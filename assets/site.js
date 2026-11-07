@@ -44,6 +44,18 @@ if (!location.hash) {
     });
     fig.addEventListener('pointerleave', function () { im.style.transform = ''; });
   });
+  // Headlines marked .scrub fill in word by word as they scroll through the screen
+  document.querySelectorAll('.scrub').forEach(function (h) {
+    var ws = h.querySelectorAll('.w');
+    if (still) { ws.forEach(function (w) { w.classList.add('on'); }); return; }
+    var tick = function () {
+      var r = h.getBoundingClientRect(), vh = window.innerHeight;
+      var p = (vh * 0.85 - r.top) / (vh * 0.85 - vh * 0.35);
+      var n = Math.round(Math.max(0, Math.min(1, p)) * ws.length);
+      ws.forEach(function (w, i) { w.classList.toggle('on', i < n); });
+    };
+    window.addEventListener('scroll', tick, { passive: true }); window.addEventListener('resize', tick); tick();
+  });
   var form = document.querySelector('.form');
   if (form) form.addEventListener('submit', function (e) {
     e.preventDefault();

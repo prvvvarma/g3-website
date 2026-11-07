@@ -168,9 +168,19 @@ home = head('Home', "You don't need an AI team. You need AI that works. G3's con
   </div>
 </section>
 
-<section class="section" aria-labelledby="problem-h">
+<section class="section problem" aria-labelledby="problem-h">
   <div class="wrap">
-    {intro('01 — The problem', 'Building an AI team in-house is slow, expensive and hard to get right.', "Good ideas stall without the right people. We've seen it, and we built G3 to fix it.", 'problem-h')}
+    <div class="intro grid">
+      <span class="intro__num label">01 — The problem</span>
+      <div class="intro__body"><h2 class="display-l scrub" id="problem-h"><span class="w">Building</span> <span class="w">an</span> <span class="w">AI</span> <span class="w">team</span> <span class="w">in‑house</span> <span class="w">is</span> <span class="w">slow,</span> <span class="w">expensive</span> <span class="w">and</span> <span class="w">hard</span> <span class="w">to</span> <span class="w">get</span> <span class="w">right.</span></h2></div>
+    </div>
+    <div class="grid"><div class="block"><div class="pains">
+      <div class="pain rv"><h3 class="title"><span class="strike">Slow</span></h3><p>Hiring the right people takes months.</p></div>
+      <div class="pain rv"><h3 class="title"><span class="strike">Expensive</span></h3><p>Senior AI talent is scarce and costly.</p></div>
+      <div class="pain rv"><h3 class="title"><span class="strike">Hard to get right</span></h3><p>Many projects stall between the demo and daily use.</p></div>
+    </div>
+    <p class="empathy heading rv">Good ideas stall without the right people. We've seen it, and we built G3 to fix it.<span class="dot" aria-hidden="true"></span></p>
+    </div></div>
   </div>
 </section>
 
