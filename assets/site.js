@@ -53,6 +53,7 @@ if (!location.hash) {
       var p = (vh * 0.85 - r.top) / (vh * 0.85 - vh * 0.35);
       var n = Math.round(Math.max(0, Math.min(1, p)) * ws.length);
       ws.forEach(function (w, i) { w.classList.toggle('on', i < n); });
+      h.classList.toggle('done', n === ws.length);
     };
     window.addEventListener('scroll', tick, { passive: true }); window.addEventListener('resize', tick); tick();
   });
@@ -77,6 +78,40 @@ if (!location.hash) {
       el.addEventListener('pointerdown', function (e) { if (e.pointerType === 'mouse') e.preventDefault(); });
     });
   }
+  // Timelines fill as they scroll through the screen
+  document.querySelectorAll('.timeline').forEach(function (tl) {
+    var steps = tl.querySelectorAll('.step');
+    var tick = function () {
+      var r = tl.getBoundingClientRect(), vh = window.innerHeight;
+      var p = still ? 1 : Math.max(0, Math.min(1, (vh * 0.8 - r.top) / (r.height + vh * 0.25)));
+      tl.style.setProperty('--p', p.toFixed(3));
+      steps.forEach(function (s, i) { s.classList.toggle('on', p >= i / steps.length + 0.02); });
+    };
+    window.addEventListener('scroll', tick, { passive: true }); window.addEventListener('resize', tick); tick();
+  });
+
+  // Interactive index: hover or focus shows the description in the side panel; tap opens it on small screens
+  document.querySelectorAll('.ix').forEach(function (ix) {
+    var items = ix.querySelectorAll('.ix__item'), panel = ix.querySelector('.ix__panel');
+    var num = panel.querySelector('.ix__num'), text = panel.querySelector('.ix__text'), t = null;
+    var show = function (it) {
+      items.forEach(function (o) { o.classList.toggle('is-on', o === it); });
+      var desc = it.nextElementSibling.innerHTML;
+      if (text.innerHTML === desc) return;
+      panel.classList.add('swap'); clearTimeout(t);
+      t = setTimeout(function () { num.textContent = it.getAttribute('data-n'); text.innerHTML = desc; panel.classList.remove('swap'); }, 180);
+    };
+    items.forEach(function (it) {
+      it.addEventListener('mouseenter', function () { show(it); });
+      it.addEventListener('focus', function () { show(it); });
+      it.addEventListener('click', function () {
+        var open = !it.classList.contains('open');
+        items.forEach(function (o) { o.classList.remove('open'); o.setAttribute('aria-expanded', 'false'); });
+        if (open) { it.classList.add('open'); it.setAttribute('aria-expanded', 'true'); }
+        show(it);
+      });
+    });
+  });
   var form = document.querySelector('.form');
   if (form) form.addEventListener('submit', function (e) {
     e.preventDefault();

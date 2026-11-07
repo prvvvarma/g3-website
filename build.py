@@ -67,6 +67,7 @@ def header(page):
 '''
 
 BAND = '''<section class="band" aria-labelledby="band-h">
+  <img class="band__rings" src="assets/img/rings.jpg" alt="" aria-hidden="true" loading="lazy">
   <div class="wrap">
     <div><span class="label">The end result</span><h2 id="band-h" class="display-l">Your tech team, without the hiring.</h2></div>
     <a class="btn btn--inverse" href="contact.html">Book a call<span class="dot" aria-hidden="true"></span></a>
@@ -130,7 +131,29 @@ def cards(items, big=False):
         out.append(f'''<a class="card" id="{key if big else ''}" href="{href}"><div class="card__img"><img src="assets/img/product-{key}.jpg" alt="{ALTS[key]}" width="800" height="800" loading="lazy"></div><span class="label">0{i}</span><{tag} class="{'heading' if big else 'title'}">{name}</{tag}><p>{line}</p><span class="go">{go}</span></a>''')
     return f'<div class="cards{" cards--big" if big else ""}">' + ''.join(out) + '</div>'
 
+LOGOS = ['<span class="logo"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 2a10 10 0 0 1 0 20z" fill="currentColor"/></svg><b style="font-weight:600;letter-spacing:-0.03em;text-transform:lowercase">halcyon</b></span>','<span class="logo"><svg viewBox="0 0 28 24" aria-hidden="true"><path d="M2 21 9 5l7 16zM12 21l7-16 7 16z" fill="currentColor"/></svg><b style="font-family:var(--mono);font-weight:400;letter-spacing:0.18em;font-size:13px">MERIDIAN</b></span>','<span class="logo"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="3.5"/></svg><b style="font-weight:500;letter-spacing:-0.02em;font-size:21px">Orbis</b></span>','<span class="logo"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="5" width="20" height="3" fill="currentColor"/><rect x="2" y="11" width="14" height="3" fill="currentColor"/><rect x="2" y="17" width="8" height="3" fill="currentColor"/></svg><b style="font-weight:600;letter-spacing:0.08em;font-size:15px">SANDLINE</b></span>','<span class="logo"><b style="font-size:21px;letter-spacing:-0.02em"><i style="font-weight:400">Kestrel</i>&amp;Co.</b></span>','<span class="logo"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="2" width="9" height="9" fill="currentColor"/><rect x="13" y="2" width="9" height="9" fill="none" stroke="currentColor" stroke-width="2"/><rect x="2" y="13" width="9" height="9" fill="none" stroke="currentColor" stroke-width="2"/><rect x="13" y="13" width="9" height="9" fill="currentColor"/></svg><b style="font-weight:500;font-size:19px">Quadra</b></span>']
+
 CAPTIONS = ['thinks', 'proves', 'senses', 'holds it together']
+
+def scrub_words(text):
+    return ' '.join(f'<span class="w">{w}</span>' for w in text.replace('in-house', 'in\u2011house').split())
+
+def scrub_intro(num, text, hid):
+    return f'''<div class="intro grid">
+      <span class="intro__num label">{num}</span>
+      <div class="intro__body"><h2 class="display-l scrub" id="{hid}">{scrub_words(text)}</h2></div>
+    </div>'''
+
+def marquee(items, cls=''):
+    track = ''.join(items)
+    return f'<div class="marquee {cls}"><div class="marquee__track">{track}<span class="marquee__dup" aria-hidden="true">{track}</span></div></div>'
+
+def index_list(items, uid):
+    rows, first = [], items[0]
+    for i, (t, d) in enumerate(items):
+        rows.append(f'''<li><button class="ix__item{' is-on' if i == 0 else ''}" type="button" aria-expanded="false" aria-controls="{uid}-{i}" data-desc="{html.escape(d, quote=True)}" data-n="0{i + 1}"><span class="label">0{i + 1}</span><span class="title">{t}</span><span class="ix__arrow" aria-hidden="true">→</span></button><p class="ix__desc" id="{uid}-{i}">{ph(d)}</p></li>''')
+    return f'''<div class="ix"><ol class="ix__list">{''.join(rows)}</ol><div class="ix__panel" aria-hidden="true"><span class="ix__num">01</span><p class="ix__text lead">{ph(first[1])}</p></div></div>'''
+
 
 def services_strip(exclude=None, margin=True):
     cells = ''.join(
@@ -141,7 +164,7 @@ def services_strip(exclude=None, margin=True):
     cols = ' style="grid-template-columns:repeat(3,minmax(0,1fr))"' if exclude else style
     return f'<nav class="{cls}" aria-label="Services"{cols}>{cells}</nav>'
 
-PLAN = '''<ol class="steps">
+PLAN = '''<ol class="steps timeline">
         <li class="step"><span class="label" data-n="1">Step 1</span><span class="title">Book a call.</span><p>Tell us what you want to achieve.</p></li>
         <li class="step"><span class="label" data-n="2">Step 2</span><span class="title">Get a clear plan.</span><p>What to build, in what order, and what it takes.</p></li>
         <li class="step"><span class="label" data-n="3">Step 3</span><span class="title">We build and run it.</span><p>Or hand it to your team when you're ready.</p></li>
@@ -187,15 +210,8 @@ home = head('Home', "You don't need an AI team. You need AI that works. G3's con
 <section class="section" aria-labelledby="proof-h">
   <div class="wrap">
     {intro('02 — Proof', 'Who we work with.', '', 'proof-h')}
-    <div class="grid"><div class="block rv"><div class="logos" aria-label="Sample client logos">
-      <span class="logo"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 2a10 10 0 0 1 0 20z" fill="currentColor"/></svg><b style="font-weight:600;letter-spacing:-0.03em;text-transform:lowercase">halcyon</b></span>
-      <span class="logo"><svg viewBox="0 0 28 24" aria-hidden="true"><path d="M2 21 9 5l7 16zM12 21l7-16 7 16z" fill="currentColor"/></svg><b style="font-family:var(--mono);font-weight:400;letter-spacing:0.18em;font-size:13px">MERIDIAN</b></span>
-      <span class="logo"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="3.5"/></svg><b style="font-weight:500;letter-spacing:-0.02em;font-size:21px">Orbis</b></span>
-      <span class="logo"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="5" width="20" height="3" fill="currentColor"/><rect x="2" y="11" width="14" height="3" fill="currentColor"/><rect x="2" y="17" width="8" height="3" fill="currentColor"/></svg><b style="font-weight:600;letter-spacing:0.08em;font-size:15px">SANDLINE</b></span>
-      <span class="logo"><b style="font-size:21px;letter-spacing:-0.02em"><i style="font-weight:400">Kestrel</i>&amp;Co.</b></span>
-      <span class="logo"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="2" width="9" height="9" fill="currentColor"/><rect x="13" y="2" width="9" height="9" fill="none" stroke="currentColor" stroke-width="2"/><rect x="2" y="13" width="9" height="9" fill="none" stroke="currentColor" stroke-width="2"/><rect x="13" y="13" width="9" height="9" fill="currentColor"/></svg><b style="font-weight:500;font-size:19px">Quadra</b></span>
-    </div>
-    <p class="label" style="margin-top:12px">Sample logos · to be replaced with G3's clients</p></div></div>
+    {marquee(LOGOS, "marquee--logos")}
+    <div class="grid"><div class="block"><p class="label" style="margin-top:12px">Sample logos · to be replaced with G3's clients</p></div></div>
   </div>
 </section>
 
@@ -214,7 +230,7 @@ home = head('Home', "You don't need an AI team. You need AI that works. G3's con
 </section>
 
 <section class="statement" aria-label="What changes">
-  <div class="wrap rv"><span class="label">05 — What changes</span><p class="display-l">From talking about AI to using it every day.</p></div>
+  <div class="wrap"><span class="label">05 — What changes</span><p class="display-l scrub ba"><span class="w">From</span> <span class="w before">talking</span> <span class="w before">about</span> <span class="w before">AI</span> <span class="w">to</span> <span class="w after">using</span> <span class="w after">it</span> <span class="w after">every</span> <span class="w after">day.</span></p></div>
 </section>
 ''' + BAND + footer()
 write('index.html', home)
@@ -223,9 +239,8 @@ write('index.html', home)
 def service_page(page, name, headline, subline, problem, groups, used, img, alt, fig, small='', what_h='What we do', used_h='Where it’s used'):
     caps_html = ''
     for gi, (gtitle, items) in enumerate(groups):
-        cells = ''.join(f'<div class="cap"><h3 class="title">{t}</h3><p>{ph(d)}</p></div>' for t, d in items)
-        gh = f'<h3 class="label" style="margin:{"0" if gi == 0 else "48px"} 0 16px">{gtitle}</h3>' if gtitle else ''
-        caps_html += f'{gh}<div class="caps">{cells}</div>'
+        gh = f'<h3 class="label" style="margin:{"0" if gi == 0 else "64px"} 0 16px">{gtitle}</h3>' if gtitle else ''
+        caps_html += gh + index_list(items, f'ix{gi}')
     if small:
         caps_html += f'<p class="small"><em>{small}</em></p>'
     chips = ''.join(f'<span class="chip">{u}</span>' for u in used)
@@ -236,8 +251,8 @@ def service_page(page, name, headline, subline, problem, groups, used, img, alt,
         used_html = f'''<section class="section" aria-labelledby="used-h">
   <div class="wrap">
     {intro('03 — Used in', used_h, '', 'used-h')}
-    <div class="grid"><div class="block rv"><div class="chips">{chips}</div></div></div>
   </div>
+  <div class="rv">{marquee([f'<span class="mq-word">{u}</span>' for u in used], 'marquee--words')}</div>
 </section>
 '''
     body = head(name.replace('&amp;', '&'), f'{headline} {subline}', page) + header(page) + f'''
@@ -256,7 +271,7 @@ def service_page(page, name, headline, subline, problem, groups, used, img, alt,
 </section>
 
 <section class="section" aria-labelledby="problem-h">
-  <div class="wrap">{intro('01 — The problem', problem, '', 'problem-h')}</div>
+  <div class="wrap">{scrub_intro('01 — The problem', problem, 'problem-h')}</div>
 </section>
 
 <section class="section" aria-labelledby="what-h">
@@ -372,7 +387,7 @@ about = head('About', 'One team, from first idea to everyday use.', 'about.html'
 <section class="section" aria-labelledby="how-h">
   <div class="wrap">
     {intro('01 — How we work', 'Discover, design, build, secure, run.', '', 'how-h')}
-    <div class="grid"><div class="block rv"><ol class="steps steps--5">
+    <div class="grid"><div class="block rv"><ol class="steps steps--5 timeline">
       <li class="step"><span class="label" data-n="1">01</span><span class="title">Discover</span><p>Your goals, your systems and what success looks like.</p></li>
       <li class="step"><span class="label" data-n="2">02</span><span class="title">Design</span><p>The right technology, fitted to what you already have.</p></li>
       <li class="step"><span class="label" data-n="3">03</span><span class="title">Build</span><p>Short cycles, so you see progress every few weeks.</p></li>
@@ -384,18 +399,23 @@ about = head('About', 'One team, from first idea to everyday use.', 'about.html'
 <section class="section" aria-labelledby="ways-h">
   <div class="wrap">
     {intro('02 — Ways to work with us', 'Start small or go all in.', '', 'ways-h')}
-    <div class="grid"><div class="block rv"><div class="chips"><span class="chip">Consulting</span><span class="chip">Projects</span><span class="chip">Dedicated teams</span><span class="chip">Managed services</span></div></div></div>
+    <div class="grid"><div class="block rv"><div class="tiles">
+      <div class="tile"><span class="label">01</span><span class="title">Consulting</span><p>Advice and a clear plan.</p></div>
+      <div class="tile"><span class="label">02</span><span class="title">Projects</span><p>We build it, end to end.</p></div>
+      <div class="tile"><span class="label">03</span><span class="title">Dedicated teams</span><p>Our people, your roadmap.</p></div>
+      <div class="tile"><span class="label">04</span><span class="title">Managed services</span><p>We run it for you.</p></div>
+    </div></div></div>
   </div>
 </section>
 <section class="section" aria-labelledby="why-h">
   <div class="wrap">
     {intro('03 — Why G3', 'What you can count on.', '', 'why-h')}
-    <div class="grid"><div class="block rv"><div class="caps">
-      <div class="cap"><h3 class="title">No hand-offs from strategy to support</h3></div>
-      <div class="cap"><h3 class="title">AI in Arabic and English</h3></div>
-      <div class="cap"><h3 class="title">Your data kept where it must stay</h3></div>
-      <div class="cap"><h3 class="title">Security built in, not added later</h3></div>
-    </div></div></div>
+    <div class="grid"><div class="block rv"><ol class="numbered">
+      <li><span class="numbered__n">01</span><span class="heading">No hand-offs from strategy to support</span></li>
+      <li><span class="numbered__n">02</span><span class="heading">AI in Arabic and English</span></li>
+      <li><span class="numbered__n">03</span><span class="heading">Your data kept where it must stay</span></li>
+      <li><span class="numbered__n">04</span><span class="heading">Security built in, not added later</span></li>
+    </ol></div></div>
   </div>
 </section>
 <section class="section" aria-labelledby="facts-h">
