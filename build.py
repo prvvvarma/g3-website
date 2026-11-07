@@ -105,8 +105,10 @@ def actions(link_text=None, link_href=None):
 def plate(img, alt, left, right=''):
     return f'''<figure class="plate"><img src="assets/img/{img}" alt="{alt}" width="1200" height="1200"></figure>'''
 
-def rings(alt):
-    return f'''<div class="rings" data-rings title="Drag to turn"><img src="assets/img/rings.jpg" alt="{alt}" width="1200" height="1200"></div>'''
+def rings(alt, kind='rings', img='rings.jpg'):
+    return f'''<div class="rings" data-rings="{kind}" title="Drag to turn"><img src="assets/img/{img}" alt="{alt}" width="1200" height="1200"></div>'''
+
+KINDS = {'plate-ai.jpg': 'knot', 'plate-blockchain.jpg': 'chain', 'plate-iot.jpg': 'sensors', 'plate-cloud.jpg': 'layers'}
 
 def services_strip(exclude=None, margin=True):
     cells = ''.join(
@@ -208,12 +210,13 @@ def service_page(page, name, headline, subline, problem, groups, used, img, alt,
 <section class="hero hero--page" aria-labelledby="hero-h">
   <div class="wrap">
     <div class="grid">
-      <div class="hero__text hero__text--wide">
+      <div class="hero__text">
         <span class="label">Services — {name}</span>
         <h1 id="hero-h" class="display-l">{headline}</h1>
         <p class="lead">{subline}</p>
         {actions()}
       </div>
+      <div class="hero__plate">{rings(alt, KINDS[img], img)}</div>
     </div>
   </div>
 </section>
@@ -302,10 +305,12 @@ service_page('cloud-security.html', 'Cloud &amp; Security', 'Systems that stay u
 # ---------------------------------------------------------------- Products
 products = head('Products', 'Ready-made solutions, so you can start faster.', 'products.html') + header('products.html') + f'''
 <section class="hero hero--page" aria-labelledby="hero-h">
-  <div class="wrap"><div class="grid"><div class="hero__text hero__text--wide">
+  <div class="wrap"><div class="grid"><div class="hero__text">
     <span class="label">Products</span>
-    <h1 id="hero-h" class="display-xl">Ready-made solutions, so you can start faster.</h1>
-  </div></div></div>
+    <h1 id="hero-h" class="display-l">Ready-made solutions, so you can start faster.</h1>
+    {actions()}
+  </div>
+  <div class="hero__plate">{rings('A solid cube, engraved', 'cube')}</div></div></div>
 </section>
 <section class="section" aria-label="Products">
   <div class="wrap rv"><div class="rows">
@@ -327,11 +332,12 @@ write('products.html', products)
 about = head('About', 'One team, from first idea to everyday use.', 'about.html') + header('about.html') + f'''
 <section class="hero hero--page" aria-labelledby="hero-h">
   <div class="wrap"><div class="grid">
-    <div class="hero__text hero__text--wide">
+    <div class="hero__text">
       <span class="label">About G3</span>
       <h1 id="hero-h" class="display-l">One team, from first idea to everyday use.</h1>
       <p class="lead">{ph('G3 Technologies is a Dubai-based technology services company. Our consultants, architects and developers build and run AI, blockchain and IoT solutions for organisations across [the UAE or the region: G3 to confirm].')}</p>
     </div>
+    <div class="hero__plate">{rings('Three interlocked rings, engraved')}</div>
   </div></div>
 </section>
 <section class="section" aria-labelledby="how-h">
@@ -374,11 +380,12 @@ write('about.html', about)
 # ---------------------------------------------------------------- Careers
 careers = head('Careers', 'Work on real AI, blockchain and IoT projects.', 'careers.html') + header('careers.html') + f'''
 <section class="hero hero--page" aria-labelledby="hero-h">
-  <div class="wrap"><div class="grid"><div class="hero__text hero__text--wide">
+  <div class="wrap"><div class="grid"><div class="hero__text">
     <span class="label">Careers</span>
-    <h1 id="hero-h" class="display-xl">Work on real AI, blockchain and IoT projects.</h1>
+    <h1 id="hero-h" class="display-l">Work on real AI, blockchain and IoT projects.</h1>
     <p class="lead">We're looking for consultants, architects and developers in AI, blockchain, IoT and cloud.</p>
-  </div></div></div>
+  </div>
+  <div class="hero__plate">{rings('A rising spiral, engraved', 'helix')}</div></div></div>
 </section>
 <section class="section" aria-labelledby="roles-h">
   <div class="wrap">
@@ -397,11 +404,12 @@ write('careers.html', careers)
 opts = ''.join(f'<label><input type="radio" name="need" value="{v}"><span>{v}</span></label>' for v in ['AI', 'Blockchain', 'IoT', 'Cloud & Security', 'Not sure yet'])
 contact = head('Contact', 'Book a call with our team.', 'contact.html') + header('contact.html') + f'''
 <section class="hero hero--page" aria-labelledby="hero-h">
-  <div class="wrap"><div class="grid"><div class="hero__text hero__text--wide">
+  <div class="wrap"><div class="grid"><div class="hero__text">
     <span class="label">Contact</span>
-    <h1 id="hero-h" class="display-xl">Book a call with our team.</h1>
+    <h1 id="hero-h" class="display-l">Book a call with our team.</h1>
     <p class="lead">{ph("Tell us what you want to achieve. We'll reply within [one working day: G3 to confirm] with a clear next step.")}</p>
-  </div></div></div>
+  </div>
+  <div class="hero__plate">{rings('Two linked rings, engraved', 'pair')}</div></div></div>
 </section>
 <section class="section" aria-label="Contact form">
   <div class="wrap grid">
