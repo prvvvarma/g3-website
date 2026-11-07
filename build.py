@@ -4,6 +4,8 @@ import html, os, re
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
 YEAR = 2026
+import time
+VERSION = time.strftime('%Y%m%d%H%M')
 
 def ph(s):
     """Render [bracketed] placeholders as visible pending items."""
@@ -31,9 +33,9 @@ def head(title, desc, page):
 <meta property="og:image" content="assets/img/og.jpg">
 <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
 <link rel="preload" href="assets/fonts/schibsted-grotesk-latin-500-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="assets/site.css">
-<script src="assets/site.js" defer></script>
-<script src="assets/rings.js" defer></script>
+<link rel="stylesheet" href="assets/site.css?v={VERSION}">
+<script src="assets/site.js?v={VERSION}" defer></script>
+<script src="assets/rings.js?v={VERSION}" defer></script>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
