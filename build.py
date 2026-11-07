@@ -136,7 +136,6 @@ home = head('Home', "You don't need an AI team. You need AI that works. G3's con
   <div class="wrap">
     <div class="grid">
       <div class="hero__text">
-        <span class="label">AI · Blockchain · IoT · Cloud &amp; Security</span>
         <h1 id="hero-h" class="display-xl">You don't need an AI team. You need AI that works.</h1>
         <p class="lead">G3's consultants, architects and developers build and run AI, blockchain and IoT for your business.</p>
         {actions('See what we build', '#services')}
