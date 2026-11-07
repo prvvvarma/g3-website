@@ -340,3 +340,38 @@ fieldset.field { border: 0; margin: 0; padding: 0; }
 .empathy .dot { width: 10px; height: 10px; margin-left: 10px; vertical-align: 0.15em; }
 @media (prefers-reduced-motion: reduce) { .js .scrub .w { color: var(--ink); } .strike::after { transform: scaleX(1); transition: none; } }
 @media (max-width: 760px) { .pains { grid-template-columns: 1fr; row-gap: 28px; } .empathy { margin-top: 48px; } }
+
+/* ---- Phone compositions: denser, more designed than a single stacked column ---- */
+@media (max-width: 760px) {
+  /* hero services as a 2 x 2 tile grid */
+  .hero .services { grid-template-columns: repeat(2, minmax(0, 1fr)); margin-top: 40px; border-top: 1px solid var(--line); }
+  .hero .service, .hero .service + .service { padding: 16px 14px 18px; border-top: 0; border-left: 0; border-bottom: 1px solid var(--line); gap: 8px; min-height: 124px; }
+  .hero .service:nth-child(odd) { padding-left: 0; border-right: 1px solid var(--line); }
+  .hero .service .title { font-size: 17px; line-height: 23px; }
+  .hero .service .go { display: none; }
+  .hero .service::before { top: -1px; }
+
+  /* problem pains as tight rows: word left, line right */
+  .pains { row-gap: 0; }
+  .pain { display: grid; grid-template-columns: 40% 1fr; column-gap: 16px; align-items: baseline; padding: 18px 0; border-top: 1px solid var(--line); }
+  .pain:last-child { border-bottom: 1px solid var(--line); }
+  .pain .title { font-size: 20px; line-height: 26px; }
+  .pain p { font-size: 15px; line-height: 22px; }
+
+  /* steps as a numbered list: big number left, text right */
+  .steps { row-gap: 0; }
+  .step { display: grid; grid-template-columns: 56px 1fr; column-gap: 8px; row-gap: 4px; padding: 20px 0; border-top: 1px solid var(--line); }
+  .step:last-child { border-bottom: 1px solid var(--line); }
+  .step .label { grid-row: span 2; font-family: var(--sans); font-size: 34px; line-height: 34px; letter-spacing: -0.03em; color: var(--ink); text-transform: none; }
+  .step .label { font-size: 0; }
+  .step .label::before { content: attr(data-n); font-size: 34px; }
+  .step p { font-size: 15px; line-height: 22px; }
+}
+
+/* strike-through that follows wrapped lines: colour fades in instead of a drawn bar */
+.strike { display: inline; text-decoration: line-through; text-decoration-thickness: 2px; text-decoration-color: transparent; transition: text-decoration-color 700ms var(--ease) 500ms; }
+.strike::after { display: none; }
+.pain.in .strike, html:not(.js) .strike { text-decoration-color: var(--signal); }
+.pain:nth-child(2).in .strike { transition-delay: 650ms; }
+.pain:nth-child(3).in .strike { transition-delay: 800ms; }
+@media (prefers-reduced-motion: reduce) { .strike { text-decoration-color: var(--signal); transition: none; } }

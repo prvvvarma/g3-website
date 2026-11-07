@@ -142,9 +142,9 @@ def services_strip(exclude=None, margin=True):
     return f'<nav class="{cls}" aria-label="Services"{cols}>{cells}</nav>'
 
 PLAN = '''<ol class="steps">
-        <li class="step"><span class="label">Step 1</span><span class="title">Book a call.</span><p>Tell us what you want to achieve.</p></li>
-        <li class="step"><span class="label">Step 2</span><span class="title">Get a clear plan.</span><p>What to build, in what order, and what it takes.</p></li>
-        <li class="step"><span class="label">Step 3</span><span class="title">We build and run it.</span><p>Or hand it to your team when you're ready.</p></li>
+        <li class="step"><span class="label" data-n="1">Step 1</span><span class="title">Book a call.</span><p>Tell us what you want to achieve.</p></li>
+        <li class="step"><span class="label" data-n="2">Step 2</span><span class="title">Get a clear plan.</span><p>What to build, in what order, and what it takes.</p></li>
+        <li class="step"><span class="label" data-n="3">Step 3</span><span class="title">We build and run it.</span><p>Or hand it to your team when you're ready.</p></li>
       </ol>'''
 
 def write(name, body):
@@ -373,11 +373,11 @@ about = head('About', 'One team, from first idea to everyday use.', 'about.html'
   <div class="wrap">
     {intro('01 — How we work', 'Discover, design, build, secure, run.', '', 'how-h')}
     <div class="grid"><div class="block rv"><ol class="steps steps--5">
-      <li class="step"><span class="label">01</span><span class="title">Discover</span><p>Your goals, your systems and what success looks like.</p></li>
-      <li class="step"><span class="label">02</span><span class="title">Design</span><p>The right technology, fitted to what you already have.</p></li>
-      <li class="step"><span class="label">03</span><span class="title">Build</span><p>Short cycles, so you see progress every few weeks.</p></li>
-      <li class="step"><span class="label">04</span><span class="title">Secure</span><p>Risks tested and protections in place before go-live.</p></li>
-      <li class="step"><span class="label">05</span><span class="title">Run</span><p>We support and improve it, or hand it to your team.</p></li>
+      <li class="step"><span class="label" data-n="1">01</span><span class="title">Discover</span><p>Your goals, your systems and what success looks like.</p></li>
+      <li class="step"><span class="label" data-n="2">02</span><span class="title">Design</span><p>The right technology, fitted to what you already have.</p></li>
+      <li class="step"><span class="label" data-n="3">03</span><span class="title">Build</span><p>Short cycles, so you see progress every few weeks.</p></li>
+      <li class="step"><span class="label" data-n="4">04</span><span class="title">Secure</span><p>Risks tested and protections in place before go-live.</p></li>
+      <li class="step"><span class="label" data-n="5">05</span><span class="title">Run</span><p>We support and improve it, or hand it to your team.</p></li>
     </ol></div></div>
   </div>
 </section>
