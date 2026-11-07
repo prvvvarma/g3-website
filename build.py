@@ -208,13 +208,12 @@ def service_page(page, name, headline, subline, problem, groups, used, img, alt,
 <section class="hero hero--page" aria-labelledby="hero-h">
   <div class="wrap">
     <div class="grid">
-      <div class="hero__text">
+      <div class="hero__text hero__text--wide">
         <span class="label">Services — {name}</span>
         <h1 id="hero-h" class="display-l">{headline}</h1>
         <p class="lead">{subline}</p>
         {actions()}
       </div>
-      <div class="hero__plate">{plate(img, alt, fig)}</div>
     </div>
   </div>
 </section>
@@ -328,12 +327,11 @@ write('products.html', products)
 about = head('About', 'One team, from first idea to everyday use.', 'about.html') + header('about.html') + f'''
 <section class="hero hero--page" aria-labelledby="hero-h">
   <div class="wrap"><div class="grid">
-    <div class="hero__text">
+    <div class="hero__text hero__text--wide">
       <span class="label">About G3</span>
       <h1 id="hero-h" class="display-l">One team, from first idea to everyday use.</h1>
       <p class="lead">{ph('G3 Technologies is a Dubai-based technology services company. Our consultants, architects and developers build and run AI, blockchain and IoT solutions for organisations across [the UAE or the region: G3 to confirm].')}</p>
     </div>
-    <div class="hero__plate">{rings('Three interlocked rings, engraved')}</div>
   </div></div>
 </section>
 <section class="section" aria-labelledby="how-h">

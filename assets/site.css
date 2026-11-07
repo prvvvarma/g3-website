@@ -71,11 +71,13 @@ ul, ol { padding: 0; list-style: none; }
 .nav .btn { display: none; }
 
 /* Hero */
-.hero { padding: 72px 0 0; }
+.hero { padding: 40px 0 0; }
 .hero .grid { align-items: center; }
-.hero__text { grid-column: span 7; display: flex; flex-direction: column; gap: 36px; }
+.hero__text { grid-column: span 7; display: flex; flex-direction: column; gap: 32px; }
 .hero__text .lead { max-width: 540px; color: var(--ink-muted); }
-.hero__plate { grid-column: 8 / span 5; }
+.hero__plate { grid-column: 8 / span 5; margin-right: -24px; }
+.hero--page { padding-top: 56px; }
+.hero--page + .section { padding-top: 96px; }
 .hero--page .hero__text { gap: 32px; }
 .hero__text--wide { grid-column: span 10; }
 
@@ -85,7 +87,7 @@ ul, ol { padding: 0; list-style: none; }
 .plate figcaption { display: flex; justify-content: space-between; gap: 16px; }
 
 /* Services strip */
-.services { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-top: 1px solid var(--line); margin-top: 72px; }
+.services { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-top: 1px solid var(--line); margin-top: 40px; }
 .service { display: flex; flex-direction: column; gap: 12px; padding: 24px 24px 8px 0; text-decoration: none; }
 .service + .service { padding-left: 24px; border-left: 1px solid var(--line); }
 .service .title { font-size: 22px; line-height: 28px; transition: color 400ms var(--ease); }
@@ -178,7 +180,7 @@ fieldset.field { border: 0; margin: 0; padding: 0; }
   .display-xl { font-size: 72px; line-height: 72px; }
   .display-l { font-size: 56px; line-height: 58px; }
   .hero__text { grid-column: span 7; }
-  .hero__plate { grid-column: 8 / span 5; }
+  .hero__plate { grid-column: 8 / span 5; margin-right: -24px; }
   .steps--5 { grid-template-columns: repeat(3, minmax(0, 1fr)); row-gap: 40px; }
   .intro__num { grid-column: 1 / -1; padding: 0 0 16px; }
   .intro__body, .block, .contact { grid-column: 1 / -1; }
@@ -206,7 +208,8 @@ fieldset.field { border: 0; margin: 0; padding: 0; }
   .nav > a.btn { display: inline-flex; margin-top: 20px; justify-content: center; height: 52px; padding: 0 22px; border-bottom: 0; background: var(--ink); color: var(--ink-inverse); font-size: 16px; }
   .hero { padding-top: 32px; }
   .hero__text, .hero__text--wide, .hero__plate { grid-column: 1 / -1; }
-  .hero__plate { margin: 24px auto 0; width: 78%; }
+  .hero__plate { margin: 16px auto 0; width: 100%; }
+  .hero__plate .rings { aspect-ratio: 5 / 4; }
   .services, .caps, .steps, .steps--5 { grid-template-columns: 1fr; }
   .services { margin-top: 56px; }
   .service, .service + .service { padding: 20px 0; border-left: 0; }

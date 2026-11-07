@@ -66,7 +66,7 @@
   function draw() {
     if (!buf) return;
     var m = mat(0.62 + tiltX, -0.55 + spin + tiltY, 0.3);
-    var s = Math.min(W, H) / 4.3, ox = W / 2, oy = H / 2;
+    var s = Math.min(W, H) / 3.45, ox = W / 2, oy = H / 2;
     buf.fill(BONE); zb.fill(-1e9);
     var i, k, x, y, z, nz, sx, sy, zi;
     // depth pass (front-facing points only)
@@ -82,7 +82,7 @@
       zi = sy * ZW + sx; if (z > zb[zi]) zb[zi] = z;
     }
     // stipple pass
-    var dot = dpr > 1.4 ? 2 : 1;
+    var dot = (dpr > 1.4 && W > 900) ? 2 : 1;
     var dens = 0.55 * Math.min(1.6, 0.68 / (N / (W * H)) / (dot * dot));
     for (i = 0; i < N; i++) {
       k = i * 3;
