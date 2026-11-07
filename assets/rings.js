@@ -208,10 +208,26 @@
   host.addEventListener('pointerup', function () { drag = null; host.classList.remove('is-drag'); vel = Math.max(-0.05, Math.min(0.05, vel)); });
   host.addEventListener('pointercancel', function () { drag = null; host.classList.remove('is-drag'); });
 
-  document.querySelectorAll('[data-ring]').forEach(function (el) {
-    var on = function () { glow = +el.getAttribute('data-ring'); if (reduce) { glowAmt = 0.55; draw(); } };
-    var off = function () { glow = -1; if (reduce) { glowAmt = 0; draw(); } };
+  // ---- services light their ring; on the homepage the row also plays through on its own
+  var svc = Array.prototype.slice.call(document.querySelectorAll('[data-ring]'));
+  var STEP = 3200, auto = -1, autoTimer = null, resumeTimer = null, paused = false;
+  function mark(el) { svc.forEach(function (s) { s.classList.toggle('is-active', s === el); }); }
+  function light(el) { glow = el ? +el.getAttribute('data-ring') : -1; if (reduce) { glowAmt = el ? 0.55 : 0; draw(); } }
+  function next() {
+    if (paused || !visible || document.hidden) return;
+    auto = (auto + 1) % svc.length;
+    // restart the progress bar animation on the active item
+    svc[auto].classList.remove('is-active'); void svc[auto].offsetWidth;
+    mark(svc[auto]); light(svc[auto]);
+  }
+  function play() { if (reduce || !svc.length) return; clearInterval(autoTimer); next(); autoTimer = setInterval(next, STEP); }
+  function pause() { paused = true; clearTimeout(resumeTimer); svc.forEach(function (s) { s.classList.remove('is-active'); }); }
+  function resumeSoon() { clearTimeout(resumeTimer); resumeTimer = setTimeout(function () { paused = false; play(); }, 2500); }
+  svc.forEach(function (el) {
+    var on = function () { pause(); light(el); el.classList.add('is-hover'); };
+    var off = function () { light(null); el.classList.remove('is-hover'); resumeSoon(); };
     el.addEventListener('mouseenter', on); el.addEventListener('focus', on);
     el.addEventListener('mouseleave', off); el.addEventListener('blur', off);
   });
+  if (svc.length) setTimeout(play, 1400);
 })();
