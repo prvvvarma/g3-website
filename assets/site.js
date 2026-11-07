@@ -56,6 +56,27 @@ if (!location.hash) {
     };
     window.addEventListener('scroll', tick, { passive: true }); window.addEventListener('resize', tick); tick();
   });
+  // Pains: resolve one by one when they scroll in, then flip on hover or tap
+  var pains = document.querySelectorAll('.pain');
+  if (pains.length) {
+    var set = function (el, on) { el.classList.toggle('solved', on); el.setAttribute('aria-pressed', on ? 'true' : 'false'); };
+    var played = false;
+    var playIn = function () {
+      if (played) return; played = true;
+      pains.forEach(function (el, i) { setTimeout(function () { set(el, true); }, still ? 0 : 900 + i * 900); });
+    };
+    if ('IntersectionObserver' in window) {
+      var pio = new IntersectionObserver(function (e) { if (e[0].isIntersecting) { playIn(); pio.disconnect(); } }, { threshold: 0.4 });
+      pio.observe(pains[0].parentNode);
+    } else playIn();
+    pains.forEach(function (el) {
+      var lastType = '';
+      el.addEventListener('pointerup', function (e) { lastType = e.pointerType; });
+      el.addEventListener('click', function () { if (lastType === 'mouse') { lastType = ''; return; } played = true; set(el, !el.classList.contains('solved')); });
+      el.addEventListener('pointerenter', function (e) { if (played && e.pointerType === 'mouse') set(el, !el.classList.contains('solved')); });
+      el.addEventListener('pointerdown', function (e) { if (e.pointerType === 'mouse') e.preventDefault(); });
+    });
+  }
   var form = document.querySelector('.form');
   if (form) form.addEventListener('submit', function (e) {
     e.preventDefault();

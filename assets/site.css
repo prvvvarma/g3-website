@@ -375,3 +375,24 @@ fieldset.field { border: 0; margin: 0; padding: 0; }
 .pain:nth-child(2).in .strike { transition-delay: 650ms; }
 .pain:nth-child(3).in .strike { transition-delay: 800ms; }
 @media (prefers-reduced-motion: reduce) { .strike { text-decoration-color: var(--signal); transition: none; } }
+
+/* Pains flip between the problem and G3's fix */
+button.pain { font: inherit; color: inherit; text-align: left; background: none; border: 0; padding: 24px 0 0; border-top: 1px solid var(--line-strong); cursor: pointer; width: 100%; }
+.pain__lines { display: grid; }
+.pain__lines > span { grid-area: 1 / 1; transition: opacity 450ms var(--ease), transform 450ms var(--ease); }
+.pain .prob { color: var(--ink-muted); }
+.pain .fix { color: var(--ink); opacity: 0; transform: translateY(6px); }
+.pain .fix .label { color: var(--signal-ink); margin-right: 6px; }
+.pain.solved .prob { opacity: 0; transform: translateY(-6px); }
+.pain.solved .fix { opacity: 1; transform: none; }
+.pain .strike { text-decoration-color: transparent; transition: text-decoration-color 500ms var(--ease); }
+.pain.solved .strike { text-decoration-color: var(--signal); }
+.pain.in .strike { text-decoration-color: transparent; }
+.pain.in.solved .strike { text-decoration-color: var(--signal); }
+.pains-hint { margin-bottom: 16px; }
+@media (hover: hover) { .pains-hint { visibility: hidden; } .pains-hint::after { content: ""; } }
+@media (hover: hover) { .pains-hint { visibility: visible; font-size: 0; } .pains-hint::before { content: "Hover to flip · problem or fix"; font-size: 11px; } }
+@media (max-width: 760px) { button.pain { border-top: 1px solid var(--line); } }
+@media (prefers-reduced-motion: reduce) { .pain__lines > span { transition: none; } }
+
+@media (max-width: 760px) { button.pain { padding: 18px 0; } }
