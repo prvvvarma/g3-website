@@ -110,6 +110,26 @@ def rings(alt, kind='rings', img='rings.jpg'):
 
 KINDS = {'plate-ai.jpg': 'knot', 'plate-blockchain.jpg': 'chain', 'plate-iot.jpg': 'sensors', 'plate-cloud.jpg': 'layers'}
 
+
+PRODUCTS = [
+    ('rmn', 'Retail Media Network', 'In-store screens that earn.', 'Turn in-store screens into a measurable advertising channel, with proof of every play.'),
+    ('companion', 'Companion', 'An AI assistant for every counter.', 'An AI assistant for any industry: a sales assistant in a supermarket, room service in a hotel, a waiter in a restaurant.'),
+    ('marketing', 'Marketing Intelligence', 'Know which campaigns work.', 'See which campaigns work and where to spend next.'),
+    ('voice', 'Voice Agents', 'AI that answers your calls.', 'AI that answers calls and resolves common requests.'),
+]
+PRODUCTS_SHORT = [(k, n, s) for k, n, s, l in PRODUCTS]
+PRODUCTS_LONG = [(k, n, l) for k, n, s, l in PRODUCTS]
+ALTS = {'rmn': 'A screen on a stand, engraved', 'companion': 'An orb with a ring around it, engraved', 'marketing': 'Rising bars, engraved', 'voice': 'Rings of sound, engraved'}
+
+def cards(items, big=False):
+    out = []
+    for i, (key, name, line) in enumerate(items, 1):
+        href = 'contact.html' if big else f'products.html#{key}'
+        go = 'Ask about it →' if big else 'Learn more →'
+        tag = 'h2' if big else 'h3'
+        out.append(f'''<a class="card" id="{key if big else ''}" href="{href}"><div class="card__img"><img src="assets/img/product-{key}.jpg" alt="{ALTS[key]}" width="800" height="800" loading="lazy"></div><span class="label">0{i}</span><{tag} class="{'heading' if big else 'title'}">{name}</{tag}><p>{line}</p><span class="go">{go}</span></a>''')
+    return f'<div class="cards{" cards--big" if big else ""}">' + ''.join(out) + '</div>'
+
 def services_strip(exclude=None, margin=True):
     cells = ''.join(
         f'<a class="service" href="{h}" data-ring="{i}"><span class="label">{n}</span><span class="title">{line}</span><span class="go">Explore {n} →</span></a>'
@@ -170,12 +190,7 @@ home = head('Home', "You don't need an AI team. You need AI that works. G3's con
 <section class="section" aria-labelledby="products-h">
   <div class="wrap">
     {intro('03 — Products', 'Ready-made solutions, so you can start faster.', '', 'products-h')}
-    <div class="grid"><div class="block rv"><div class="rows">
-      <div class="row"><span class="label">01</span><h3 class="title">Retail Media Network</h3><p>Turn in-store screens into a measurable advertising channel.</p></div>
-      <div class="row"><span class="label">02</span><h3 class="title">Companion</h3><p>An AI assistant that serves your customers, in shops, hotels and restaurants.</p></div>
-      <div class="row"><span class="label">03</span><h3 class="title">Marketing Intelligence</h3><p>See which campaigns work and where to spend next.</p></div>
-      <div class="row"><span class="label">04</span><h3 class="title">Voice Agents</h3><p>AI that answers calls and resolves common requests.</p></div>
-    </div><p style="margin-top:28px"><a class="link" href="products.html">All products</a></p></div></div>
+    <div class="grid"><div class="block rv">{cards(PRODUCTS_SHORT)}<p style="margin-top:32px"><a class="link" href="products.html">All products</a></p></div></div>
   </div>
 </section>
 
@@ -320,12 +335,7 @@ products = head('Products', 'Ready-made solutions, so you can start faster.', 'p
   <div class="hero__plate">{rings('A solid cube, engraved', 'cube')}</div></div></div>
 </section>
 <section class="section" aria-label="Products">
-  <div class="wrap rv"><div class="rows">
-    <div class="row"><span class="label">01</span><h2 class="heading">Retail Media Network</h2><p>Turn in-store screens into a measurable advertising channel, with proof of every play.</p></div>
-    <div class="row"><span class="label">02</span><h2 class="heading">Companion</h2><p>An AI assistant for any industry: a sales assistant in a supermarket, room service in a hotel, a waiter in a restaurant.</p></div>
-    <div class="row"><span class="label">03</span><h2 class="heading">Marketing Intelligence</h2><p>See which campaigns work and where to spend next.</p></div>
-    <div class="row"><span class="label">04</span><h2 class="heading">Voice Agents</h2><p>AI that answers calls and resolves common requests.</p></div>
-  </div></div>
+  <div class="wrap rv">{cards(PRODUCTS_LONG, big=True)}</div>
 </section>
 <section class="section" aria-labelledby="fit-h">
   <div class="wrap grid"><div class="block rv" style="grid-column: 1 / -1; margin-top: 0; display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:32px">
