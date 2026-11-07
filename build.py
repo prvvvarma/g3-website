@@ -130,9 +130,11 @@ def cards(items, big=False):
         out.append(f'''<a class="card" id="{key if big else ''}" href="{href}"><div class="card__img"><img src="assets/img/product-{key}.jpg" alt="{ALTS[key]}" width="800" height="800" loading="lazy"></div><span class="label">0{i}</span><{tag} class="{'heading' if big else 'title'}">{name}</{tag}><p>{line}</p><span class="go">{go}</span></a>''')
     return f'<div class="cards{" cards--big" if big else ""}">' + ''.join(out) + '</div>'
 
+CAPTIONS = ['thinks', 'proves', 'senses', 'holds it together']
+
 def services_strip(exclude=None, margin=True):
     cells = ''.join(
-        f'<a class="service" href="{h}" data-ring="{i}"><span class="label">{n}</span><span class="title">{line}</span><span class="go">Explore {n} →</span></a>'
+        f'<a class="service" href="{h}" data-ring="{i}" data-caption="{CAPTIONS[i]}"><span class="label">{n}</span><span class="title">{line}</span><span class="go">Explore {n} →</span></a>'
         for i, (h, n, line) in enumerate(SERVICES) if h != exclude)
     style = '' if margin else ' style="margin-top:0"'
     cls = 'services' + (' services--3' if exclude else '')
@@ -156,11 +158,11 @@ home = head('Home', "You don't need an AI team. You need AI that works. G3's con
   <div class="wrap">
     <div class="grid">
       <div class="hero__text">
-        <h1 id="hero-h" class="display-xl">You don't need an AI team. You need AI that works.</h1>
+        <h1 id="hero-h" class="display-xl">You don't need an AI team. You need AI that <span class="u">works.</span></h1>
         <p class="lead">G3's consultants, architects and developers build and run AI, blockchain and IoT for your business.</p>
         {actions('See what we build', '#services')}
       </div>
-      <div class="hero__plate">{rings('Three interlocked rings, engraved: AI, blockchain and IoT')}</div>
+      <div class="hero__plate">{rings('Three interlocked rings, engraved: AI, blockchain and IoT')}<p class="rings-caption" aria-live="polite"><span class="rc-k label">G3</span><span class="rc-v">Three disciplines, locked together.</span></p></div>
     </div>
     <div id="services">{services_strip()}</div>
   </div>

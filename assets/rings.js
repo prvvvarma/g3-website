@@ -189,6 +189,16 @@
   function start() { if (!running && visible && !reduce && !document.hidden) { running = true; last = 0; requestAnimationFrame(frame); } }
   function stop() { running = false; }
 
+  // scrolling away: the object turns faster, shrinks a little and fades, tying the hero to what follows
+  var lastY = window.scrollY;
+  window.addEventListener('scroll', function () {
+    var y = window.scrollY, dy = y - lastY; lastY = y;
+    if (!reduce) vel += dy * 0.00006;
+    var hero = host.closest('.hero') || host, h = hero.offsetHeight || 1;
+    var p = window.innerWidth > 760 ? Math.max(0, Math.min(1, y / (h * 0.9))) : 0;
+    host.style.transform = p ? 'translateY(' + (p * 40).toFixed(1) + 'px) scale(' + (1 - 0.18 * p).toFixed(3) + ')' : '';
+    host.style.opacity = p ? (1 - 0.7 * p).toFixed(3) : '';
+  }, { passive: true });
   host.classList.add('is-live');
   size();
   window.addEventListener('resize', size);
@@ -212,7 +222,17 @@
   var svc = Array.prototype.slice.call(document.querySelectorAll('[data-ring]'));
   var STEP = 3200, auto = -1, autoTimer = null, resumeTimer = null, paused = false;
   function mark(el) { svc.forEach(function (s) { s.classList.toggle('is-active', s === el); }); }
-  function light(el) { glow = el ? +el.getAttribute('data-ring') : -1; if (reduce) { glowAmt = el ? 0.55 : 0; draw(); } }
+  var cap = document.querySelector('.rings-caption'), capK = cap && cap.querySelector('.rc-k'), capV = cap && cap.querySelector('.rc-v');
+  var capDefault = cap ? [capK.textContent, capV.textContent] : null, capTimer = null;
+  function caption(el) {
+    if (!cap) return;
+    var k = el ? el.querySelector('.label').textContent : capDefault[0];
+    var v = el ? el.getAttribute('data-caption') : capDefault[1];
+    if (capK.textContent === k && capV.textContent === v) return;
+    cap.classList.add('is-swap'); clearTimeout(capTimer);
+    capTimer = setTimeout(function () { capK.textContent = k; capV.textContent = v; cap.classList.remove('is-swap'); }, 220);
+  }
+  function light(el) { glow = el ? +el.getAttribute('data-ring') : -1; caption(el); if (reduce) { glowAmt = el ? 0.55 : 0; draw(); } }
   function next() {
     if (paused || !visible || document.hidden) return;
     auto = (auto + 1) % svc.length;

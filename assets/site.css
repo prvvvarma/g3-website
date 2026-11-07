@@ -304,3 +304,20 @@ fieldset.field { border: 0; margin: 0; padding: 0; }
   .js .hero .service:nth-child(3) { animation-delay: 650ms; }
   .js .hero .service:nth-child(4) { animation-delay: 750ms; }
 }
+
+/* Hero: caption that names the lit ring */
+.hero__plate { position: relative; }
+.rings { transform-origin: 50% 40%; will-change: transform, opacity; }
+.rings-caption { position: absolute; left: 0; bottom: 8px; display: flex; align-items: baseline; gap: 12px; margin: 0; transition: opacity 220ms var(--ease), transform 220ms var(--ease); pointer-events: none; }
+.rings-caption .rc-k { color: var(--signal-ink); }
+.rings-caption .rc-v { font-size: 17px; line-height: 24px; font-weight: 500; letter-spacing: -0.01em; }
+.rings-caption.is-swap { opacity: 0; transform: translateY(4px); }
+
+/* Hero: the promise gets a vermilion underline, drawn once */
+.u { position: relative; white-space: nowrap; }
+.u::after { content: ""; position: absolute; left: 0.02em; right: 0.06em; bottom: 0.02em; height: 0.07em; background: var(--signal); transform-origin: left center; }
+@media (prefers-reduced-motion: no-preference) {
+  .js .u::after { transform: scaleX(0); animation: g3-draw 900ms var(--ease) 1100ms forwards; }
+}
+@keyframes g3-draw { to { transform: scaleX(1); } }
+@media (max-width: 760px) { .rings-caption { position: static; margin-top: 8px; } }
