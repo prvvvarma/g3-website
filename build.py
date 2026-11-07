@@ -439,6 +439,9 @@ careers = head('Careers', 'Work on real AI, blockchain and IoT projects.', 'care
   </div>
   <div class="hero__plate">{rings('A rising spiral, engraved', 'helix')}</div></div></div>
 </section>
+<section class="photo-band" aria-label="Engineers at work">
+  <div class="wrap"><figure class="photo rv"><img src="assets/img/photo-careers.jpg" alt="Two engineers working through code together at a screen" width="1800" height="654" loading="lazy"></figure></div>
+</section>
 <section class="section" aria-labelledby="roles-h">
   <div class="wrap">
     {intro('01 — Open roles', 'Current openings.', ph('[List of open roles from G3]'), 'roles-h')}
