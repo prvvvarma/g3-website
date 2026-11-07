@@ -172,7 +172,7 @@ home = head('Home', "You don't need an AI team. You need AI that works. G3's con
     {intro('03 — Products', 'Ready-made solutions, so you can start faster.', '', 'products-h')}
     <div class="grid"><div class="block rv"><div class="rows">
       <div class="row"><span class="label">01</span><h3 class="title">Retail Media Network</h3><p>Turn in-store screens into a measurable advertising channel.</p></div>
-      <div class="row"><span class="label">02</span><h3 class="title">Companion</h3><p>{ph("[One line from G3: what Companion does and who it's for]")}</p></div>
+      <div class="row"><span class="label">02</span><h3 class="title">Companion</h3><p>An AI assistant that serves your customers, in shops, hotels and restaurants.</p></div>
       <div class="row"><span class="label">03</span><h3 class="title">Marketing Intelligence</h3><p>See which campaigns work and where to spend next.</p></div>
       <div class="row"><span class="label">04</span><h3 class="title">Voice Agents</h3><p>AI that answers calls and resolves common requests.</p></div>
     </div><p style="margin-top:28px"><a class="link" href="products.html">All products</a></p></div></div>
@@ -322,7 +322,7 @@ products = head('Products', 'Ready-made solutions, so you can start faster.', 'p
 <section class="section" aria-label="Products">
   <div class="wrap rv"><div class="rows">
     <div class="row"><span class="label">01</span><h2 class="heading">Retail Media Network</h2><p>Turn in-store screens into a measurable advertising channel, with proof of every play.</p></div>
-    <div class="row"><span class="label">02</span><h2 class="heading">Companion</h2><p>{ph("[One line from G3: what Companion does and who it's for]")}</p></div>
+    <div class="row"><span class="label">02</span><h2 class="heading">Companion</h2><p>An AI assistant for any industry: a sales assistant in a supermarket, room service in a hotel, a waiter in a restaurant.</p></div>
     <div class="row"><span class="label">03</span><h2 class="heading">Marketing Intelligence</h2><p>See which campaigns work and where to spend next.</p></div>
     <div class="row"><span class="label">04</span><h2 class="heading">Voice Agents</h2><p>AI that answers calls and resolves common requests.</p></div>
   </div></div>
