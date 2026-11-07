@@ -33,6 +33,7 @@ def head(title, desc, page):
 <link rel="preload" href="assets/fonts/schibsted-grotesk-latin-500-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="assets/site.css">
 <script src="assets/site.js" defer></script>
+<script src="assets/rings.js" defer></script>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
@@ -102,10 +103,13 @@ def actions(link_text=None, link_href=None):
 def plate(img, alt, left, right=''):
     return f'''<figure class="plate"><img src="assets/img/{img}" alt="{alt}" width="1200" height="1200"></figure>'''
 
+def rings(alt):
+    return f'''<div class="rings" data-rings title="Drag to turn"><img src="assets/img/rings.jpg" alt="{alt}" width="1200" height="1200"></div>'''
+
 def services_strip(exclude=None, margin=True):
     cells = ''.join(
-        f'<a class="service" href="{h}"><span class="label">{n}</span><span class="title">{line}</span><span class="go">Explore {n} →</span></a>'
-        for h, n, line in SERVICES if h != exclude)
+        f'<a class="service" href="{h}" data-ring="{i}"><span class="label">{n}</span><span class="title">{line}</span><span class="go">Explore {n} →</span></a>'
+        for i, (h, n, line) in enumerate(SERVICES) if h != exclude)
     style = '' if margin else ' style="margin-top:0"'
     cls = 'services' + (' services--3' if exclude else '')
     cols = ' style="grid-template-columns:repeat(3,minmax(0,1fr))"' if exclude else style
@@ -133,7 +137,7 @@ home = head('Home', "You don't need an AI team. You need AI that works. G3's con
         <p class="lead">G3's consultants, architects and developers build and run AI, blockchain and IoT for your business.</p>
         {actions('See what we build', '#services')}
       </div>
-      <div class="hero__plate">{plate('rings.jpg', 'Three interlocked rings, engraved', 'Fig. 01 — AI · Blockchain · IoT', 'Take one away, the rest fall apart.')}</div>
+      <div class="hero__plate">{rings('Three interlocked rings, engraved: AI, blockchain and IoT')}</div>
     </div>
     <div id="services">{services_strip()}</div>
   </div>
@@ -327,7 +331,7 @@ about = head('About', 'One team, from first idea to everyday use.', 'about.html'
       <h1 id="hero-h" class="display-l">One team, from first idea to everyday use.</h1>
       <p class="lead">{ph('G3 Technologies is a Dubai-based technology services company. Our consultants, architects and developers build and run AI, blockchain and IoT solutions for organisations across [the UAE or the region: G3 to confirm].')}</p>
     </div>
-    <div class="hero__plate">{plate('rings.jpg', 'Three interlocked rings, engraved', 'Fig. 01 — One team', 'Three disciplines, locked together.')}</div>
+    <div class="hero__plate">{rings('Three interlocked rings, engraved')}</div>
   </div></div>
 </section>
 <section class="section" aria-labelledby="how-h">

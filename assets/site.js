@@ -32,6 +32,18 @@ if (!location.hash) {
     }, { rootMargin: '0px 0px -8% 0px' });
     items.forEach(function (el) { io.observe(el); });
   } else { items.forEach(function (el) { el.classList.add('in'); }); }
+  // Engraved plates tilt gently toward the pointer
+  var still = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  document.querySelectorAll('.plate').forEach(function (fig) {
+    var im = fig.querySelector('img');
+    if (!im || still) return;
+    fig.addEventListener('pointermove', function (e) {
+      var r = fig.getBoundingClientRect();
+      var x = (e.clientX - r.left) / r.width - 0.5, y = (e.clientY - r.top) / r.height - 0.5;
+      im.style.transform = 'rotateY(' + (x * 10).toFixed(2) + 'deg) rotateX(' + (-y * 10).toFixed(2) + 'deg) scale(1.02)';
+    });
+    fig.addEventListener('pointerleave', function () { im.style.transform = ''; });
+  });
   var form = document.querySelector('.form');
   if (form) form.addEventListener('submit', function (e) {
     e.preventDefault();

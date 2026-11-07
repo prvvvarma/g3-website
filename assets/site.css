@@ -224,3 +224,37 @@ fieldset.field { border: 0; margin: 0; padding: 0; }
   .form { padding: 24px 16px; }
   .form .pair { grid-template-columns: 1fr; }
 }
+
+/* ---- Interaction layer ---- */
+/* Live rings: the engraving image stays as the fallback until the canvas takes over */
+.rings { position: relative; aspect-ratio: 1 / 1; touch-action: pan-y; cursor: grab; }
+.rings img { width: 100%; height: 100%; object-fit: cover; }
+.rings.is-live img { visibility: hidden; }
+.rings-canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+.rings.is-drag { cursor: grabbing; }
+
+/* Services light their ring: a quiet vermilion tick on hover */
+.service .label { transition: color 300ms var(--ease); }
+.service:hover .label, .service:focus-visible .label { color: var(--signal-ink); }
+
+/* Engraved plates tilt with the pointer (set by site.js) */
+.plate { perspective: 1200px; }
+.plate img { transition: transform 600ms var(--ease); will-change: transform; }
+
+/* Smooth page-to-page transitions where the browser supports them */
+@view-transition { navigation: auto; }
+::view-transition-old(root), ::view-transition-new(root) { animation-duration: 420ms; animation-timing-function: cubic-bezier(0.2, 0.7, 0.2, 1); }
+.header { view-transition-name: site-header; }
+
+/* Hero entrance */
+@media (prefers-reduced-motion: no-preference) {
+  .js .hero__text > * { animation: g3-rise 900ms var(--ease) both; }
+  .js .hero__text > *:nth-child(2) { animation-delay: 80ms; }
+  .js .hero__text > *:nth-child(3) { animation-delay: 180ms; }
+  .js .hero__text > *:nth-child(4) { animation-delay: 280ms; }
+  .js .hero__plate { animation: g3-fade 1200ms var(--ease) 200ms both; }
+  .btn .dot { transition: transform 300ms var(--ease); }
+  .btn:hover .dot { transform: scale(1.6); }
+}
+@keyframes g3-rise { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+@keyframes g3-fade { from { opacity: 0; } to { opacity: 1; } }
