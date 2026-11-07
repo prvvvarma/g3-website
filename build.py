@@ -190,7 +190,7 @@ home = head('Home', "You don't need an AI team. You need AI that works. G3's con
 <section class="section" aria-labelledby="products-h">
   <div class="wrap">
     {intro('03 — Products', 'Ready-made solutions, so you can start faster.', '', 'products-h')}
-    <div class="grid"><div class="block rv">{cards(PRODUCTS_SHORT)}<p style="margin-top:32px"><a class="link" href="products.html">All products</a></p></div></div>
+    <div class="grid"><div class="block rv">{cards(PRODUCTS_SHORT)}</div></div>
   </div>
 </section>
 
