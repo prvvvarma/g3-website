@@ -154,7 +154,7 @@ home = head('Home', "You don't need an AI team. You need AI that works. G3's con
 
 <section class="section" aria-labelledby="proof-h">
   <div class="wrap">
-    {intro('02 — Proof', 'Who we work with.', ph('[Real client logos, or one short case study, from G3]'), 'proof-h')}
+    {intro('02 — Proof', 'Who we work with.', '', 'proof-h')}
     <div class="grid"><div class="block rv"><div class="logos" aria-label="Sample client logos">
       <span class="logo"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 2a10 10 0 0 1 0 20z" fill="currentColor"/></svg><b style="font-weight:600;letter-spacing:-0.03em;text-transform:lowercase">halcyon</b></span>
       <span class="logo"><svg viewBox="0 0 28 24" aria-hidden="true"><path d="M2 21 9 5l7 16zM12 21l7-16 7 16z" fill="currentColor"/></svg><b style="font-family:var(--mono);font-weight:400;letter-spacing:0.18em;font-size:13px">MERIDIAN</b></span>
