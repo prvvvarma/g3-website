@@ -479,3 +479,13 @@ button.pain { font: inherit; color: inherit; text-align: left; background: none;
 .js .ba.done .w.before { color: #B5AFA3; }
 .band__rings { right: -12%; opacity: 0.16; -webkit-mask-image: radial-gradient(circle, #000 52%, transparent 70%); mask-image: radial-gradient(circle, #000 52%, transparent 70%); }
 @media (min-width: 761px) { .band .btn { position: relative; z-index: 2; } }
+
+/* Photo band */
+.photo-band { padding-top: 96px; }
+.photo { overflow: hidden; }
+.photo img { width: 100%; height: auto; display: block; }
+@media (prefers-reduced-motion: no-preference) {
+  .js .photo img { transform: scale(1.08); transition: transform 1600ms var(--ease); }
+  .js .photo.in img { transform: none; }
+}
+@media (max-width: 760px) { .photo-band { padding-top: 56px; } .photo img { aspect-ratio: 4 / 3; object-fit: cover; object-position: 60% 50%; } }

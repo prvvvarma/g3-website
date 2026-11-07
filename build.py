@@ -384,6 +384,9 @@ about = head('About', 'One team, from first idea to everyday use.', 'about.html'
     <div class="hero__plate">{rings('Three interlocked rings, engraved')}</div>
   </div></div>
 </section>
+<section class="photo-band" aria-label="Our team at work">
+  <div class="wrap"><figure class="photo rv"><img src="assets/img/photo-team.jpg" alt="A G3 architect sketching a cloud system diagram at his desk, laptop open beside him" width="1536" height="624" loading="lazy"></figure></div>
+</section>
 <section class="section" aria-labelledby="how-h">
   <div class="wrap">
     {intro('01 — How we work', 'Discover, design, build, secure, run.', '', 'how-h')}
