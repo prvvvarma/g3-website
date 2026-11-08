@@ -64,7 +64,11 @@ h1, h2, p { margin: 0; }
 .place { fill: var(--text); }
 .route { fill: none; stroke: #4A4D55; stroke-width: 2.5; stroke-linecap: round; stroke-dasharray: 2 7; }
 .route-done { fill: none; stroke: var(--text); stroke-width: 2.5; stroke-linecap: round; }
-.jam { fill: none; stroke: var(--amber); stroke-width: 7; stroke-linecap: round; opacity: 0; transition: opacity 600ms var(--ease); }
+.jam { display: none; }
+.hub rect { fill: var(--ink); stroke: var(--amber); stroke-width: 2; }
+.hub text { font-family: var(--mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; fill: var(--amber); }
+.hub { opacity: 0; transition: opacity 600ms var(--ease); }
+.s3 .hub, .s4 .hub, .s5 .hub, .s6 .hub { opacity: 1; }
 .reroute { fill: none; stroke: var(--amber); stroke-width: 2.5; stroke-linecap: round; stroke-dasharray: var(--L, 2000); stroke-dashoffset: var(--L, 2000); transition: stroke-dashoffset 1600ms var(--ease); }
 .pin { fill: var(--ink); stroke: var(--text); stroke-width: 2; }
 .truck-halo { fill: var(--amber); opacity: 0.18; transform-box: fill-box; transform-origin: center; animation: halo 2s ease-out infinite; }
@@ -92,7 +96,7 @@ h1, h2, p { margin: 0; }
 .s3 .sensor .fc { opacity: 1; }
 .sensor .note { margin-top: 8px; color: var(--muted); font-size: 14px; line-height: 20px; }
 .s3 .sensor .note { color: var(--amber); }
-.ai { left: 6%; bottom: 14%; width: 300px; border-color: rgba(255, 181, 71, 0.5); }
+.ai { left: 6%; top: 28%; width: 300px; border-color: rgba(255, 181, 71, 0.5); }
 .ai p { font-size: 15px; line-height: 22px; color: var(--text); margin-top: 8px; }
 .ai .act { margin-top: 12px; color: var(--amber); font-family: var(--mono); font-size: 12px; letter-spacing: 0.06em; }
 .receipt { right: 6%; bottom: 12%; width: 300px; }
@@ -143,7 +147,7 @@ h1, h2, p { margin: 0; }
   .sensor { width: 170px; right: 4%; top: 6%; }
   .sensor .temp { font-size: 28px; line-height: 32px; }
   .sensor .note { display: none; }
-  .ai { width: 210px; left: 4%; bottom: 6%; }
+  .ai { width: 210px; left: 4%; top: auto; bottom: 6%; }
   .ai p { font-size: 13px; line-height: 18px; }
   .receipt { width: 220px; right: 4%; bottom: 6%; }
   .receipt dl { font-size: 12px; line-height: 17px; }
@@ -183,8 +187,8 @@ h1, h2, p { margin: 0; }
     </section>
     <section class="ch" data-step="3">
       <span class="mono tag"><i></i><b>Thinks</b> · AI</span>
-      <h2>Traffic builds ahead. The AI sees the problem before it happens.</h2>
-      <p>It predicts the cargo will get too warm and finds a faster route.</p>
+      <h2>The fridge starts to fail. The AI notices before anyone else.</h2>
+      <p>Google Maps knows the road. Only G3 knows what's happening inside the truck.</p>
     </section>
     <section class="ch" data-step="4">
       <span class="mono tag"><i></i><b>Proves</b> · Blockchain</span>
@@ -218,6 +222,7 @@ h1, h2, p { margin: 0; }
         <circle class="pin" cx="840" cy="400" r="7"></circle>
         <text class="place" x="70" y="540">Jebel Ali Port</text>
         <text class="place" x="740" y="372">Healthcare City</text>
+        <g class="hub" id="hub"><rect width="12" height="12" rx="1"></rect><text x="-20" y="32">Cold-storage hub</text></g>
         <g class="truck-g" id="truck"><circle class="truck-halo" r="10"></circle><circle class="truck" r="8"></circle></g>
         <g class="platform"><rect x="40" y="150" width="920" height="520" rx="2"></rect><text x="56" y="176">ONE SECURE PLATFORM · CLOUD · ENCRYPTED · MONITORED</text></g>
       </g>
@@ -231,15 +236,16 @@ h1, h2, p { margin: 0; }
     </div>
     <div class="panel ai" id="ai">
       <span class="mono" style="color:var(--amber)">AI · prediction</span>
-      <p>Traffic ahead adds 38 minutes. Cargo would reach <b>8.4°C</b> before arrival.</p>
-      <div class="act">→ Rerouting via inland road · saves 31 min</div>
+      <p>Cooling unit is weakening. At this rate the cargo passes <b>8°C</b> in 22 minutes, before it reaches the hospital.</p>
+      <div class="act">→ Diverting to cold-storage hub, 4 min away · swap to a cooled van</div>
     </div>
     <div class="panel receipt" id="receipt">
       <span class="mono">Proof of delivery · sealed</span>
       <dl>
         <dt>Shipment</dt><dd>DXB-0612</dd>
         <dt>Delivered</dt><dd>06:47</dd>
-        <dt>Temperature</dt><dd>3.9 – 5.6°C</dd>
+        <dt>Temperature</dt><dd>3.9 – 7.1°C</dd>
+        <dt>Handover</dt><dd>Cold hub · 06:22</dd>
         <dt>Readings</dt><dd>2,820</dd>
         <dt>Record</dt><dd class="hash">0x8f3a…c21e</dd>
       </dl>
@@ -299,6 +305,7 @@ h1, h2, p { margin: 0; }
   var alt = document.getElementById('r-alt');
   alt.setAttribute('d', 'M' + B.x + ',' + B.y + ' C' + (B.x + 90) + ',' + (B.y + 120) + ' 560,610 690,560 S820,460 840,400');
   var AL = alt.getTotalLength(); alt.style.setProperty('--L', AL.toFixed(1));
+  var H = alt.getPointAtLength(AL * 0.3); document.getElementById('hub').setAttribute('transform', 'translate(' + (H.x - 6).toFixed(1) + ',' + (H.y - 6).toFixed(1) + ')');
   var done = document.getElementById('r-done'), truck = document.getElementById('truck');
 
   // truck position: progress 0..1 on main up to BR, then along the reroute
@@ -325,7 +332,7 @@ h1, h2, p { margin: 0; }
   fc.setAttribute('points', '215,' + yOf(vals[vals.length - 1]) + ' 220,' + yOf(8.4));
   var live = function (on) {
     clearInterval(timer); if (!on || reduce) return;
-    timer = setInterval(function () { t += (Math.random() - 0.48) * 0.18; t = Math.min(5.6, Math.max(3.9, t)); vals.push(t); vals.shift(); drawSpark(); tempEl.textContent = t.toFixed(1); fc.setAttribute('points', '215,' + yOf(t) + ' 220,' + yOf(8.4)); }, 900);
+    timer = setInterval(function () { t += (Math.random() - 0.48) * 0.18 + (stage.classList.contains('s3') ? 0.16 : 0); t = Math.min(stage.classList.contains('s3') ? 7.4 : 5.6, Math.max(3.9, t)); vals.push(t); vals.shift(); drawSpark(); tempEl.textContent = t.toFixed(1); fc.setAttribute('points', '215,' + yOf(t) + ' 220,' + yOf(8.4)); }, 900);
   };
   var times = ['06:00', '06:00', '06:09', '06:16', '06:47', '06:47', '06:47'];
 
@@ -336,7 +343,7 @@ h1, h2, p { margin: 0; }
     panels.sensor.classList.toggle('show', s >= 2 && s <= 4);
     panels.ai.classList.toggle('show', s === 3);
     panels.receipt.classList.toggle('show', s >= 4);
-    note.textContent = s === 3 ? 'Forecast · 8.4°C on current route' : (s >= 4 ? 'Delivered · stayed in range' : 'Within range · 2–8°C');
+    note.textContent = s === 3 ? 'Rising · 8°C predicted in 22 min' : (s >= 4 ? 'Delivered · stayed in range' : 'Within range · 2–8°C');
     live(s >= 2 && s <= 3);
     moveTo([0, 0, 0.2, BR, 1, 1, 1][s]);
   };
