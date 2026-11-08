@@ -1,0 +1,373 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>G3 Technologies · One delivery (prototype)</title>
+<meta name="description" content="Follow one delivery across Dubai to see how G3 brings IoT, AI, blockchain and secure cloud together.">
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<style>
+@font-face { font-family: "Schibsted Grotesk"; src: url(assets/fonts/schibsted-grotesk-latin-400-normal.woff2) format("woff2"); font-weight: 400; font-display: swap; }
+@font-face { font-family: "Schibsted Grotesk"; src: url(assets/fonts/schibsted-grotesk-latin-500-normal.woff2) format("woff2"); font-weight: 500; font-display: swap; }
+@font-face { font-family: "Schibsted Grotesk"; src: url(assets/fonts/schibsted-grotesk-latin-600-normal.woff2) format("woff2"); font-weight: 600; font-display: swap; }
+@font-face { font-family: "Spline Sans Mono"; src: url(assets/fonts/spline-sans-mono-latin-400-normal.woff2) format("woff2"); font-weight: 400; font-display: swap; }
+:root {
+  --ink: #0B0C0E; --panel: #131519; --line: #24272D; --text: #EDEAE3; --muted: #9A968D; --dim: #5C5A55;
+  --amber: #FFB547; --amber-soft: rgba(255, 181, 71, 0.14); --ok: #E9E5DC;
+  --sans: "Schibsted Grotesk", system-ui, sans-serif; --mono: "Spline Sans Mono", ui-monospace, monospace;
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--ink); color: var(--text); font-family: var(--sans); font-size: 16px; line-height: 26px; -webkit-font-smoothing: antialiased; }
+a { color: inherit; }
+h1, h2, p { margin: 0; }
+.mono { font-family: var(--mono); font-size: 11px; line-height: 16px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+:focus-visible { outline: 2px solid var(--amber); outline-offset: 3px; }
+
+/* Header */
+.top { position: fixed; inset: 0 0 auto 0; z-index: 20; display: flex; align-items: center; gap: 24px; height: 76px; padding: 0 48px; background: linear-gradient(var(--ink) 40%, rgba(11,12,14,0)); }
+.brand { display: flex; align-items: center; gap: 12px; text-decoration: none; font-size: 20px; font-weight: 600; letter-spacing: -0.03em; margin-right: auto; }
+.brand img { width: 30px; height: 30px; filter: invert(1); }
+.proto { border: 1px solid var(--line); padding: 6px 10px; }
+.btn { display: inline-flex; align-items: center; gap: 12px; height: 52px; padding: 0 26px; background: var(--amber); color: var(--ink); text-decoration: none; font-weight: 600; font-size: 16px; transition: background-color 300ms var(--ease); }
+.btn:hover { background: #FFC873; }
+.btn--sm { height: 42px; padding: 0 18px; font-size: 15px; }
+.btn--ghost { background: transparent; color: var(--text); border: 1px solid var(--line); }
+.btn--ghost:hover { background: var(--panel); }
+
+/* Stage: sticky map + scrolling chapters */
+.stage { position: relative; display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); }
+.chapters { position: relative; z-index: 2; padding: 0 48px; }
+.ch { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; gap: 22px; max-width: 520px; padding: 96px 0; }
+.ch .mono b { color: var(--amber); font-weight: 400; }
+.ch h1 { font-size: 76px; line-height: 76px; font-weight: 500; letter-spacing: -0.045em; }
+.ch h2 { font-size: 44px; line-height: 48px; font-weight: 500; letter-spacing: -0.03em; }
+.ch p { font-size: 19px; line-height: 29px; color: var(--muted); max-width: 440px; }
+.ch .actions { display: flex; flex-wrap: wrap; gap: 16px; align-items: center; margin-top: 8px; }
+.scroll-cue { display: inline-flex; align-items: center; gap: 10px; color: var(--muted); text-decoration: none; font-size: 15px; }
+.scroll-cue span { display: inline-block; animation: cue 1.8s var(--ease) infinite; }
+@keyframes cue { 50% { transform: translateY(5px); } }
+.ch { opacity: 0.25; transition: opacity 500ms var(--ease); }
+.ch.on { opacity: 1; }
+.tag { display: inline-flex; align-items: center; gap: 10px; }
+.tag i { width: 8px; height: 8px; border-radius: 50%; background: var(--amber); box-shadow: 0 0 0 4px var(--amber-soft); }
+
+.mapwrap { position: sticky; top: 0; height: 100vh; overflow: hidden; }
+#map { position: absolute; inset: 0; width: 100%; height: 100%; }
+#map .world { transition: transform 1400ms var(--ease); transform-origin: 560px 380px; }
+.zoom #map .world { transform: scale(0.82); }
+.dotland circle { fill: #3A3D44; }
+.coast { fill: none; stroke: #2E3137; stroke-width: 1.5; }
+.sea-label, .place { font-family: var(--mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; fill: var(--muted); }
+.place { fill: var(--text); }
+.route { fill: none; stroke: #4A4D55; stroke-width: 2.5; stroke-linecap: round; stroke-dasharray: 2 7; }
+.route-done { fill: none; stroke: var(--text); stroke-width: 2.5; stroke-linecap: round; }
+.jam { fill: none; stroke: var(--amber); stroke-width: 7; stroke-linecap: round; opacity: 0; transition: opacity 600ms var(--ease); }
+.reroute { fill: none; stroke: var(--amber); stroke-width: 2.5; stroke-linecap: round; stroke-dasharray: var(--L, 2000); stroke-dashoffset: var(--L, 2000); transition: stroke-dashoffset 1600ms var(--ease); }
+.pin { fill: var(--ink); stroke: var(--text); stroke-width: 2; }
+.truck-halo { fill: var(--amber); opacity: 0.18; transform-box: fill-box; transform-origin: center; animation: halo 2s ease-out infinite; }
+@keyframes halo { from { transform: scale(0.6); opacity: 0.35; } to { transform: scale(2.4); opacity: 0; } }
+.truck { fill: var(--amber); }
+.truck-g { opacity: 0; transition: opacity 500ms var(--ease); }
+.s1 .truck-g, .s2 .truck-g, .s3 .truck-g, .s4 .truck-g, .s5 .truck-g, .s6 .truck-g { opacity: 1; }
+.s3 .jam { opacity: 0.9; } .s4 .jam { opacity: 0.25; }
+.s3 .reroute, .s4 .reroute, .s5 .reroute, .s6 .reroute { stroke-dashoffset: 0; }
+.platform rect { fill: none; stroke: var(--amber); stroke-width: 1.5; stroke-dasharray: 6 8; opacity: 0; transition: opacity 900ms var(--ease) 500ms; }
+.platform text { opacity: 0; transition: opacity 900ms var(--ease) 700ms; }
+.zoom .platform rect, .zoom .platform text { opacity: 1; }
+.platform text { font-family: var(--mono); font-size: 12px; letter-spacing: 0.1em; fill: var(--amber); }
+
+/* Floating panels on the map */
+.panel { position: absolute; background: rgba(19, 21, 25, 0.92); border: 1px solid var(--line); padding: 18px 20px; backdrop-filter: blur(6px); opacity: 0; transform: translateY(12px); transition: opacity 500ms var(--ease), transform 500ms var(--ease); pointer-events: none; }
+.panel.show { opacity: 1; transform: none; }
+.sensor { right: 6%; top: 14%; width: 260px; }
+.sensor .temp { font-size: 44px; line-height: 48px; font-weight: 500; letter-spacing: -0.03em; margin: 8px 0 6px; font-variant-numeric: tabular-nums; }
+.sensor .temp small { font-size: 20px; color: var(--muted); }
+.sensor svg { display: block; width: 100%; height: 44px; }
+.sensor .spark { fill: none; stroke: var(--text); stroke-width: 1.5; }
+.sensor .limit { stroke: var(--amber); stroke-width: 1; stroke-dasharray: 3 4; }
+.sensor .fc { fill: none; stroke: var(--amber); stroke-width: 1.5; stroke-dasharray: 3 3; opacity: 0; transition: opacity 400ms; }
+.s3 .sensor .fc { opacity: 1; }
+.sensor .note { margin-top: 8px; color: var(--muted); font-size: 14px; line-height: 20px; }
+.s3 .sensor .note { color: var(--amber); }
+.ai { left: 6%; bottom: 14%; width: 300px; border-color: rgba(255, 181, 71, 0.5); }
+.ai p { font-size: 15px; line-height: 22px; color: var(--text); margin-top: 8px; }
+.ai .act { margin-top: 12px; color: var(--amber); font-family: var(--mono); font-size: 12px; letter-spacing: 0.06em; }
+.receipt { right: 6%; bottom: 12%; width: 300px; }
+.receipt dl { margin: 12px 0 0; display: grid; grid-template-columns: auto 1fr; gap: 6px 16px; font-size: 14px; line-height: 20px; }
+.receipt dt { color: var(--muted); }
+.receipt dd { margin: 0; text-align: right; font-variant-numeric: tabular-nums; }
+.receipt .hash { font-family: var(--mono); font-size: 12px; }
+.receipt .seal { display: flex; align-items: center; gap: 10px; margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--line); color: var(--amber); font-family: var(--mono); font-size: 12px; letter-spacing: 0.08em; }
+.receipt .seal svg { width: 18px; height: 18px; }
+.clock { position: absolute; left: 6%; top: 14%; font-family: var(--mono); font-size: 13px; letter-spacing: 0.08em; color: var(--muted); opacity: 0; transition: opacity 400ms; }
+.clock b { display: block; font-family: var(--sans); font-size: 36px; line-height: 40px; color: var(--text); font-weight: 500; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
+.s1 .clock, .s2 .clock, .s3 .clock, .s4 .clock { opacity: 1; }
+
+/* After the story */
+.after { position: relative; z-index: 3; background: var(--ink); border-top: 1px solid var(--line); }
+.wrap { max-width: 1440px; margin: 0 auto; padding: 0 48px; }
+.yours { padding: 128px 0 112px; }
+.yours h2 { font-size: 56px; line-height: 60px; font-weight: 500; letter-spacing: -0.04em; margin: 16px 0 40px; }
+.tabs { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 40px; }
+.tabs button { height: 46px; padding: 0 20px; background: transparent; border: 1px solid var(--line); color: var(--muted); font: inherit; font-size: 16px; font-weight: 500; cursor: pointer; transition: all 300ms var(--ease); }
+.tabs button[aria-selected="true"] { background: var(--text); color: var(--ink); border-color: var(--text); }
+.tabs button[aria-selected="false"]:hover { color: var(--text); border-color: var(--muted); }
+.flow { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 24px; }
+.step { padding-top: 22px; border-top: 1px solid var(--line); display: flex; flex-direction: column; gap: 10px; }
+.step .mono b { color: var(--amber); font-weight: 400; }
+.step p { font-size: 20px; line-height: 28px; transition: opacity 250ms var(--ease); }
+.flow.swap p { opacity: 0; }
+.close { padding: 120px 0; border-top: 1px solid var(--line); display: flex; justify-content: space-between; align-items: flex-end; gap: 40px; flex-wrap: wrap; }
+.close h2 { font-size: 72px; line-height: 72px; font-weight: 500; letter-spacing: -0.045em; max-width: 880px; }
+.close h2 em { font-style: normal; color: var(--amber); }
+.foot { padding: 32px 0 48px; border-top: 1px solid var(--line); display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+
+@media (max-width: 900px) {
+  .top { padding: 0 16px; height: 64px; background: var(--ink); }
+  .top .proto { display: none; }
+  .stage { display: flex; flex-direction: column; }
+  .mapwrap { order: -1; z-index: 5; }
+  .chapters { z-index: 1; }
+  .mapwrap { position: sticky; top: 64px; height: 46vh; z-index: 5; border-bottom: 1px solid var(--line); background: var(--ink); }
+  .chapters { padding: 0 16px; }
+  .ch { min-height: 50vh; padding: 32px 0; justify-content: center; }
+  .panel .mono { font-size: 9px; line-height: 13px; }
+  .ch:first-child { min-height: auto; padding-top: 40px; }
+  .ch h1 { font-size: 44px; line-height: 46px; }
+  .ch h2 { font-size: 30px; line-height: 34px; }
+  .ch p { font-size: 17px; line-height: 26px; }
+  .panel { padding: 12px 14px; }
+  .sensor { width: 170px; right: 4%; top: 6%; }
+  .sensor .temp { font-size: 28px; line-height: 32px; }
+  .sensor .note { display: none; }
+  .ai { width: 210px; left: 4%; bottom: 6%; }
+  .ai p { font-size: 13px; line-height: 18px; }
+  .receipt { width: 220px; right: 4%; bottom: 6%; }
+  .receipt dl { font-size: 12px; line-height: 17px; }
+  .clock { left: 4%; top: 6%; } .clock b { font-size: 24px; line-height: 28px; }
+  .wrap { padding: 0 16px; }
+  .yours { padding: 88px 0; } .yours h2 { font-size: 34px; line-height: 38px; }
+  .flow { grid-template-columns: 1fr; gap: 0; } .step { padding: 18px 0; }
+  .close { padding: 88px 0; } .close h2 { font-size: 40px; line-height: 44px; }
+}
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
+</style>
+</head>
+<body>
+<header class="top">
+  <a class="brand" href="index.html"><img src="assets/img/g3-mark.svg" alt="" width="30" height="30">G3 Technologies</a>
+  <span class="mono proto">Prototype · story homepage</span>
+  <a class="btn btn--sm" href="contact.html">Book a call</a>
+</header>
+
+<main id="stage" class="stage s0">
+  <div class="chapters">
+    <section class="ch on" data-step="0">
+      <span class="mono">G3 Technologies · Dubai</span>
+      <h1>You don't need an AI team. You need AI that works.</h1>
+      <p>Don't take our word for it. Follow one delivery across Dubai.</p>
+      <div class="actions"><a class="btn" href="contact.html">Book a call</a><a class="scroll-cue" href="#c1">Follow the delivery <span aria-hidden="true">↓</span></a></div>
+    </section>
+    <section class="ch" data-step="1" id="c1">
+      <span class="mono">06:00 · Jebel Ali Port</span>
+      <h2>A refrigerated truck of medicine leaves the port.</h2>
+      <p>It has to stay between 2 and 8°C all the way to the hospital.</p>
+    </section>
+    <section class="ch" data-step="2">
+      <span class="mono tag"><i></i><b>Senses</b> · IoT</span>
+      <h2>A sensor reports the temperature every second.</h2>
+      <p>No more guessing what happened inside the truck.</p>
+    </section>
+    <section class="ch" data-step="3">
+      <span class="mono tag"><i></i><b>Thinks</b> · AI</span>
+      <h2>Traffic builds ahead. The AI sees the problem before it happens.</h2>
+      <p>It predicts the cargo will get too warm and finds a faster route.</p>
+    </section>
+    <section class="ch" data-step="4">
+      <span class="mono tag"><i></i><b>Proves</b> · Blockchain</span>
+      <h2>Delivered. Every reading is sealed into one record.</h2>
+      <p>The hospital, the supplier and the insurer all see the same proof. Nobody argues.</p>
+    </section>
+    <section class="ch" data-step="5">
+      <span class="mono tag"><i></i><b>Holds it together</b> · Cloud &amp; Security</span>
+      <h2>All of it ran on one secure platform.</h2>
+      <p>Built by G3, and run by G3 every day after.</p>
+    </section>
+    <section class="ch" data-step="6">
+      <span class="mono">The result</span>
+      <h2>On time. Proof recorded. Nobody hired a team.</h2>
+      <p>That's what we do: we build it, then we run it with you.</p>
+      <div class="actions"><a class="btn" href="contact.html">Book a call</a></div>
+    </section>
+  </div>
+
+  <div class="mapwrap" aria-hidden="true">
+    <svg id="map" viewBox="0 0 1000 760" preserveAspectRatio="xMidYMid meet">
+      <g class="world">
+        <path class="coast" d="M-20,470 C180,430 360,350 540,280 S860,120 1040,60"></path>
+        <text class="sea-label" x="150" y="250">Arabian Gulf</text>
+        <g class="dotland" id="dots"></g>
+        <path id="r-main" class="route" d="M120,505 C260,520 380,480 500,470 S700,440 840,400"></path>
+        <path id="r-done" class="route-done" d="" ></path>
+        <path id="r-jam" class="jam" d="" ></path>
+        <path id="r-alt" class="reroute" d="" ></path>
+        <circle class="pin" cx="120" cy="505" r="7"></circle>
+        <circle class="pin" cx="840" cy="400" r="7"></circle>
+        <text class="place" x="70" y="540">Jebel Ali Port</text>
+        <text class="place" x="740" y="372">Healthcare City</text>
+        <g class="truck-g" id="truck"><circle class="truck-halo" r="10"></circle><circle class="truck" r="8"></circle></g>
+        <g class="platform"><rect x="40" y="150" width="920" height="520" rx="2"></rect><text x="56" y="176">ONE SECURE PLATFORM · CLOUD · ENCRYPTED · MONITORED</text></g>
+      </g>
+    </svg>
+    <div class="clock"><span>Dubai</span><b id="clock">06:00</b></div>
+    <div class="panel sensor" id="sensor">
+      <span class="mono">Cargo temperature · live</span>
+      <div class="temp"><span id="temp">4.2</span><small>°C</small></div>
+      <svg viewBox="0 0 220 44" preserveAspectRatio="none"><line class="limit" x1="0" y1="6" x2="220" y2="6"></line><polyline class="spark" id="spark" points=""></polyline><polyline class="fc" id="fc" points=""></polyline></svg>
+      <p class="note" id="note">Within range · 2–8°C</p>
+    </div>
+    <div class="panel ai" id="ai">
+      <span class="mono" style="color:var(--amber)">AI · prediction</span>
+      <p>Traffic ahead adds 38 minutes. Cargo would reach <b>8.4°C</b> before arrival.</p>
+      <div class="act">→ Rerouting via inland road · saves 31 min</div>
+    </div>
+    <div class="panel receipt" id="receipt">
+      <span class="mono">Proof of delivery · sealed</span>
+      <dl>
+        <dt>Shipment</dt><dd>DXB-0612</dd>
+        <dt>Delivered</dt><dd>06:47</dd>
+        <dt>Temperature</dt><dd>3.9 – 5.6°C</dd>
+        <dt>Readings</dt><dd>2,820</dd>
+        <dt>Record</dt><dd class="hash">0x8f3a…c21e</dd>
+      </dl>
+      <div class="seal"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="10" cy="10" r="8"></circle><path d="M6 10.5l2.6 2.5L14 7.5"></path></svg>Verified · cannot be changed</div>
+    </div>
+  </div>
+</main>
+
+<div class="after">
+  <section class="wrap yours" aria-labelledby="yours-h">
+    <span class="mono">An example story. Now make it yours.</span>
+    <h2 id="yours-h">This could be your…</h2>
+    <div class="tabs" role="tablist" aria-label="Choose an industry">
+      <button role="tab" aria-selected="true" data-k="hospital">Hospital</button>
+      <button role="tab" aria-selected="false" data-k="mall">Mall</button>
+      <button role="tab" aria-selected="false" data-k="factory">Factory</button>
+      <button role="tab" aria-selected="false" data-k="farm">Farm</button>
+    </div>
+    <div class="flow" id="flow">
+      <div class="step"><span class="mono"><b>Senses</b> · IoT</span><p></p></div>
+      <div class="step"><span class="mono"><b>Thinks</b> · AI</span><p></p></div>
+      <div class="step"><span class="mono"><b>Proves</b> · Blockchain</span><p></p></div>
+      <div class="step"><span class="mono"><b>Holds it together</b> · Cloud &amp; Security</span><p></p></div>
+    </div>
+  </section>
+  <section class="wrap close">
+    <h2>Your tech team, <em>without the hiring.</em></h2>
+    <a class="btn" href="contact.html">Book a call</a>
+  </section>
+  <footer class="wrap foot"><span class="mono">© 2026 G3 Technologies · Dubai</span><a class="mono" href="index.html">See the current homepage →</a></footer>
+</div>
+
+<script>
+(function () {
+  var stage = document.getElementById('stage');
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var NS = 'http://www.w3.org/2000/svg';
+
+  // land dots below the coastline
+  var coastY = function (x) { var t = (x + 20) / 1060; return 470 - 410 * (t * t * (3 - 2 * t)) - 40 * Math.sin(t * Math.PI); };
+  var dots = document.getElementById('dots'), seed = 3;
+  var rnd = function () { seed = (seed * 16807) % 2147483647; return seed / 2147483647; };
+  for (var x = 0; x <= 1000; x += 16) for (var y = 40; y <= 760; y += 16) {
+    if (y < coastY(x) + 18) continue;
+    var c = document.createElementNS(NS, 'circle');
+    c.setAttribute('cx', x + (rnd() - 0.5) * 4); c.setAttribute('cy', y + (rnd() - 0.5) * 4);
+    c.setAttribute('r', rnd() < 0.08 ? 1.9 : 1.2); c.setAttribute('opacity', (0.35 + rnd() * 0.6).toFixed(2));
+    dots.appendChild(c);
+  }
+
+  // routes
+  var main = document.getElementById('r-main'), L = main.getTotalLength();
+  var at = function (p, t) { return p.getPointAtLength(t * p.getTotalLength()); };
+  var sub = function (p, a, b) { var s = '', n = 40; for (var i = 0; i <= n; i++) { var q = at(p, a + (b - a) * i / n); s += (i ? 'L' : 'M') + q.x.toFixed(1) + ',' + q.y.toFixed(1); } return s; };
+  var BR = 0.34, B = at(main, BR);
+  document.getElementById('r-jam').setAttribute('d', sub(main, 0.48, 0.72));
+  var alt = document.getElementById('r-alt');
+  alt.setAttribute('d', 'M' + B.x + ',' + B.y + ' C' + (B.x + 90) + ',' + (B.y + 120) + ' 560,610 690,560 S820,460 840,400');
+  var AL = alt.getTotalLength(); alt.style.setProperty('--L', AL.toFixed(1));
+  var done = document.getElementById('r-done'), truck = document.getElementById('truck');
+
+  // truck position: progress 0..1 on main up to BR, then along the reroute
+  var cur = 0, target = 0, raf = null;
+  var place = function (u) {
+    var pt, d;
+    if (u <= BR) { pt = at(main, u); d = u > 0.002 ? sub(main, 0, u) : ''; }
+    else { var v = (u - BR) / (1 - BR); pt = alt.getPointAtLength(v * AL); d = sub(main, 0, BR) + ' M' + B.x + ',' + B.y; var n = 30; for (var i = 1; i <= n; i++) { var q = alt.getPointAtLength(v * AL * i / n); d += 'L' + q.x.toFixed(1) + ',' + q.y.toFixed(1); } }
+    truck.setAttribute('transform', 'translate(' + pt.x.toFixed(1) + ',' + pt.y.toFixed(1) + ')');
+    done.setAttribute('d', d);
+  };
+  var tick = function () { cur += (target - cur) * (reduce ? 1 : 0.06); place(cur); if (Math.abs(target - cur) > 0.001) raf = requestAnimationFrame(tick); else { cur = target; place(cur); raf = null; } };
+  var moveTo = function (u) { target = u; if (!raf) raf = requestAnimationFrame(tick); };
+  place(0);
+
+  // clock and sensor
+  var clockEl = document.getElementById('clock'), tempEl = document.getElementById('temp'), note = document.getElementById('note');
+  var spark = document.getElementById('spark'), fc = document.getElementById('fc');
+  var vals = [], t = 4.2, timer = null;
+  for (var i = 0; i < 44; i++) { t += (Math.random() - 0.5) * 0.25; t = Math.min(5.2, Math.max(3.8, t)); vals.push(t); }
+  var yOf = function (v) { return (44 - (v - 2) / 6.5 * 38).toFixed(1); };
+  var drawSpark = function () { spark.setAttribute('points', vals.map(function (v, i) { return (i * 5) + ',' + yOf(v); }).join(' ')); };
+  drawSpark();
+  fc.setAttribute('points', '215,' + yOf(vals[vals.length - 1]) + ' 220,' + yOf(8.4));
+  var live = function (on) {
+    clearInterval(timer); if (!on || reduce) return;
+    timer = setInterval(function () { t += (Math.random() - 0.48) * 0.18; t = Math.min(5.6, Math.max(3.9, t)); vals.push(t); vals.shift(); drawSpark(); tempEl.textContent = t.toFixed(1); fc.setAttribute('points', '215,' + yOf(t) + ' 220,' + yOf(8.4)); }, 900);
+  };
+  var times = ['06:00', '06:00', '06:09', '06:16', '06:47', '06:47', '06:47'];
+
+  var panels = { sensor: document.getElementById('sensor'), ai: document.getElementById('ai'), receipt: document.getElementById('receipt') };
+  var setStep = function (s) {
+    stage.className = 'stage s' + s + (s >= 5 ? ' zoom' : '');
+    clockEl.textContent = times[s];
+    panels.sensor.classList.toggle('show', s >= 2 && s <= 4);
+    panels.ai.classList.toggle('show', s === 3);
+    panels.receipt.classList.toggle('show', s >= 4);
+    note.textContent = s === 3 ? 'Forecast · 8.4°C on current route' : (s >= 4 ? 'Delivered · stayed in range' : 'Within range · 2–8°C');
+    live(s >= 2 && s <= 3);
+    moveTo([0, 0, 0.2, BR, 1, 1, 1][s]);
+  };
+
+  var chs = Array.prototype.slice.call(document.querySelectorAll('.ch'));
+  var pick = function () {
+    var mid = window.innerHeight * (window.innerWidth <= 900 ? 0.72 : 0.5), best = 0, bd = 1e9;
+    chs.forEach(function (c, i) { var r = c.getBoundingClientRect(), d = Math.abs((r.top + r.bottom) / 2 - mid); if (d < bd) { bd = d; best = i; } });
+    chs.forEach(function (c, i) { c.classList.toggle('on', i === best); });
+    var s = +chs[best].getAttribute('data-step');
+    if (s !== pick.last) { pick.last = s; setStep(s); }
+  };
+  window.addEventListener('scroll', pick, { passive: true }); window.addEventListener('resize', pick); pick();
+
+  // industry switcher
+  var STORIES = {
+    hospital: ['Fridges and wards report temperature and occupancy live.', 'Predicts which beds free up next and flags failing equipment early.', 'Every medicine handover is recorded and can be audited.', 'Patient data stays in the UAE, encrypted and monitored.'],
+    mall: ['Footfall sensors count visitors at every entrance and floor.', 'Forecasts busy hours and tells stores when to staff up.', 'Screen ads are proven to have played, so brands pay with confidence.', 'Every store and screen on one secure system.'],
+    factory: ['Machines report vibration, heat and output every second.', 'Spots a failing part days before it breaks.', 'Each batch carries a record of how and where it was made.', 'Plant systems run on one platform, protected from attack.'],
+    farm: ['Soil and water sensors cover every field.', 'Decides when and where to irrigate, and how much.', 'Produce carries proof of origin from field to shelf.', 'Runs on secure cloud, even across remote sites.']
+  };
+  var flow = document.getElementById('flow'), ps = flow.querySelectorAll('p'), tabs = document.querySelectorAll('.tabs button');
+  var show = function (k, instant) {
+    tabs.forEach(function (b) { b.setAttribute('aria-selected', b.getAttribute('data-k') === k ? 'true' : 'false'); });
+    var fill = function () { ps.forEach(function (p, i) { p.textContent = STORIES[k][i]; }); flow.classList.remove('swap'); };
+    if (instant) return fill();
+    flow.classList.add('swap'); setTimeout(fill, 220);
+  };
+  tabs.forEach(function (b) { b.addEventListener('click', function () { show(b.getAttribute('data-k')); }); });
+  show('hospital', true);
+})();
+</script>
+</body>
+</html>
