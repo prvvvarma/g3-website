@@ -466,6 +466,9 @@ contact = head('Contact', 'Book a call with our team.', 'contact.html') + header
   </div>
   <div class="hero__plate">{rings('Two linked rings, engraved', 'pair')}</div></div></div>
 </section>
+<section class="photo-band" aria-label="Our office">
+  <div class="wrap"><figure class="photo rv"><img src="assets/img/photo-office.jpg" alt="A calm office reception with a stone desk, lounge chairs and a meeting in progress behind glass" width="1800" height="792" loading="lazy"></figure></div>
+</section>
 <section class="section" aria-label="Contact form">
   <div class="wrap grid">
     <div class="contact rv" style="margin-top:0">
