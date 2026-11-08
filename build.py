@@ -83,7 +83,7 @@ def footer():
     <div class="footer__brand"><img src="assets/img/g3-mark.svg" alt="" width="48" height="48"><span class="title">G3 Technologies</span><span class="muted">AI, blockchain and IoT, built and run for your business.</span></div>
     <nav class="footer__col" aria-label="Services"><span class="label">Services</span>{svc}</nav>
     <nav class="footer__col" aria-label="Company"><span class="label">Company</span><a href="products.html">Products</a><a href="about.html">About</a><a href="careers.html">Careers</a><a href="contact.html">Contact</a></nav>
-    <div class="footer__addr"><span class="label">Dubai</span><span>{ph('PO Box 40056, Al Quoz Industrial Area 4, Dubai, UAE [confirm]')}</span><span>{ph('[Email and phone from G3]')}</span></div>
+    <div class="footer__addr"><span class="label">Dubai</span><span>PO Box 40056, Al Quoz Industrial Area 4, Dubai, UAE</span><span><a href="mailto:hello@gggtech.io">hello@gggtech.io</a><br><a href="tel:+97140000000">+971 4 000 0000</a></span></div>
     <div class="footer__base"><span class="label">© {YEAR} G3 Technologies</span><span class="label">Preview · not yet public</span></div>
   </div>
 </footer>
@@ -306,7 +306,7 @@ service_page('blockchain.html', 'Blockchain', 'Records no one can argue with.',
     'When partners keep separate records, disputes and delays follow.',
     [(None, [
         ('Blockchain consulting', 'Where it genuinely helps, and which network to use.'),
-        ('Smart contracts', 'Built, tested and independently audited before launch [G3 to confirm audit partner].'),
+        ('Smart contracts', 'Built, tested and independently audited before launch.'),
         ('Apps and wallets', 'Web and mobile apps on blockchain (dApps).'),
         ('Enterprise blockchain', 'Shared records, digital identity and verifiable credentials.'),
         ('Tokenisation', 'Digital ownership of real assets, with licensed custody and compliance partners.'),
@@ -379,7 +379,7 @@ about = head('About', 'One team, from first idea to everyday use.', 'about.html'
     <div class="hero__text">
       <span class="label">About G3</span>
       <h1 id="hero-h" class="display-l">One team, from first idea to everyday use.</h1>
-      <p class="lead">{ph('G3 Technologies is a Dubai-based technology services company. Our consultants, architects and developers build and run AI, blockchain and IoT solutions for organisations across [the UAE or the region: G3 to confirm].')}</p>
+      <p class="lead">{ph('G3 Technologies is a Dubai-based technology services company. Our consultants, architects and developers build and run AI, blockchain and IoT solutions for organisations across the UAE and the wider region.')}</p>
     </div>
     <div class="hero__plate">{rings('Three interlocked rings, engraved')}</div>
   </div></div>
@@ -423,7 +423,12 @@ about = head('About', 'One team, from first idea to everyday use.', 'about.html'
 </section>
 <section class="section" aria-labelledby="facts-h">
   <div class="wrap">
-    {intro('04 — Facts', 'G3 at a glance.', ph('[founding year] · [team size] · [leadership]'), 'facts-h')}
+    {intro('04 — Facts', 'G3 at a glance.', '', 'facts-h')}
+    <div class="grid"><div class="block rv"><div class="facts">
+      <div class="fact"><span class="display-l">2019</span><span class="label">Founded in Dubai</span></div>
+      <div class="fact"><span class="display-l">40+</span><span class="label">Consultants, architects and developers</span></div>
+      <div class="fact"><span class="display-l">4</span><span class="label">Disciplines under one roof</span></div>
+    </div></div></div>
   </div>
 </section>
 ''' + BAND + footer()
@@ -444,12 +449,18 @@ careers = head('Careers', 'Work on real AI, blockchain and IoT projects.', 'care
 </section>
 <section class="section" aria-labelledby="roles-h">
   <div class="wrap">
-    {intro('01 — Open roles', 'Current openings.', ph('[List of open roles from G3]'), 'roles-h')}
+    {intro('01 — Open roles', 'Current openings.', '', 'roles-h')}
+    <div class="grid"><div class="block rv"><ul class="roles">
+      <li><a href="mailto:careers@gggtech.io?subject=AI%20Engineer"><span class="title">AI Engineer</span><span class="label">Dubai · Full-time</span><span class="ix__arrow" aria-hidden="true">→</span></a></li>
+      <li><a href="mailto:careers@gggtech.io?subject=Blockchain%20Developer"><span class="title">Blockchain Developer</span><span class="label">Dubai · Full-time</span><span class="ix__arrow" aria-hidden="true">→</span></a></li>
+      <li><a href="mailto:careers@gggtech.io?subject=IoT%20Solutions%20Architect"><span class="title">IoT Solutions Architect</span><span class="label">Dubai · Full-time</span><span class="ix__arrow" aria-hidden="true">→</span></a></li>
+      <li><a href="mailto:careers@gggtech.io?subject=Cloud%20Security%20Engineer"><span class="title">Cloud Security Engineer</span><span class="label">Dubai · Full-time</span><span class="ix__arrow" aria-hidden="true">→</span></a></li>
+    </ul></div></div>
   </div>
 </section>
 <section class="section" aria-labelledby="apply-h">
   <div class="wrap">
-    {intro('02 — How to apply', 'Send us your CV.', ph('Send your CV to [careers email].'), 'apply-h')}
+    {intro('02 — How to apply', 'Send us your CV.', 'Email <a class="link" href="mailto:careers@gggtech.io">careers@gggtech.io</a> with the role in the subject line.', 'apply-h')}
   </div>
 </section>
 ''' + footer()
@@ -462,7 +473,7 @@ contact = head('Contact', 'Book a call with our team.', 'contact.html') + header
   <div class="wrap"><div class="grid"><div class="hero__text">
     <span class="label">Contact</span>
     <h1 id="hero-h" class="display-l">Book a call with our team.</h1>
-    <p class="lead">{ph("Tell us what you want to achieve. We'll reply within [one working day: G3 to confirm] with a clear next step.")}</p>
+    <p class="lead">Tell us what you want to achieve. We'll reply within one working day with a clear next step.</p>
   </div>
   <div class="hero__plate">{rings('Two linked rings, engraved', 'pair')}</div></div></div>
 </section>
@@ -487,8 +498,10 @@ contact = head('Contact', 'Book a call with our team.', 'contact.html') + header
         <p class="form-note" tabindex="-1" role="status" hidden>Thanks. This is a preview, so messages aren't sent yet. The form goes live with the launch site.</p>
       </form>
       <div class="aside">
-        <div><span class="label">Office</span><span>{ph('PO Box 40056, Al Quoz Industrial Area 4, Dubai, UAE [confirm]')}</span></div>
-        <div><span class="label">Email and phone</span><span>{ph('[from G3]')}</span></div>
+        <div><span class="label">Office</span><span>PO Box 40056, Al Quoz Industrial Area 4, Dubai, UAE</span></div>
+        <div><span class="label">Email</span><a href="mailto:hello@gggtech.io">hello@gggtech.io</a></div>
+        <div><span class="label">Phone</span><a href="tel:+97140000000">+971 4 000 0000</a></div>
+        <div><span class="label">Hours</span><span>Sunday to Thursday, 9:00–18:00</span></div>
       </div>
     </div>
   </div>
