@@ -1,0 +1,501 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#04070B">
+<title>G3 Technologies · Hologram prototype</title>
+<link rel="icon" href="assets/img/favicon.svg">
+<link rel="preload" href="assets/fonts/schibsted-grotesk-latin-500-normal.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+@font-face { font-family: "Schibsted Grotesk"; src: url(assets/fonts/schibsted-grotesk-latin-400-normal.woff2) format("woff2"); font-weight: 400; font-display: swap; }
+@font-face { font-family: "Schibsted Grotesk"; src: url(assets/fonts/schibsted-grotesk-latin-500-normal.woff2) format("woff2"); font-weight: 500; font-display: swap; }
+@font-face { font-family: "Schibsted Grotesk"; src: url(assets/fonts/schibsted-grotesk-latin-600-normal.woff2) format("woff2"); font-weight: 600; font-display: swap; }
+@font-face { font-family: "Spline Sans Mono"; src: url(assets/fonts/spline-sans-mono-latin-400-normal.woff2) format("woff2"); font-weight: 400; font-display: swap; }
+:root {
+  --bg: #04070B; --bg2: #08101A; --ink: #EAF6FB; --mute: #8FA6B5; --dim: #5C7384;
+  --c: #4FE3FF; --c-soft: rgba(79,227,255,.14); --c-line: rgba(79,227,255,.28); --warn: #FFB547;
+  --sans: "Schibsted Grotesk", system-ui, sans-serif; --mono: "Spline Sans Mono", ui-monospace, monospace;
+  --pad: clamp(20px, 4vw, 56px);
+}
+* { box-sizing: border-box; margin: 0; }
+html { overflow-x: clip; background: var(--bg); color-scheme: dark; scroll-behavior: smooth; }
+body { font-family: var(--sans); color: var(--ink); background:
+  radial-gradient(1200px 700px at 72% 18%, rgba(30,110,160,.22), transparent 60%),
+  radial-gradient(900px 600px at 10% 60%, rgba(20,60,120,.14), transparent 60%), var(--bg);
+  line-height: 1.5; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+a { color: inherit; text-decoration: none; }
+button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
+:focus-visible { outline: 2px solid var(--c); outline-offset: 3px; }
+.mono { font-family: var(--mono); font-size: 12px; letter-spacing: .12em; text-transform: uppercase; }
+.c { color: var(--c); }
+
+/* Header */
+.header { position: fixed; inset: 0 0 auto 0; z-index: 20; display: flex; align-items: center; gap: 28px;
+  padding: 14px var(--pad); background: linear-gradient(rgba(4,7,11,.85), rgba(4,7,11,0)); }
+.brand { display: flex; align-items: center; gap: 10px; font-weight: 600; letter-spacing: -.01em; }
+.brand img { width: 30px; height: 30px; filter: drop-shadow(0 0 6px rgba(79,227,255,.7)); }
+.nav { display: flex; gap: 26px; margin-left: auto; font-size: 15px; color: var(--mute); }
+.nav a:hover { color: var(--c); }
+.btn { display: inline-flex; align-items: center; gap: 10px; padding: 12px 20px; font-weight: 600; font-size: 15px;
+  border: 1px solid var(--c); color: var(--c); position: relative; transition: .25s;
+  clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px); }
+.btn:hover { background: var(--c-soft); box-shadow: 0 0 24px rgba(79,227,255,.35); }
+.btn--solid { background: var(--c); color: #021017; }
+.btn--solid:hover { background: #8CEEFF; }
+@media (max-width: 860px) { .nav { display: none; } .header .btn { margin-left: auto; padding: 9px 14px; font-size: 14px; } }
+
+/* Hero */
+.hero { position: relative; min-height: 100vh; min-height: 100svh; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+  align-items: center; padding: 96px var(--pad) 40px; overflow: hidden; }
+#holo { position: absolute; inset: 0; width: 100%; height: 100%; touch-action: pan-y; cursor: grab; }
+#holo.grab { cursor: grabbing; } #holo.point { cursor: pointer; }
+.floor { position: absolute; left: -20%; right: -20%; bottom: -8%; height: 46%; pointer-events: none;
+  background-image: linear-gradient(var(--c-line) 1px, transparent 1px), linear-gradient(90deg, var(--c-line) 1px, transparent 1px);
+  background-size: 56px 56px; transform: perspective(600px) rotateX(64deg); transform-origin: 50% 100%;
+  -webkit-mask-image: radial-gradient(60% 90% at 62% 100%, #000 0, transparent 75%); mask-image: radial-gradient(60% 90% at 62% 100%, #000 0, transparent 75%);
+  opacity: .5; animation: floor 6s linear infinite; }
+@keyframes floor { to { background-position: 0 56px, 0 0; } }
+.hero__copy { position: relative; z-index: 2; pointer-events: none; max-width: 600px; }
+.hero__copy > * { pointer-events: auto; }
+.boot { color: var(--c); margin-bottom: 22px; min-height: 1.4em; }
+.boot::after { content: "▍"; animation: blink 1s steps(2) infinite; margin-left: 4px; }
+@keyframes blink { 50% { opacity: 0; } }
+h1 { font-size: clamp(38px, 5.4vw, 76px); line-height: 1.02; letter-spacing: -.035em; font-weight: 600; text-wrap: balance; }
+h1 .c { text-shadow: 0 0 28px rgba(79,227,255,.65); }
+.lede { margin-top: 22px; font-size: clamp(17px, 1.5vw, 20px); color: var(--mute); max-width: 30em; }
+.actions { margin-top: 30px; display: flex; flex-wrap: wrap; gap: 14px; }
+.stage { position: relative; z-index: 2; height: 100%; min-height: 520px; pointer-events: none; }
+.stage > * { pointer-events: auto; }
+.hint { position: absolute; left: 50%; bottom: 62px; transform: translateX(-50%); color: var(--dim); white-space: nowrap; pointer-events: none; transition: opacity .4s; }
+.chips { position: absolute; left: 50%; bottom: 8px; transform: translateX(-50%); display: flex; gap: 8px; }
+.chip { padding: 9px 13px; border: 1px solid var(--c-line); color: var(--mute); white-space: nowrap; transition: .25s; background: rgba(4,7,11,.5); }
+.chip:hover, .chip.on { color: var(--c); border-color: var(--c); background: var(--c-soft); box-shadow: 0 0 18px rgba(79,227,255,.25); }
+/* HUD corners and readouts */
+.hud { position: absolute; z-index: 1; pointer-events: none; color: var(--dim); }
+.hud--tl { top: 84px; left: var(--pad); } .hud--tr { top: 84px; right: var(--pad); text-align: right; }
+.hud--bl { bottom: 18px; left: var(--pad); } .hud--br { bottom: 18px; right: var(--pad); text-align: right; }
+.hud b { color: var(--c); font-weight: 400; }
+.hero::before, .hero::after { content: ""; position: absolute; width: 26px; height: 26px; border: 1px solid var(--c); opacity: .6; pointer-events: none; }
+.hero::before { top: 72px; left: calc(var(--pad) - 12px); border-right: 0; border-bottom: 0; }
+.hero::after { bottom: 10px; right: calc(var(--pad) - 12px); border-left: 0; border-top: 0; }
+/* Floating panel */
+.panel { position: absolute; right: 0; bottom: 96px; width: min(340px, 100%); padding: 20px 22px 22px; z-index: 3;
+  background: linear-gradient(160deg, rgba(10,30,44,.82), rgba(4,10,16,.82)); border: 1px solid var(--c-line);
+  backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+  clip-path: polygon(16px 0, 100% 0, 100% calc(100% - 16px), calc(100% - 16px) 100%, 0 100%, 0 16px);
+  opacity: 0; transform: translateY(14px) scale(.97); visibility: hidden; transition: opacity .3s, transform .35s cubic-bezier(.2,.8,.2,1), visibility 0s .35s; }
+.panel.open { opacity: 1; transform: none; visibility: visible; transition-delay: 0s; }
+.panel::before { content: ""; position: absolute; inset: 0; pointer-events: none; opacity: .5;
+  background: repeating-linear-gradient(0deg, rgba(79,227,255,.07) 0 1px, transparent 1px 4px); }
+.panel__tag { color: var(--c); display: flex; justify-content: space-between; align-items: center; }
+.panel__x { color: var(--mute); padding: 4px 6px; margin: -4px -6px; } .panel__x:hover { color: var(--c); }
+.panel h2 { font-size: 30px; letter-spacing: -.02em; margin-top: 10px; font-weight: 600; }
+.panel p { color: var(--mute); margin-top: 6px; font-size: 16px; }
+.panel ul { list-style: none; padding: 0; margin: 14px 0 18px; display: grid; gap: 7px; font-size: 15px; }
+.panel li { display: flex; gap: 10px; align-items: baseline; }
+.panel li::before { content: ""; width: 6px; height: 6px; background: var(--c); box-shadow: 0 0 8px var(--c); flex: none; transform: translateY(-2px); }
+.panel a { color: var(--c); font-weight: 600; } .panel a:hover { text-shadow: 0 0 14px var(--c); }
+
+@media (max-width: 900px) {
+  .hero { display: block; padding-top: 104px; padding-bottom: 20px; min-height: 0; }
+  .stage { height: 540px; min-height: 0; margin-top: 8px; }
+  .hud { display: none; }
+  .hero::before { display: none; }
+  .chips { gap: 6px; left: 0; right: 0; transform: none; justify-content: center; }
+  .chip { padding: 8px 9px; font-size: 10.5px; letter-spacing: .08em; }
+  .panel { left: 0; right: 0; width: auto; bottom: 52px; }
+  .hint { bottom: 54px; }
+  .floor { height: 30%; }
+}
+
+/* Sections */
+section { position: relative; padding: clamp(72px, 10vw, 140px) var(--pad); max-width: 1320px; margin: 0 auto; }
+.eyebrow { color: var(--c); display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
+.eyebrow::before { content: ""; width: 28px; height: 1px; background: var(--c); box-shadow: 0 0 8px var(--c); }
+h2.big { font-size: clamp(30px, 4.2vw, 58px); line-height: 1.06; letter-spacing: -.03em; font-weight: 600; max-width: 18em; text-wrap: balance; }
+.rv { opacity: 0; transform: translateY(26px); transition: opacity .7s, transform .7s cubic-bezier(.2,.8,.2,1); }
+.rv.in { opacity: 1; transform: none; }
+.frame { border: 1px solid var(--c-line); background: linear-gradient(160deg, rgba(10,30,44,.55), rgba(4,10,16,.4)); position: relative;
+  clip-path: polygon(14px 0, 100% 0, 100% calc(100% - 14px), calc(100% - 14px) 100%, 0 100%, 0 14px); }
+
+/* Problem diagnostics */
+.diags { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 44px; }
+.diag { text-align: left; padding: 22px 22px 26px; min-height: 190px; display: flex; flex-direction: column; overflow: hidden; transition: border-color .4s, box-shadow .4s; border-color: rgba(255,181,71,.35); }
+.diag__st { display: flex; align-items: center; gap: 9px; color: var(--warn); transition: color .4s; }
+.diag__st i { width: 8px; height: 8px; border-radius: 50%; background: currentColor; box-shadow: 0 0 10px currentColor; animation: blink 1.1s steps(2) infinite; }
+.diag__k { font-size: 24px; font-weight: 600; letter-spacing: -.02em; margin-top: 18px; }
+.diag__t { color: var(--mute); margin-top: 6px; font-size: 17px; display: grid; }
+.diag__t span { grid-area: 1 / 1; transition: opacity .35s, transform .45s; }
+.diag__t .fix { opacity: 0; transform: translateY(10px); color: var(--ink); }
+.diag::after { content: ""; position: absolute; left: 0; right: 0; top: -40%; height: 40%; background: linear-gradient(transparent, rgba(79,227,255,.22)); opacity: 0; pointer-events: none; }
+.diag.ok { border-color: var(--c); box-shadow: 0 0 30px rgba(79,227,255,.14) inset; }
+.diag.ok::after { animation: sweep .7s ease-out; }
+@keyframes sweep { 0% { top: -40%; opacity: 1; } 100% { top: 100%; opacity: 0; } }
+.diag.ok .diag__st { color: var(--c); } .diag.ok .diag__st i { animation: none; }
+.diag.ok .prob { opacity: 0; transform: translateY(-10px); } .diag.ok .fix { opacity: 1; transform: none; }
+.note { margin-top: 30px; color: var(--mute); font-size: 18px; max-width: 34em; }
+.tap { color: var(--dim); margin-top: 18px; }
+
+/* Logos */
+.marq { overflow: hidden; margin-top: 36px; border-block: 1px solid var(--c-line); padding: 26px 0;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent); mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent); }
+.marq__t { display: flex; gap: 72px; width: max-content; animation: marq 26s linear infinite; font-size: 26px; font-weight: 600; color: var(--mute); letter-spacing: -.01em; }
+.marq__t span:nth-child(2n) { font-family: var(--mono); font-weight: 400; letter-spacing: .2em; font-size: 20px; align-self: center; }
+@keyframes marq { to { transform: translateX(-50%); } }
+
+/* Products */
+.prods { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; margin-top: 44px; }
+.prod { display: block; padding: 0 0 20px; transition: transform .35s, box-shadow .35s, border-color .35s; }
+.prod:hover { transform: translateY(-6px); border-color: var(--c); box-shadow: 0 18px 50px rgba(79,227,255,.14); }
+.prod__img { aspect-ratio: 4 / 3; background: var(--c); position: relative; overflow: hidden; }
+.prod__img img { width: 100%; height: 100%; object-fit: cover; display: block; mix-blend-mode: multiply; filter: grayscale(1) invert(1) contrast(1.25) brightness(.95); transition: transform .6s; }
+.prod:hover img { transform: scale(1.06); }
+.prod__img::after { content: ""; position: absolute; inset: 0; background: repeating-linear-gradient(0deg, rgba(0,0,0,.35) 0 1px, transparent 1px 3px), linear-gradient(transparent 60%, rgba(4,10,16,.9)); }
+.prod__n { color: var(--c); padding: 16px 18px 0; }
+.prod h3 { font-size: 21px; letter-spacing: -.02em; padding: 6px 18px 0; font-weight: 600; }
+.prod p { color: var(--mute); padding: 4px 18px 0; font-size: 15.5px; }
+
+/* Steps */
+.steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; margin-top: 52px; position: relative; }
+.steps::before { content: ""; position: absolute; left: 0; right: 0; top: 13px; height: 1px; background: linear-gradient(90deg, var(--c), rgba(79,227,255,.1)); box-shadow: 0 0 10px var(--c); }
+.step { padding: 0 28px 0 0; position: relative; }
+.step i { display: block; width: 27px; height: 27px; border: 1px solid var(--c); background: var(--bg); position: relative; transform: rotate(45deg); margin-left: 4px; }
+.step i::after { content: ""; position: absolute; inset: 7px; background: var(--c); box-shadow: 0 0 12px var(--c); }
+.step .mono { color: var(--c); margin-top: 26px; display: block; }
+.step h3 { font-size: 26px; letter-spacing: -.02em; margin-top: 8px; font-weight: 600; }
+.step p { color: var(--mute); margin-top: 6px; font-size: 17px; max-width: 18em; }
+
+/* Close */
+.close { overflow: hidden; max-width: none; text-align: center; padding-block: clamp(90px, 13vw, 180px); }
+.close > :not(.orb) { position: relative; z-index: 1; }
+.close .eyebrow { justify-content: center; } .close .eyebrow::before { display: none; }
+.close h2 { font-size: clamp(36px, 6vw, 88px); line-height: 1; letter-spacing: -.04em; font-weight: 600; text-wrap: balance; margin-inline: auto; max-width: 12em; }
+.close .btn { margin-top: 38px; font-size: 17px; padding: 15px 26px; }
+.orb { position: absolute; left: 50%; top: 50%; width: min(760px, 120vw); aspect-ratio: 1; transform: translate(-50%, -50%); border-radius: 50%; pointer-events: none; z-index: 0;
+  background: radial-gradient(closest-side, rgba(79,227,255,.16), transparent 70%); }
+.orb::before, .orb::after { content: ""; position: absolute; inset: 12%; border-radius: 50%; border: 1px dashed var(--c-line); animation: turn 40s linear infinite; }
+.orb::after { inset: 26%; border-style: solid; border-color: transparent var(--c-line) transparent var(--c-line); animation-duration: 18s; animation-direction: reverse; }
+@keyframes turn { to { transform: rotate(360deg); } }
+footer { border-top: 1px solid var(--c-line); padding: 26px var(--pad); display: flex; flex-wrap: wrap; gap: 10px 28px; justify-content: space-between; color: var(--dim); }
+footer a:hover { color: var(--c); }
+
+@media (max-width: 900px) {
+  .diags, .steps { grid-template-columns: 1fr; } .prods { grid-template-columns: 1fr 1fr; gap: 12px; }
+  .diag { min-height: 150px; }
+  .steps::before { left: 17px; right: auto; top: 0; bottom: 0; width: 1px; height: auto; background: linear-gradient(var(--c), rgba(79,227,255,.1)); }
+  .step { padding: 0 0 34px 56px; } .step i { position: absolute; left: 4px; top: 2px; margin: 0; } .step .mono { margin-top: 0; }
+  .prod h3 { font-size: 18px; padding-inline: 14px; } .prod p, .prod__n { padding-inline: 14px; }
+  .marq__t { font-size: 21px; gap: 48px; }
+}
+@media (prefers-reduced-motion: reduce) { .floor, .marq__t, .orb::before, .orb::after { animation: none; } .rv { opacity: 1; transform: none; } }
+</style>
+</head>
+<body>
+<header class="header">
+  <a class="brand" href="./"><img src="assets/img/g3-mark-light.svg" alt=""><span>G3 Technologies</span></a>
+  <nav class="nav" aria-label="Main">
+    <a href="ai.html">AI</a><a href="blockchain.html">Blockchain</a><a href="iot.html">IoT</a><a href="cloud-security.html">Cloud &amp; Security</a><a href="products.html">Products</a><a href="about.html">About</a>
+  </nav>
+  <a class="btn" href="contact.html">Book a call</a>
+</header>
+
+<main>
+<div class="hero" id="hero">
+  <div class="floor" aria-hidden="true"></div>
+  <canvas id="holo" aria-hidden="true"></canvas>
+  <div class="hud hud--tl mono" aria-hidden="true">G3 // Systems <b>online</b></div>
+  <div class="hud hud--tr mono" aria-hidden="true">DXB <b id="clock">00:00:00</b><br>25.2048°N 55.2708°E</div>
+  <div class="hud hud--bl mono" aria-hidden="true">Yaw <b id="yaw">000°</b> · Pitch <b id="pit">000°</b></div>
+  <div class="hud hud--br mono" aria-hidden="true">Parts <b>4 / 4</b> linked</div>
+
+  <div class="hero__copy">
+    <p class="boot mono" id="boot" aria-hidden="true"></p>
+    <h1>You don't need an AI team. You need AI that <span class="c">works.</span></h1>
+    <p class="lede">G3's consultants, architects and developers build and run AI, blockchain and IoT for your business.</p>
+    <div class="actions"><a class="btn btn--solid" href="contact.html">Book a call</a><a class="btn" href="#products">See what we build</a></div>
+  </div>
+
+  <div class="stage" id="stage">
+    <p class="hint mono" id="hint">Drag to spin · tap a part to open it</p>
+    <div class="chips" role="group" aria-label="Open a service">
+      <button class="chip mono" data-p="0">AI</button><button class="chip mono" data-p="1">Blockchain</button><button class="chip mono" data-p="2">IoT</button><button class="chip mono" data-p="3">Cloud &amp; Security</button>
+    </div>
+    <aside class="panel" id="panel" aria-live="polite">
+      <div class="panel__tag mono"><span id="pTag"></span><button class="panel__x mono" id="pX" aria-label="Close">Close ✕</button></div>
+      <h2 id="pName"></h2><p id="pLine"></p><ul id="pList"></ul><a id="pLink" href="#"></a>
+    </aside>
+  </div>
+</div>
+
+<section>
+  <p class="eyebrow mono rv">01 · The problem</p>
+  <h2 class="big rv">Building an AI team in‑house is slow, expensive and hard to get right.</h2>
+  <div class="diags">
+    <button class="diag frame rv" aria-pressed="false"><span class="diag__st mono"><i></i><b>Fault detected</b></span><span class="diag__k">Slow</span><span class="diag__t"><span class="prob">Hiring the right people takes months.</span><span class="fix">Our team is ready when you are.</span></span></button>
+    <button class="diag frame rv" aria-pressed="false"><span class="diag__st mono"><i></i><b>Fault detected</b></span><span class="diag__k">Expensive</span><span class="diag__t"><span class="prob">Senior AI talent is scarce and costly.</span><span class="fix">Pay for the skills you need, only when you need them.</span></span></button>
+    <button class="diag frame rv" aria-pressed="false"><span class="diag__st mono"><i></i><b>Fault detected</b></span><span class="diag__k">Hard to get right</span><span class="diag__t"><span class="prob">Many projects stall between the demo and daily use.</span><span class="fix">We build it, then run it with you.</span></span></button>
+  </div>
+  <p class="tap mono">Tap a card · problem or G3 fix</p>
+  <p class="note rv">Good ideas stall without the right people. We've seen it, and we built G3 to fix it.</p>
+</section>
+
+<section>
+  <p class="eyebrow mono rv">02 · Proof</p>
+  <h2 class="big rv">Who we work with.</h2>
+  <div class="marq rv" aria-label="Sample client logos"><div class="marq__t" id="marq"></div></div>
+  <p class="tap mono">Sample logos · to be replaced with G3's clients</p>
+</section>
+
+<section id="products">
+  <p class="eyebrow mono rv">03 · Products</p>
+  <h2 class="big rv">Ready-made solutions, so you can start faster.</h2>
+  <div class="prods">
+    <a class="prod frame rv" href="products.html"><div class="prod__img"><img src="assets/img/product-rmn.jpg" alt="" loading="lazy"></div><p class="prod__n mono">01</p><h3>Retail Media Network</h3><p>In-store screens that earn.</p></a>
+    <a class="prod frame rv" href="products.html"><div class="prod__img"><img src="assets/img/product-companion.jpg" alt="" loading="lazy"></div><p class="prod__n mono">02</p><h3>Companion</h3><p>An AI assistant for every counter.</p></a>
+    <a class="prod frame rv" href="products.html"><div class="prod__img"><img src="assets/img/product-marketing.jpg" alt="" loading="lazy"></div><p class="prod__n mono">03</p><h3>Marketing Intelligence</h3><p>Know which campaigns work.</p></a>
+    <a class="prod frame rv" href="products.html"><div class="prod__img"><img src="assets/img/product-voice.jpg" alt="" loading="lazy"></div><p class="prod__n mono">04</p><h3>Voice Agents</h3><p>AI that answers your calls.</p></a>
+  </div>
+</section>
+
+<section>
+  <p class="eyebrow mono rv">04 · How it works</p>
+  <h2 class="big rv">Three steps. No hiring.</h2>
+  <div class="steps">
+    <div class="step rv"><i></i><span class="mono">Step 1</span><h3>Book a call.</h3><p>Tell us what you want to achieve.</p></div>
+    <div class="step rv"><i></i><span class="mono">Step 2</span><h3>Get a clear plan.</h3><p>What to build, in what order, and what it takes.</p></div>
+    <div class="step rv"><i></i><span class="mono">Step 3</span><h3>We build and run it.</h3><p>Or hand it to your team when you're ready.</p></div>
+  </div>
+</section>
+
+<section class="close">
+  <div class="orb" aria-hidden="true"></div>
+  <p class="eyebrow mono rv">The end result</p>
+  <h2 class="rv">Your tech team, without the hiring.</h2>
+  <a class="btn btn--solid rv" href="contact.html">Book a call</a>
+</section>
+</main>
+<footer class="mono"><span>© 2026 G3 Technologies · Dubai</span><span>Hologram prototype · <a href="./">Back to current site</a></span></footer>
+
+<script>
+(function () {
+  var still = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var PARTS = [
+    { n: '01', name: 'AI', verb: 'Thinks', line: 'AI that works inside your business.', list: ['Assistants and agents', 'Answers from your own data', 'Forecasts and automation'], href: 'ai.html', rad: 1, spin: .22, a: .5, b: .3, wa: .11, wb: .07 },
+    { n: '02', name: 'Blockchain', verb: 'Proves', line: 'Records no one can argue with.', list: ['Tamper-proof records', 'Smart contracts', 'Only where it helps'], href: 'blockchain.html', rad: .78, spin: -.3, a: 1.4, b: -.6, wa: -.09, wb: .13 },
+    { n: '03', name: 'IoT', verb: 'Senses', line: "Know what's happening at every site.", list: ['Sensors and devices', 'Live dashboards', 'Alerts before failures'], href: 'iot.html', rad: .56, spin: .42, a: -.7, b: 1.1, wa: .14, wb: -.1 },
+    { n: '04', name: 'Cloud & Security', verb: 'Holds it together', line: 'Systems that stay up and stay safe.', list: ['Build it', 'Protect it', 'Run it'], href: 'cloud-security.html', rad: .2, core: true, spin: .3, a: 0, b: 0, wa: 0, wb: 0 }
+  ];
+  // Build point clouds: x, y, z, bright flag, scatter x/y/z
+  PARTS.forEach(function (p) {
+    var pts = [];
+    function add(x, y, z, f) { pts.push(x, y, z, f, (Math.random() - .5) * 5, (Math.random() - .5) * 5, (Math.random() - .5) * 5); }
+    if (p.core) {
+      var N = 420, g = Math.PI * (3 - Math.sqrt(5));
+      for (var i = 0; i < N; i++) { var y = 1 - 2 * (i + .5) / N, r = Math.sqrt(1 - y * y), t = g * i; add(Math.cos(t) * r * p.rad, y * p.rad, Math.sin(t) * r * p.rad, i % 9 === 0 ? 1 : 0); }
+      for (var u = 0; u < 90; u++) { var q = u / 90 * Math.PI * 2; add(Math.cos(q) * p.rad * 1.45, 0, Math.sin(q) * p.rad * 1.45, 0); }
+    } else {
+      var M = Math.round(230 * p.rad), tube = .042;
+      for (var i = 0; i < M; i++) {
+        var u = i / M * Math.PI * 2, gap = (u % (Math.PI * 2 / 3));
+        if (gap > 1.93) continue;
+        var bright = u < .7 ? 1 : 0;
+        for (var j = 0; j < 5; j++) { var v = j / 5 * Math.PI * 2, rr = p.rad + tube * Math.cos(v); add(rr * Math.cos(u), rr * Math.sin(u), tube * Math.sin(v), bright); }
+      }
+      for (var k = 0; k < 72; k++) { var w = k / 72 * Math.PI * 2, ro = p.rad + (k % 6 === 0 ? .12 : .09); add(ro * Math.cos(w), ro * Math.sin(w), 0, k % 6 === 0 ? 1 : 0); }
+    }
+    p.pts = new Float32Array(pts); p.k = 0; p.lum = 1; p.scr = []; p.ax = 0; p.ay = 0;
+  });
+
+  var hero = document.getElementById('hero'), stage = document.getElementById('stage'), cv = document.getElementById('holo'), ctx = cv.getContext('2d');
+  var panel = document.getElementById('panel'), chips = [].slice.call(document.querySelectorAll('.chip')), hint = document.getElementById('hint');
+  var W, H, dpr, cx, cy, R, wide, selX = 0, selY = 0, selS = 1, selT = -.5;
+  function size() {
+    var hr = hero.getBoundingClientRect(), sr = stage.getBoundingClientRect();
+    dpr = Math.min(2, window.devicePixelRatio || 1); W = hr.width; H = hr.height; wide = W > 900;
+    cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr);
+    cx = sr.left - hr.left + sr.width / 2; cy = sr.top - hr.top + sr.height / 2 - (wide ? 30 : 46);
+    R = wide ? Math.min(sr.width * .3, H * .27) : Math.min(sr.width * .4, 150);
+    selX = wide ? -.42 : 0; selY = wide ? .36 : (cy - (sr.top - hr.top + 96)) / R; selS = wide ? .8 : .92; selT = wide ? -.5 : -1.12;
+  }
+  size(); addEventListener('resize', size);
+  if ('ResizeObserver' in window) new ResizeObserver(size).observe(hero);
+
+  var yaw = -.5, pitch = .35, vy = .0035, vp = 0, down = false, moved = 0, lx = 0, ly = 0, mx = -999, my = -999;
+  var hover = -1, sel = -1, auto = 0, touched = false, t0 = performance.now(), trail = [];
+  var CAM = 3.4;
+
+  function select(i) {
+    sel = (i === sel) ? -1 : i; touched = true;
+    chips.forEach(function (c, j) { c.classList.toggle('on', j === sel); c.setAttribute('aria-pressed', j === sel ? 'true' : 'false'); });
+    hint.style.opacity = 0;
+    if (sel < 0) { panel.classList.remove('open'); return; }
+    var p = PARTS[sel];
+    document.getElementById('pTag').textContent = p.n + ' · ' + p.verb;
+    document.getElementById('pName').textContent = p.name;
+    document.getElementById('pLine').textContent = p.line;
+    document.getElementById('pList').innerHTML = p.list.map(function (s) { return '<li>' + s + '</li>'; }).join('');
+    var a = document.getElementById('pLink'); a.href = p.href; a.textContent = 'Explore ' + p.name + ' →';
+    panel.classList.add('open');
+  }
+  chips.forEach(function (c, i) { c.addEventListener('click', function () { select(i); }); });
+  document.getElementById('pX').addEventListener('click', function () { select(sel); });
+  addEventListener('keydown', function (e) { if (e.key === 'Escape' && sel >= 0) select(sel); });
+
+  function local(e) { var r = cv.getBoundingClientRect(); return [e.clientX - r.left, e.clientY - r.top]; }
+  cv.addEventListener('pointerdown', function (e) { down = true; moved = 0; lx = e.clientX; ly = e.clientY; var m = local(e); mx = m[0]; my = m[1]; pick(); cv.classList.add('grab'); });
+  addEventListener('pointermove', function (e) {
+    var m = local(e); mx = m[0]; my = m[1];
+    if (e.pointerType === 'mouse') { trail.push([mx, my, performance.now()]); if (trail.length > 26) trail.shift(); }
+    if (!down) return;
+    var dx = e.clientX - lx, dy = e.clientY - ly; lx = e.clientX; ly = e.clientY; moved += Math.abs(dx) + Math.abs(dy);
+    vy = dx * .008; vp = dy * .008; yaw += vy; pitch += vp; touched = true;
+  });
+  addEventListener('pointerup', function (e) {
+    if (!down) return; down = false; cv.classList.remove('grab');
+    if (moved < 8) { if (hover >= 0) select(hover); else if (sel >= 0) select(sel); }
+    if (e.pointerType !== 'mouse') { mx = my = -999; }
+  });
+  cv.addEventListener('pointerleave', function () { if (!down) { mx = my = -999; } });
+
+  function pick() {
+    var best = -1, bd = 26 * 26;
+    for (var i = 0; i < PARTS.length; i++) {
+      if (sel >= 0 && sel !== i) continue;
+      var s = PARTS[i].scr;
+      for (var j = 0; j < s.length; j += 2) { var dx = s[j] - mx, dy = s[j + 1] - my, d = dx * dx + dy * dy; if (d < bd) { bd = d; best = i; } }
+    }
+    hover = best; cv.classList.toggle('point', best >= 0 && !down);
+  }
+
+  var yawEl = document.getElementById('yaw'), pitEl = document.getElementById('pit'), clock = document.getElementById('clock'), frame = 0;
+  function deg(v) { var d = Math.round(((v * 180 / Math.PI) % 360 + 360) % 360); return ('00' + d).slice(-3) + '°'; }
+
+  function draw(now) {
+    var t = (now - t0) / 1000, boot = still ? 1 : Math.min(1, t / 1.9); boot = 1 - Math.pow(1 - boot, 3);
+    if (!down) { yaw += vy; pitch += vp; vy += ((still ? 0 : .0032) - vy) * .03; vp *= .94; pitch += (.35 - pitch) * .004; }
+    if (!touched && t > 2.6) auto = Math.floor((t - 2.6) / 2.8) % 4;
+    if (mx > -900 && !down) pick(); else if (!down) hover = -1;
+    var hi = hover >= 0 ? hover : (!touched && t > 2.6 ? auto : -1);
+    if (!touched) chips.forEach(function (c, j) { c.classList.toggle('on', j === hi); });
+
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0); ctx.clearRect(0, 0, W, H);
+    ctx.globalCompositeOperation = 'lighter';
+    // Soft glow and projector
+    var g = ctx.createRadialGradient(cx, cy, 0, cx, cy, R * 1.7); g.addColorStop(0, 'rgba(79,227,255,.13)'); g.addColorStop(1, 'rgba(79,227,255,0)');
+    ctx.globalAlpha = boot; ctx.fillStyle = g; ctx.fillRect(cx - R * 2, cy - R * 2, R * 4, R * 4);
+    var by = cy + R * 1.42;
+    var cg = ctx.createLinearGradient(0, by, 0, cy - R * .4); cg.addColorStop(0, 'rgba(79,227,255,.16)'); cg.addColorStop(1, 'rgba(79,227,255,0)');
+    ctx.fillStyle = cg; ctx.beginPath(); ctx.moveTo(cx - R * .28, by); ctx.lineTo(cx + R * .28, by); ctx.lineTo(cx + R * 1.15, cy - R * .4); ctx.lineTo(cx - R * 1.15, cy - R * .4); ctx.closePath(); ctx.fill();
+    ctx.strokeStyle = '#4FE3FF'; ctx.lineWidth = 1;
+    for (var e = 1; e <= 3; e++) { ctx.globalAlpha = boot * (.55 - e * .13); ctx.beginPath(); ctx.ellipse(cx, by, R * .28 * e, R * .28 * e * .2, 0, 0, 7); ctx.stroke(); }
+
+    var cyw = Math.cos(yaw), syw = Math.sin(yaw), cp = Math.cos(pitch), sp = Math.sin(pitch);
+    var scanY = cy - R * 1.35 + ((t * .26) % 1) * R * 2.7, flick = (Math.random() < .03 ? .8 : 1) * boot;
+    for (var i = 0; i < PARTS.length; i++) {
+      var p = PARTS[i], P = p.pts, isSel = sel === i;
+      p.k += ((isSel ? 1 : 0) - p.k) * .1;
+      var lum = sel >= 0 ? (isSel ? 1.7 : .1) : (hi === i ? 1.45 : (hi >= 0 ? .55 : .9));
+      p.lum += (lum - p.lum) * .12;
+      var s = t * p.spin, cs = Math.cos(s), ss = Math.sin(s);
+      var a = p.a + t * p.wa, b = p.b + t * p.wb, ca = Math.cos(a), sa = Math.sin(a), cb = Math.cos(b), sb = Math.sin(b);
+      var k = p.k, sc = (p.core ? 3.4 : 1.02 / p.rad) * selS, ft = selT, cf = Math.cos(ft), sf = Math.sin(ft);
+      var scr = p.scr; scr.length = 0; var white = -1;
+      for (var j = 0, n = 0; j < P.length; j += 7, n++) {
+        var x0 = P[j], y0 = P[j + 1], z0 = P[j + 2];
+        var x = x0 * cs - y0 * ss, y = x0 * ss + y0 * cs, z = z0;
+        // selected pose: facing the viewer, slightly tilted, enlarged
+        var fx = x * sc + selX, fy = (y * cf - z * sf) * sc + selY, fz = (y * sf + z * cf) * sc;
+        // free pose: own tumble, then the whole object's rotation
+        var y1 = y * ca - z * sa, z1 = y * sa + z * ca;
+        var x2 = x * cb + z1 * sb, z2 = -x * sb + z1 * cb;
+        var x3 = x2 * cyw + z2 * syw, z3 = -x2 * syw + z2 * cyw;
+        var y4 = y1 * cp - z3 * sp, z4 = y1 * sp + z3 * cp;
+        var X = x3 + (fx - x3) * k, Y = y4 + (fy - y4) * k, Z = z4 + (fz - z4) * k;
+        if (boot < 1) { var ib = 1 - boot; X += P[j + 4] * ib; Y += P[j + 5] * ib; Z += P[j + 6] * ib; }
+        var pr = CAM / (CAM - Z), sx = cx + X * R * pr, sy = cy - Y * R * pr;
+        if (j === 0) { p.ax = sx; p.ay = sy; }
+        if (n % 5 === 0) scr.push(sx, sy);
+        var f = P[j + 3], d = (Z + 1.3) / 2.6; d = d < 0 ? 0 : d > 1 ? 1 : d;
+        var dy = (sy - scanY) / 16, al = (.22 + .6 * d + (f ? .35 : 0) + Math.exp(-dy * dy) * .8) * p.lum * flick;
+        if (al < .02) continue;
+        if (f !== white) { white = f; ctx.fillStyle = f ? '#DFFAFF' : '#4FE3FF'; }
+        ctx.globalAlpha = al > 1 ? 1 : al;
+        var z_ = (f ? 2.1 : 1.5) * pr * (wide ? 1 : .85) * (1 + k * .45);
+        ctx.fillRect(sx - z_ / 2, sy - z_ / 2, z_, z_);
+      }
+    }
+    // Scan line
+    ctx.globalAlpha = .22 * boot; ctx.fillStyle = '#4FE3FF'; ctx.fillRect(cx - R * 1.3, scanY, R * 2.6, 1);
+
+    // Labels with leader lines
+    ctx.globalCompositeOperation = 'source-over'; ctx.font = '11px "Spline Sans Mono", monospace'; ctx.textBaseline = 'middle'; ctx.lineWidth = 1;
+    if (boot >= 1) for (var i = 0; i < PARTS.length; i++) {
+      var p = PARTS[i]; if (sel >= 0) continue;
+      var on = hi === i; if (p.core && !on) continue;
+      var txt = p.n + '  ' + p.name.toUpperCase() + (on ? '  ·  ' + p.verb.toUpperCase() : '');
+      var dir = p.ax >= cx ? 1 : -1, tw = ctx.measureText(txt).width + (wide ? 62 : 44);
+      if (dir > 0 && p.ax + tw > W - 8) dir = -1; else if (dir < 0 && p.ax - tw < 8) dir = 1;
+      var x1 = p.ax + dir * 16, y1 = p.ay - 16, x2 = x1 + dir * (wide ? 34 : 16);
+      ctx.globalAlpha = on ? 1 : .42; ctx.strokeStyle = ctx.fillStyle = on ? '#DFFAFF' : '#4FE3FF';
+      ctx.beginPath(); ctx.arc(p.ax, p.ay, 3, 0, 7); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(p.ax + dir * 2, p.ay - 2); ctx.lineTo(x1, y1); ctx.lineTo(x2, y1); ctx.stroke();
+      ctx.textAlign = dir > 0 ? 'left' : 'right'; ctx.fillText(txt, x2 + dir * 6, y1);
+    }
+    // Leader to the open panel
+    if (sel >= 0 && PARTS[sel].k > .6) {
+      var p = PARTS[sel], hr = hero.getBoundingClientRect(), pr2 = panel.getBoundingClientRect();
+      var tx = wide ? pr2.left - hr.left : pr2.left - hr.left + 30, ty = pr2.top - hr.top + (wide ? 24 : 0);
+      ctx.globalAlpha = .8; ctx.strokeStyle = '#4FE3FF';
+      ctx.beginPath(); ctx.arc(p.ax, p.ay, 4, 0, 7); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(p.ax, p.ay + 4);
+      if (wide) { ctx.lineTo(p.ax, ty); ctx.lineTo(tx, ty); } else { ctx.lineTo(p.ax, ty - 14); ctx.lineTo(tx, ty - 14); ctx.lineTo(tx, ty); }
+      ctx.stroke();
+    }
+    // Cursor light trail
+    if (trail.length > 1) {
+      ctx.globalCompositeOperation = 'lighter'; ctx.strokeStyle = '#4FE3FF'; ctx.lineCap = 'round';
+      for (var i = 1; i < trail.length; i++) {
+        var age = (now - trail[i][2]) / 450; if (age > 1) continue;
+        ctx.globalAlpha = (1 - age) * .5; ctx.lineWidth = (1 - age) * 3;
+        ctx.beginPath(); ctx.moveTo(trail[i - 1][0], trail[i - 1][1]); ctx.lineTo(trail[i][0], trail[i][1]); ctx.stroke();
+      }
+    }
+    ctx.globalAlpha = 1;
+    if (frame++ % 6 === 0) { yawEl.textContent = deg(yaw); pitEl.textContent = deg(pitch); }
+    if (visible) requestAnimationFrame(draw);
+  }
+  var visible = true;
+  if ('IntersectionObserver' in window) new IntersectionObserver(function (e) { var v = e[0].isIntersecting; if (v && !visible) { visible = true; requestAnimationFrame(draw); } visible = v; }).observe(hero);
+  requestAnimationFrame(draw);
+
+  // Clock (Dubai time) and boot line
+  function tick() { try { clock.textContent = new Date().toLocaleTimeString('en-GB', { timeZone: 'Asia/Dubai' }); } catch (e) {} }
+  tick(); setInterval(tick, 1000);
+  var bootEl = document.getElementById('boot'), msg = 'G3 // AI · Blockchain · IoT', bi = 0;
+  (function type() { bootEl.textContent = msg.slice(0, bi++); if (bi <= msg.length) setTimeout(type, still ? 0 : 45); })();
+
+  // Logos
+  var names = ['halcyon', 'MERIDIAN', 'Orbis', 'SANDLINE', 'Kestrel', '&Co.', 'Quadra'];
+  document.getElementById('marq').innerHTML = names.concat(names).map(function (n) { return '<span>' + n + '</span>'; }).join('');
+
+  // Reveal
+  var rv = document.querySelectorAll('.rv');
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (es) { es.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); } }); }, { rootMargin: '0px 0px -8% 0px' });
+    rv.forEach(function (el, i) { el.style.transitionDelay = (i % 4) * 70 + 'ms'; io.observe(el); });
+  } else rv.forEach(function (el) { el.classList.add('in'); });
+
+  // Diagnostics: resolve one by one, then toggle on tap
+  var diags = [].slice.call(document.querySelectorAll('.diag'));
+  function setD(el, ok) { el.classList.toggle('ok', ok); el.setAttribute('aria-pressed', ok ? 'true' : 'false'); el.querySelector('.diag__st b').textContent = ok ? 'Resolved by G3' : 'Fault detected'; }
+  if ('IntersectionObserver' in window) {
+    var dio = new IntersectionObserver(function (e) { if (e[0].isIntersecting) { diags.forEach(function (d, i) { setTimeout(function () { setD(d, true); }, still ? 0 : 1100 + i * 800); }); dio.disconnect(); } }, { threshold: .5 });
+    dio.observe(diags[0].parentNode);
+  }
+  diags.forEach(function (d) { d.addEventListener('click', function () { setD(d, !d.classList.contains('ok')); }); });
+})();
+</script>
+</body>
+</html>
