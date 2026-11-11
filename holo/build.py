@@ -5,7 +5,7 @@ import math, pathlib
 BRAND = 'Gi5.si'
 WM = 'Gi<b>5</b>.si'                     # wordmark with the glowing 5
 EMAIL, JOBS, PHONE = 'hello@gggtech.io', 'careers@gggtech.io', '+971 4 000 0000'
-V = '4'
+V = '7'
 OUT = pathlib.Path(__file__).parent
 
 def mark(size=30):
@@ -52,7 +52,7 @@ def footer():
     <div><a class="brand" href="./">{mark(26)}<span class="wm">{WM}</span></a><p>AI, blockchain and IoT, built and run for your business.</p></div>
     <div><h4>Services</h4><a href="ai.html">AI</a><a href="blockchain.html">Blockchain</a><a href="iot.html">IoT</a><a href="cloud-security.html">Cloud &amp; Security</a></div>
     <div><h4>Company</h4><a href="products.html">Products</a><a href="about.html">About</a><a href="careers.html">Careers</a><a href="contact.html">Contact</a></div>
-    <div><h4>Talk to us</h4><a href="mailto:{EMAIL}">{EMAIL}</a><a href="tel:{PHONE.replace(" ", "")}">{PHONE}</a><span>Germany · India · UAE</span></div>
+    <div><h4>Talk to us</h4><a href="mailto:{EMAIL}">{EMAIL}</a><a href="tel:{PHONE.replace(" ", "")}">{PHONE}</a><span>Dubai, UAE</span></div>
   </div>
   <div class="foot__base mono"><span>© 2026 {BRAND}</span><span>Preview · sample content</span></div>
 </footer>
@@ -74,9 +74,9 @@ def hero(kind, eyebrow, h1, lede, actions=None, home=False):
     actions = actions or '<a class="btn btn--solid" href="contact.html">Book a call</a>'
     extra = ''
     if home:
-        extra = '''<p class="hint mono">Drag to spin · tap a part to open it</p>
-    <div class="chips" role="group" aria-label="Open a service">
-      <button class="chip mono">AI</button><button class="chip mono">Blockchain</button><button class="chip mono">IoT</button><button class="chip mono">Cloud &amp; Security</button>
+        extra = '''<p class="hint mono">Drag to spin · tap a sense to open it</p>
+    <div class="chips" role="group" aria-label="Open a sense">
+      <button class="chip mono">See</button><button class="chip mono">Hear</button><button class="chip mono">Touch</button><button class="chip mono">Smell</button><button class="chip mono">Taste</button><button class="chip mono">Remember</button>
     </div>
     <aside class="panel" aria-live="polite">
       <div class="panel__tag mono"><span class="pTag"></span><button class="panel__x mono" aria-label="Close">Close ✕</button></div>
@@ -88,7 +88,7 @@ def hero(kind, eyebrow, h1, lede, actions=None, home=False):
   <div class="floor" aria-hidden="true"></div>
   <canvas id="holo" data-holo="{kind}" aria-hidden="true"></canvas>
   <div class="hud hud--tl mono" aria-hidden="true">{BRAND} // Systems <b>online</b></div>
-  <div class="hud hud--tr mono" aria-hidden="true">DXB <b id="clock">00:00:00</b><br>Germany · India · UAE</div>
+  <div class="hud hud--tr mono" aria-hidden="true">DXB <b id="clock">00:00:00</b><br>25.2048°N 55.2708°E</div>
   <div class="hud hud--bl mono" aria-hidden="true">Yaw <b id="yaw">000°</b> · Pitch <b id="pit">000°</b></div>
   <div class="hud hud--br mono" aria-hidden="true">Senses <b>5 / 5</b> live</div>
   <div class="hero__copy">
@@ -172,7 +172,7 @@ def senses():
   </div>'''
 
 DECODE = [
-    ('Gi', 'Gi · Where it starts', 'Germany + India.', 'German precision meets Indian scale. GI also stands for generative intelligence: the AI at work today.'),
+    ('Gi', 'Gi · Where it starts', 'Generative intelligence.', 'The AI that writes, answers and creates today. General intelligence comes next.'),
     ('5', '5 · How it works', 'Five senses.', 'Our systems see, hear, touch, smell and taste. They notice what is happening and act on it.'),
     ('si', 'si · Where it goes', 'Super intelligence.', 'AI keeps getting smarter. We build today\'s systems so they are ready for tomorrow\'s.'),
 ]
@@ -206,22 +206,68 @@ def page(name, title, desc, body):
     (OUT / name).write_text(head(title, desc) + header(name) + '<main>\n' + body + '</main>\n' + footer())
 
 # ---------------------------------------------------------------- Home
+SAY = [
+    ('See.', 'Sense 01 · Sight', 'It sees.', 'Cameras that count people, read plates and check quality.', 'ai.html', 'Explore AI →'),
+    ('Hear.', 'Sense 02 · Hearing', 'It hears.', 'Voice agents that answer calls and understand what people need.', 'products.html#voice', 'See Voice Agents →'),
+    ('Touch.', 'Sense 03 · Touch', 'It feels.', 'Sensors that feel heat, movement and pressure at every site.', 'iot.html', 'Explore IoT →'),
+    ('Smell.', 'Sense 04 · Smell', 'It smells trouble.', 'Alerts that catch faults and threats before they spread.', 'cloud-security.html', 'Explore Cloud &amp; Security →'),
+    ('Taste.', 'Sense 05 · Taste', 'It knows what\'s good.', 'Recommendations that learn what your customers like.', 'ai.html', 'Explore AI →'),
+    ('Remember.', 'Plus · Memory', 'And it never forgets.', 'Blockchain records that no one can change.', 'blockchain.html', 'Explore Blockchain →'),
+]
+
+def say():
+    w = ''.join(f'<button class="sw{" on" if i == 0 else ""}" data-i="{i}" data-tag="{t}" data-title="{h}" data-text="{x}" data-href="{u}" data-cta="{c}" aria-pressed="{"true" if i == 0 else "false"}">{k}</button>'
+                for i, (k, t, h, x, u, c) in enumerate(SAY))
+    d = SAY[0]
+    return f'''<div class="say" data-pick>
+    <div class="say__words rv">{w}</div>
+    <div class="readout frame rv" aria-live="polite"><p class="ro-tag mono">{d[1]}</p><h3 class="ro-title">{d[2]}</h3><p class="ro-text">{d[3]}</p><a class="ro-link" href="{d[4]}">{d[5]}</a></div>
+  </div>'''
+
+def showroom():
+    slides = ''.join(f'''<a class="slide{" on" if i == 0 else ""}" href="products.html#{k}"><div class="prod__img"><img src="assets/img/product-{k}.jpg" alt="" loading="lazy"></div>
+      <div class="slide__txt"><p class="mono">{i + 1:02d} / 04</p><h3>{n}</h3><p class="t">{t}</p><span class="go">See how it works →</span></div></a>''' for i, (k, n, t, _, _) in enumerate(PRODUCTS))
+    tabs = ''.join(f'<button class="stab{" on" if i == 0 else ""}" role="tab" aria-selected="{"true" if i == 0 else "false"}"><b>{i + 1:02d}</b>{n}</button>' for i, (k, n, *_ ) in enumerate(PRODUCTS))
+    return f'<div class="show" data-show><div class="show__stage frame rv">{slides}</div><div class="show__tabs" role="tablist">{tabs}</div></div>'
+
+BA = [('Sales', 'Known at month end', 'Known right now'), ('Fridge 3', 'Failed overnight', 'Fixed before it failed'),
+      ('Phone calls', 'Missed after hours', 'All answered'), ('Stock', 'Ran out on Friday', 'Reordered in time')]
+
+def before_after():
+    bef = ''.join(f'<div class="ba__r"><span>{k}</span><b>{x}</b></div>' for k, x, _ in BA)
+    aft = ''.join(f'<div class="ba__r"><span>{k}</span><b>{y}</b></div>' for k, _, y in BA)
+    return f'''<div class="ba frame rv" data-ba>
+    <div class="ba__l ba__before"><h3>Guessing</h3>{bef}</div>
+    <div class="ba__l ba__after" aria-hidden="true"><h3>Knowing</h3>{aft}</div>
+    <div class="ba__h" aria-hidden="true"></div>
+    <input type="range" min="0" max="100" value="6" aria-label="Drag from guessing to knowing">
+  </div><p class="tap mono">Drag the line · guessing to knowing</p>'''
+
+def close_plan():
+    mini = '<i>→</i>'.join(f'<div class="rv"><b>{i + 1}</b>{t}</div>' for i, t in enumerate(['Book a call', 'Get a clear plan', 'We build and run it']))
+    return f'''<section class="close">
+  <div class="orb" aria-hidden="true"></div>
+  <p class="eyebrow mono rv">Three steps · no hiring</p>
+  <div class="mini">{mini}</div>
+  <h2 class="rv">Your tech team, without the hiring.</h2>
+  <a class="btn btn--solid rv" href="contact.html">Book a call</a>
+</section>
+'''
+
 page('index.html', f'{BRAND} · AI, blockchain and IoT for your business', 'AI, blockchain and IoT, built and run for your business.',
-     hero('gyro', f'{BRAND} // Intelligence with five senses', 'AI that sees, hears and senses your <span class="c">whole business.</span>',
-          f'{BRAND}\'s engineers in Germany and India build and run AI, blockchain and IoT for you. No hiring needed.',
-          '<a class="btn btn--solid" href="contact.html">Book a call</a><a class="btn" href="#senses">Meet the five senses</a>', home=True)
+     hero('senses', f'{BRAND} // Intelligence with five senses', 'AI that sees, hears and senses your <span class="c">whole business.</span>',
+          f'{BRAND} builds and runs AI, blockchain and IoT for you. No hiring needed.',
+          '<a class="btn btn--solid" href="contact.html">Book a call</a><a class="btn" href="#senses">See what it can do</a>', home=True)
+     + '<section class="strip">' + LOGOS + '</section>\n'
      + sec('01', 'The problem', 'Building an AI team in‑house is slow, expensive and hard to get right.',
            diags([('Slow', 'Hiring the right people takes months.', 'Our team is ready when you are.'),
                   ('Expensive', 'Senior AI talent is scarce and costly.', 'Pay for the skills you need, only when you need them.'),
                   ('Hard to get right', 'Many projects stall between the demo and daily use.', 'We build it, then run it with you.')])
            + '<p class="note rv">Good ideas stall without the right people. We\'ve seen it, and we built ' + BRAND + ' to fix it.</p>')
-     + sec('02', 'The 5 in ' + BRAND, 'Five senses for your business.', senses(), 'People run on five senses. Now your business can too.', id_='senses')
-     + sec('03', 'Products', 'Ready-made, so you can start faster.', product_cards() + '<p class="demo mono">Demo products · details to be confirmed</p>', id_='products')
-     + sec('04', 'From GI to SI', 'Built for today\'s AI. Ready for what comes next.', STAGES)
-     + sec('05', 'Two countries, one team', 'German precision. Indian scale.', DUO)
-     + sec('06', 'Proof', 'Who we work with.', LOGOS)
-     + sec('07', 'How it works', 'Three steps. No hiring.', steps(PLAN))
-     + close())
+     + sec('02', 'The answer', 'Now your business can', say(), id_='senses')
+     + sec('03', 'Products', 'Ready-made, so you can start faster.', showroom() + '<p class="demo mono">Demo products · details to be confirmed</p>', id_='products')
+     + sec('04', 'What changes', 'From guessing to knowing.', before_after())
+     + close_plan())
 
 # ---------------------------------------------------------------- Service pages
 def service(name, kind, label, h1, lede, problem, fix, heading, items, used):
@@ -282,10 +328,11 @@ page('products.html', f'Products · {BRAND}', 'Ready-made products you can start
      + f'<section>{blocks}<p class="demo mono">Demo products · details to be confirmed</p></section>\n' + close('Pick one. We\'ll have it running fast.'))
 
 # ---------------------------------------------------------------- About
-page('about.html', f'About · {BRAND}', 'Two countries, five senses, one team.',
-     hero('helix', f'{BRAND} // About', 'Two countries. Five senses. <span class="c">One team.</span>',
-          f'{BRAND} joins German engineering and Indian scale to build intelligent systems for business.')
+page('about.html', f'About · {BRAND}', 'Five senses, one team.',
+     hero('helix', f'{BRAND} // About', 'Five senses. <span class="c">One team.</span>',
+          f'{BRAND} builds intelligent systems for business, from Dubai.')
      + sec('01', 'The name', f'What {BRAND} means.', decode())
+     + sec('02', 'From GI to SI', 'Built for today\'s AI. Ready for what comes next.', STAGES)
      + '<section class="tight"><div class="photo frame rv"><img src="assets/img/photo-team.jpg" alt="" loading="lazy"><span class="mono">The team at work</span></div></section>\n'
      + sec('02', 'How we work', 'Five steps, start to finish.',
            '<div class="steps" style="grid-template-columns:repeat(auto-fit,minmax(180px,1fr))">' + ''.join(
@@ -299,11 +346,11 @@ page('about.html', f'About · {BRAND}', 'Two countries, five senses, one team.',
                 ('We stay after launch', 'The team that builds it also runs it.')])) + '</div>')
      + sec('04', 'In numbers', f'{BRAND} at a glance.',
            '<div class="facts">' + ''.join(f'<div class="fact frame rv"><b>{n}</b><span>{t}</span></div>' for n, t in
-                                           [('2', 'Countries, one team'), ('5', 'Senses in every system'), ('4', 'Disciplines under one roof'), ('24/7', 'Systems watched')]) + '</div>')
+                                           [('1', 'Team for the whole job'), ('5', 'Senses in every system'), ('4', 'Disciplines under one roof'), ('24/7', 'Systems watched')]) + '</div>')
      + close())
 
 # ---------------------------------------------------------------- Careers
-ROLES = [('AI Engineer', 'India · Full-time'), ('Blockchain Developer', 'India · Full-time'), ('IoT Engineer', 'Germany · Full-time'), ('Solution Architect', 'Germany · Full-time')]
+ROLES = [('AI Engineer', 'Dubai · Full-time'), ('Blockchain Developer', 'Dubai · Full-time'), ('IoT Engineer', 'Dubai · Full-time'), ('Solution Architect', 'Dubai · Full-time')]
 page('careers.html', f'Careers · {BRAND}', f'Work at {BRAND}.',
      hero('orbits', f'{BRAND} // Careers', 'Build the systems everyone else <span class="c">talks about.</span>',
           'Real AI, blockchain and IoT projects, shipped to real customers.',
@@ -311,7 +358,7 @@ page('careers.html', f'Careers · {BRAND}', f'Work at {BRAND}.',
      + sec('01', 'Why join', 'Good work, good people.',
            '<div class="tiles">' + ''.join(f'<div class="tile frame rv"><p class="mono">{i + 1:02d}</p><h3>{t}</h3><p>{d}</p></div>' for i, (t, d) in enumerate(
                [('Real projects', 'Your work goes live and gets used.'), ('Senior teammates', 'Learn from people who have built it before.'),
-                ('Two countries', 'Work across Germany and India.')])) + '</div>')
+                ('Room to grow', 'Take on more as you prove yourself.')])) + '</div>')
      + '<section class="tight"><div class="photo frame rv"><img src="assets/img/photo-careers.jpg" alt="" loading="lazy"><span class="mono">Where the work happens</span></div></section>\n'
      + sec('02', 'Open roles', 'Find your seat.',
            '<div class="rows">' + ''.join(f'<a class="role rv" href="mailto:{JOBS}?subject={r.replace(" ", "%20")}"><h3>{r}</h3><span>{w}</span><i>Apply →</i></a>' for r, w in ROLES)
@@ -335,7 +382,7 @@ page('contact.html', f'Book a call · {BRAND}', 'Tell us what you want to achiev
     <dl class="dl rv">
       <div><dt class="mono">Email</dt><dd><a href="mailto:{EMAIL}">{EMAIL}</a></dd></div>
       <div><dt class="mono">Phone</dt><dd>{PHONE}</dd></div>
-      <div><dt class="mono">Where</dt><dd>Germany · India · UAE</dd></div>
+      <div><dt class="mono">Where</dt><dd>Dubai, UAE</dd></div>
       <div><dt class="mono">Hours</dt><dd>Monday to Friday, 9:00–18:00</dd></div>
       <div><dt class="mono">Note</dt><dd style="color:var(--mute);font-size:16px">Sample contact details, to be replaced.</dd></div>
     </dl>

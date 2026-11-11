@@ -19,7 +19,7 @@ document.documentElement.classList.add('js');
   }
   function cube(a, s) {
     var c = [-s, s];
-    c.forEach(function (x) { c.forEach(function (y) { line(a, [x, y, -s], [x, y, s], 9, function (i) { return i === 0 || i === 9; }); line(a, [x, -s, y], [x, s, y], 9, 0); line(a, [-s, x, y], [s, x, y], 9, 0); }); });
+    c.forEach(function (x) { c.forEach(function (y) { line(a, [x, y, -s], [x, y, s], 14, function (i) { return i === 0 || i === 14; }); line(a, [x, -s, y], [x, s, y], 14, 0); line(a, [-s, x, y], [s, x, y], 14, 0); }); });
   }
   function part(a, o) {
     o = o || {};
@@ -38,6 +38,35 @@ document.documentElement.classList.add('js');
       var out = cfg.map(function (c, i) { var a = []; ring(a, c.rad); c.info = info[i]; return part(a, c); });
       var s = []; sphere(s, .2, 420, 9); circle(s, .29, 90, 0);
       out.push(part(s, { rad: .2, core: true, spin: .3, a: HALF, info: info[3] }));
+      return out;
+    },
+    senses: function () {
+      var info = [
+        { n: '01', name: 'See', verb: 'Sight', line: 'Cameras that count people, read plates and check quality.', list: ['People counting', 'Plate and document reading', 'Quality checks'], href: 'ai.html', cta: 'Explore AI →' },
+        { n: '02', name: 'Hear', verb: 'Hearing', line: 'Voice agents that answer calls and understand what people need.', list: ['Calls answered day and night', 'Many languages', 'Hands over to a person when needed'], href: 'products.html#voice', cta: 'See Voice Agents →' },
+        { n: '03', name: 'Touch', verb: 'Touch', line: 'Sensors that feel heat, movement and pressure at every site.', list: ['Temperature and humidity', 'Movement and doors', 'Power and pressure'], href: 'iot.html', cta: 'Explore IoT →' },
+        { n: '04', name: 'Smell', verb: 'Smell', line: 'Alerts that catch faults and threats before they spread.', list: ['Round-the-clock monitoring', 'Security testing', 'Early fault warnings'], href: 'cloud-security.html', cta: 'Explore Cloud & Security →' },
+        { n: '05', name: 'Taste', verb: 'Taste', line: 'Recommendations that learn what your customers like.', list: ['Product suggestions', 'Campaign insight', 'Demand forecasts'], href: 'ai.html', cta: 'Explore AI →' },
+        { n: '+', name: 'Remember', verb: 'Memory', line: 'Blockchain records that no one can change.', list: ['Tamper-proof records', 'Smart contracts', 'Source-to-shelf tracing'], href: 'blockchain.html', cta: 'Explore Blockchain →' }
+      ];
+      var shapes = [
+        function (a) { circle(a, .34, 110, function (i) { return i % 8 === 0; }); circle(a, .37, 60, 0); sphere(a, .2, 260, 5); },
+        function (a) { [.07, .15, .23, .31].forEach(function (r) { circle(a, r, Math.round(r * 300), function (i) { return i % 9 === 0; }); }); },
+        function (a) { cube(a, .2); cube(a, .1); },
+        function (a) { for (var i = 0; i < 200; i++) { var t = i / 200, r = .03 + .3 * t, u = t * 3.2 * TAU; add(a, r * Math.cos(u), r * Math.sin(u), (t - .5) * .3, i % 10 === 0); add(a, -r * Math.cos(u), -r * Math.sin(u), (t - .5) * .3, 0); } },
+        function (a) { var v = [[.3, 0, 0], [-.3, 0, 0], [0, .34, 0], [0, -.34, 0], [0, 0, .3], [0, 0, -.3]]; for (var i = 0; i < 6; i++) for (var j = i + 1; j < 6; j++) if (Math.floor(i / 2) !== Math.floor(j / 2)) line(a, v[i], v[j], 18, function (k) { return k === 0 || k === 18; }); }
+      ];
+      var out = [], RR = .98, beams = [];
+      shapes.forEach(function (fn, i) {
+        var a = [], u = i / 5 * TAU + .3, o = [RR * Math.cos(u), (i % 2 ? .14 : -.1), RR * Math.sin(u)]; fn(a);
+        out.push(part(a, { rad: .4, off: o, spin: .5, a: .6 + i, b: i * .8, wa: i === 1 ? .12 : .22, wb: .2, info: info[i], base: 1.15 }));
+        line(beams, [o[0] * .25, o[1] * .25, o[2] * .25], [o[0] * .74, o[1] * .74, o[2] * .74], 16, function (k) { return k % 5 === 0; });
+      });
+      var c = []; sphere(c, .2, 420, 9); circle(c, .29, 90, 0);
+      out.push(part(c, { rad: .2, core: true, spin: .3, a: HALF, info: info[5], base: 1.2 }));
+      out.push(part(beams, { base: .7 }));
+      var r = []; circle(r, RR, 170, function (i) { return i % 17 === 0; }); circle(r, 1.36, 120, function (i) { return i < 6; });
+      out.push(part(r, { a: HALF, spin: -.12, base: .5 }));
       return out;
     },
     brain: function () {
@@ -130,7 +159,7 @@ document.documentElement.classList.add('js');
   if (cv) (function () {
     var hero = cv.closest('.hero'), stage = hero.querySelector('.stage'), ctx = cv.getContext('2d');
     var PARTS = (KINDS[cv.getAttribute('data-holo')] || KINDS.gyro)();
-    var pickable = PARTS.some(function (p) { return p.info; });
+    var nPick = PARTS.filter(function (p) { return p.info; }).length, pickable = nPick > 0;
     var panel = hero.querySelector('.panel'), chips = [].slice.call(hero.querySelectorAll('.chip')), hint = hero.querySelector('.hint');
     var W, H, dpr, cx, cy, R, wide, selX = 0, selY = 0, selS = 1, selT = -.5;
     function size() {
@@ -138,7 +167,7 @@ document.documentElement.classList.add('js');
       dpr = Math.min(2, window.devicePixelRatio || 1); W = hr.width; H = hr.height; wide = W > 900;
       cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr);
       cx = sr.left - hr.left + sr.width / 2; cy = sr.top - hr.top + sr.height / 2 - (pickable ? (wide ? 30 : 46) : 10);
-      R = wide ? Math.min(sr.width * (pickable ? .3 : .36), sr.height * (pickable ? .3 : .34), 300) : Math.min(sr.width * .38, sr.height * .3, 150);
+      R = wide ? Math.min(sr.width * (pickable ? .33 : .36), sr.height * (pickable ? .3 : .34), 300) : Math.min(sr.width * .38, sr.height * .3, 150);
       selX = wide ? -.42 : 0; selY = wide ? .36 : (cy - (sr.top - hr.top + 96)) / R; selS = wide ? .8 : .92; selT = wide ? -.5 : -1.12;
     }
     size(); addEventListener('resize', size);
@@ -159,7 +188,7 @@ document.documentElement.classList.add('js');
       panel.querySelector('.pName').textContent = p.name;
       panel.querySelector('.pLine').textContent = p.line;
       panel.querySelector('.pList').innerHTML = p.list.map(function (s) { return '<li>' + s + '</li>'; }).join('');
-      var a = panel.querySelector('.pLink'); a.href = p.href; a.textContent = 'Explore ' + p.name + ' →';
+      var a = panel.querySelector('.pLink'); a.href = p.href; a.textContent = p.cta || ('Explore ' + p.name + ' →');
       panel.classList.add('open');
     }
     chips.forEach(function (c, i) { c.addEventListener('click', function () { select(i); }); });
@@ -197,7 +226,7 @@ document.documentElement.classList.add('js');
     function draw(now) {
       var t = (now - t0) / 1000, boot = still ? 1 : Math.min(1, t / 1.9); boot = 1 - Math.pow(1 - boot, 3);
       if (!down) { yaw += vy; pitch += vp; vy += ((still ? 0 : .0032) - vy) * .03; vp *= .94; pitch += (.35 - pitch) * .004; }
-      if (pickable && !touched && t > 2.6) auto = Math.floor((t - 2.6) / 2.8) % 4;
+      if (pickable && !touched && t > 2.6) auto = Math.floor((t - 2.6) / 2.8) % nPick;
       if (mx > -900 && !down) pick(); else if (!down) hover = -1;
       var hi = hover >= 0 ? hover : (pickable && !touched && t > 2.6 ? auto : -1);
       if (pickable && !touched) chips.forEach(function (c, j) { c.classList.toggle('on', j === hi); });
@@ -318,13 +347,33 @@ document.documentElement.classList.add('js');
       cur = i; btns.forEach(function (b, j) { b.classList.toggle('on', j === i); b.setAttribute('aria-pressed', j === i ? 'true' : 'false'); });
       box.style.setProperty('--sel', i);
       out.classList.add('swap');
-      setTimeout(function () { var b = btns[i]; out.querySelector('.ro-tag').textContent = b.getAttribute('data-tag'); out.querySelector('.ro-title').textContent = b.getAttribute('data-title'); out.querySelector('.ro-text').textContent = b.getAttribute('data-text'); out.classList.remove('swap'); }, 160);
+      setTimeout(function () { var b = btns[i]; out.querySelector('.ro-tag').textContent = b.getAttribute('data-tag'); out.querySelector('.ro-title').textContent = b.getAttribute('data-title'); out.querySelector('.ro-text').textContent = b.getAttribute('data-text'); var l = out.querySelector('.ro-link'); if (l) { l.href = b.getAttribute('data-href'); l.textContent = b.getAttribute('data-cta'); } out.classList.remove('swap'); }, 160);
     };
     btns.forEach(function (b, i) {
       b.addEventListener('click', function () { used = true; clearInterval(timer); show(i); });
       b.addEventListener('mouseenter', function () { used = true; clearInterval(timer); if (cur !== i) show(i); });
     });
     if (!still) timer = setInterval(function () { if (!used && box.getBoundingClientRect().top < innerHeight && box.getBoundingClientRect().bottom > 0) show((cur + 1) % btns.length); }, 2600);
+  });
+
+  // Showroom: one product at a time, auto-advancing until touched
+  $('[data-show]').forEach(function (box) {
+    var slides = $('.slide', box), tabs = $('.stab', box), cur = 0, used = false, timer;
+    var go = function (i) { cur = i; slides.forEach(function (s, j) { s.classList.toggle('on', j === i); }); tabs.forEach(function (t, j) { t.classList.toggle('on', j === i); t.setAttribute('aria-selected', j === i ? 'true' : 'false'); }); };
+    tabs.forEach(function (t, i) { t.addEventListener('click', function () { used = true; box.classList.add('used'); clearInterval(timer); go(i); }); });
+    if (!still) timer = setInterval(function () { var r = box.getBoundingClientRect(); if (!used && r.top < innerHeight && r.bottom > 0) go((cur + 1) % slides.length); }, 4200); else box.classList.add('used');
+  });
+
+  // Before / after: drag from guessing to knowing
+  $('[data-ba]').forEach(function (box) {
+    var input = box.querySelector('input'), used = false;
+    var set = function (v) { box.style.setProperty('--x', v + '%'); };
+    input.addEventListener('input', function () { used = true; set(input.value); });
+    if (still || !('IntersectionObserver' in window)) { set(60); input.value = 60; return; }
+    var io2 = new IntersectionObserver(function (e) {
+      if (!e[0].isIntersecting) return; io2.disconnect();
+      var t0 = performance.now(); (function step(now) { if (used) return; var p = Math.min(1, (now - t0) / 1800); p = 1 - Math.pow(1 - p, 3); var v = 6 + p * 46; set(v); input.value = v; if (p < 1) requestAnimationFrame(step); })(t0);
+    }, { threshold: .5 }); io2.observe(box);
   });
 
   $('[data-kick]').forEach(function (el) { el.addEventListener('mouseenter', function () { if (window.holoKick) window.holoKick(.035); }); });
