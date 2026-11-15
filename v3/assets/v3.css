@@ -24,7 +24,7 @@ h1, h2, h3 { font-family: var(--head); font-weight: 600; letter-spacing: -.045em
 /* Header */
 .top { position: sticky; top: 0; z-index: 50; display: flex; align-items: center; gap: 28px; padding: 14px var(--pad); background: rgba(243,244,247,.82); backdrop-filter: blur(14px) saturate(1.4); -webkit-backdrop-filter: blur(14px) saturate(1.4); }
 .logo { display: flex; align-items: center; gap: 9px; font-family: var(--head); font-weight: 600; font-size: 22px; letter-spacing: -.04em; }
-.logo em { font-style: normal; color: var(--mute); font-weight: 500; }
+.logo img { display: block; height: 32px; width: auto; } .foot .logo img { height: 28px; }
 .menu { display: flex; gap: 26px; margin-left: auto; font-size: 15px; color: var(--mute); } .menu a:hover { color: var(--ink); }
 @media (max-width: 860px) { .menu { display: none; } .top .btn { margin-left: auto; } }
 
