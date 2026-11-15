@@ -126,19 +126,39 @@
     addEventListener('scroll', spy, { passive: true }); spy();
   }
 
-  // ---------- Lights on: guessing to knowing
+  // ---------- Lights on: guessing to knowing (3D model, beams from the core)
   $('[data-lights]').forEach(function (box) {
     var stage = box.querySelector('.lights__stage'), btn = box.querySelector('.lights__switch'), lbl = btn.querySelector('.lbl'), used = false;
-    var num = box.querySelector('[data-to]');
+    var num = box.querySelector('[data-to]'), beams = box.querySelector('.lights__beams'), core = box.querySelector('.lights__core'), qs = box.querySelector('.lights__qs');
+    var mks = $('.mk', box), chips = {}, lifts = { hear: 50, taste: 64, touch: 50, see: 100, smell: 34, remember: 26 };
+    $('.chip', box).forEach(function (c) { chips[c.getAttribute('data-k')] = c; c.style.setProperty('--lift', (lifts[c.getAttribute('data-k')] || 56) + 'px'); });
+    mks.forEach(function (m) { if (m.getAttribute('data-k') !== 'core') { var q = document.createElement('span'); q.textContent = '?'; q.setAttribute('data-k', m.getAttribute('data-k')); qs.appendChild(q); } });
+    function place() {
+      var sr = stage.getBoundingClientRect(), pts = {}, wide = innerWidth > 760;
+      mks.forEach(function (m) { var r = m.getBoundingClientRect(); pts[m.getAttribute('data-k')] = [r.left - sr.left, r.top - sr.top]; });
+      if (!wide) return;
+      Object.keys(chips).forEach(function (k) { if (pts[k]) { chips[k].style.left = pts[k][0] + 'px'; chips[k].style.top = pts[k][1] + 'px'; } });
+      $('span', qs).forEach(function (q) { var p = pts[q.getAttribute('data-k')]; q.style.left = p[0] + 'px'; q.style.top = p[1] + 'px'; });
+      var c = [sr.width / 2, sr.height * .15]; pts.core = c; core.style.left = c[0] + 'px'; core.style.top = (c[1] + 18) + 'px';
+      var html = '<defs><linearGradient id="beam" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#D4FF5A"/><stop offset="1" stop-color="#6F8CFF"/></linearGradient></defs>';
+      Object.keys(pts).forEach(function (k, i) {
+        if (k === 'core') return; var p = pts[k], mx = (c[0] + p[0]) / 2, my = c[1] + (p[1] - c[1]) * .15;
+        html += '<path d="M' + c[0] + ' ' + c[1] + ' Q' + mx + ' ' + my + ' ' + p[0] + ' ' + p[1] + '" style="animation-delay:' + (0.2 + i * 0.1) + 's"/>';
+      });
+      beams.innerHTML = html;
+      $('path', beams).forEach(function (p) { var L = p.getTotalLength(); p.style.strokeDasharray = L; p.style.setProperty('--len', L); });
+    }
     function set(on) {
       box.classList.toggle('on', on); btn.setAttribute('aria-pressed', on ? 'true' : 'false');
       lbl.textContent = on ? 'Gi5.si is on' : 'Switch on Gi5.si';
-      if (on && num && !still) { var to = +num.getAttribute('data-to'), t0 = performance.now(); (function go(now) { var p = Math.min(1, (now - t0) / 1400); num.textContent = Math.round(to * (1 - Math.pow(1 - p, 3))).toLocaleString('en-US'); if (p < 1 && box.classList.contains('on')) requestAnimationFrame(go); })(t0); }
+      setTimeout(place, 50); setTimeout(place, 1450);
+      if (on && num && !still) { var to = +num.getAttribute('data-to'), t0 = performance.now(); (function go(now) { var p = Math.min(1, (now - t0) / 1600); num.textContent = Math.round(to * (1 - Math.pow(1 - p, 3))).toLocaleString('en-US'); if (p < 1 && box.classList.contains('on')) requestAnimationFrame(go); })(t0); }
     }
     btn.addEventListener('click', function () { used = true; set(!box.classList.contains('on')); });
     stage.addEventListener('pointermove', function (e) { var r = stage.getBoundingClientRect(); stage.style.setProperty('--mx', (e.clientX - r.left) + 'px'); stage.style.setProperty('--my', (e.clientY - r.top) + 'px'); });
+    addEventListener('resize', place); setTimeout(place, 100); setTimeout(place, 1500);
     if ('IntersectionObserver' in window) {
-      var lo = new IntersectionObserver(function (e) { if (e[0].isIntersecting) { lo.disconnect(); setTimeout(function () { if (!used) set(true); }, still ? 0 : 1600); } }, { threshold: .55 });
+      var lo = new IntersectionObserver(function (e) { if (e[0].isIntersecting) { lo.disconnect(); place(); setTimeout(function () { if (!used) set(true); }, still ? 0 : 1600); } }, { threshold: .55 });
       lo.observe(stage);
     } else set(true);
   });
