@@ -9,6 +9,9 @@
     var panels = $('.gp', orbit), n = panels.length, step = 360 / n;
     var dial = $('.dial button'), verb = document.querySelector('.verb');
     var ang = 0, target = 0, down = false, moved = 0, lx = 0, lastTouch = -1e9, front = -1, R = 360;
+    var tx = 0, ty = 0, ttx = 0, tty = 0;
+    orbit.addEventListener('pointermove', function (e) { if (down || e.pointerType !== 'mouse') return; var r = orbit.getBoundingClientRect(); ttx = ((e.clientX - r.left) / r.width - .5) * 2; tty = ((e.clientY - r.top) / r.height - .5) * 2; });
+    orbit.addEventListener('pointerleave', function () { ttx = tty = 0; });
 
     function size() { var w = orbit.clientWidth; R = w > 900 ? 380 : w > 700 ? 300 : Math.min(250, w * .64); }
     size(); addEventListener('resize', size);
@@ -29,7 +32,8 @@
         var a = (i * step + ang) * Math.PI / 180, s = Math.sin(a), c = Math.cos(a);
         var x = s * R, z = (c - 1) * R * (wide ? .9 : .8), f = (c + 1) / 2;
         var p = panels[i];
-        p.style.transform = 'translate(-50%,-50%) perspective(1300px) translate3d(' + x.toFixed(1) + 'px,' + ((1 - f) * -26).toFixed(1) + 'px,' + z.toFixed(1) + 'px) rotateY(' + (s * -38).toFixed(1) + 'deg)';
+        var k = Math.pow(f, 3);
+        p.style.transform = 'translate(-50%,-50%) perspective(1300px) translate3d(' + x.toFixed(1) + 'px,' + ((1 - f) * -26).toFixed(1) + 'px,' + z.toFixed(1) + 'px) rotateY(' + (s * -38 + tx * 8 * k).toFixed(2) + 'deg) rotateX(' + (-ty * 6 * k).toFixed(2) + 'deg)';
         p.style.zIndex = Math.round(f * 100);
         var o = Math.max(0, (f - .2) / .8); p.style.opacity = (wide ? Math.pow(o, 1.1) : Math.pow(o, 4)).toFixed(3); p.style.visibility = o < .02 ? 'hidden' : 'visible';
       }
@@ -39,6 +43,7 @@
       if (!down) {
         ang += (target - ang) * (still ? 1 : .085);
       }
+      if (!still) { tx += (ttx - tx) * .08; ty += (tty - ty) * .08; }
       layout(); requestAnimationFrame(frame);
     }
     // auto-advance until the visitor interacts
@@ -94,6 +99,8 @@
     var tpl = $('template', box), cur = 0, used = false;
     function show(i) {
       cur = i; tabs.forEach(function (t, j) { t.classList.toggle('on', j === i); t.setAttribute('aria-selected', j === i ? 'true' : 'false'); });
+      var T = [['#D4FF5A','#6F8CFF'],['#E6FF9A','#9BE8FF'],['#6F8CFF','#D4FF5A'],['#9BE8FF','#6F8CFF'],['#9BE8FF','#D4FF5A'],['#D4FF5A','#9BE8FF']][i % 6];
+      box.style.setProperty('--g1', T[0]); box.style.setProperty('--g2', T[1]);
       var t = tpl[i]; card.classList.add('swap');
       setTimeout(function () {
         nEl.textContent = t.getAttribute('data-name'); lEl.textContent = t.getAttribute('data-line');
