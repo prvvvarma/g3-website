@@ -9,7 +9,7 @@
 <meta name="description" content="Gi5.si builds and runs AI, blockchain and IoT for your business.">
 <link rel="icon" href="assets/favicon.svg">
 <link rel="preload" href="assets/fonts/geist-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="assets/v3.css?v=19">
+<link rel="stylesheet" href="assets/v3.css?v=22">
 </head>
 <body>
 <header class="top" id="top">
@@ -80,13 +80,36 @@
   <div class="logos__track"><div class="logos__row"><span>halcyon</span><span class="s">MERIDIAN</span><span>Orbis</span><span class="s">SANDLINE</span><span>Kestrel</span><span class="s">QUADRA</span><span>arcline</span><span class="s">VERIDIA</span></div><div class="logos__row" aria-hidden="true"><span>halcyon</span><span class="s">MERIDIAN</span><span>Orbis</span><span class="s">SANDLINE</span><span>Kestrel</span><span class="s">QUADRA</span><span>arcline</span><span class="s">VERIDIA</span></div></div>
 </section>
 
-<!-- 2 · PROBLEM + EMPATHY: switch each problem off -->
+<!-- 2 · PROBLEM + EMPATHY: three meters that fix themselves -->
 <section class="wrap" id="problem">
   <h2>Building an AI team in‑house is slow, expensive and hard to get right.</h2>
-  <div class="pains">
-    <div class="pain"><div class="pain__t"><b>Slow</b><span class="a">Hiring the right people takes months.</span><span class="b">Our team is ready when you are.</span></div><button class="sw" role="switch" aria-checked="false" aria-label="Fix: slow"><i></i></button></div>
-    <div class="pain"><div class="pain__t"><b>Expensive</b><span class="a">Senior AI talent is scarce and costly.</span><span class="b">Pay for the skills you need, only when you need them.</span></div><button class="sw" role="switch" aria-checked="false" aria-label="Fix: expensive"><i></i></button></div>
-    <div class="pain"><div class="pain__t"><b>Hard to get right</b><span class="a">Many projects stall between the demo and daily use.</span><span class="b">We build it, then run it with you.</span></div><button class="sw" role="switch" aria-checked="false" aria-label="Fix: hard to get right"><i></i></button></div>
+  <div class="meters" data-meters>
+    <button class="meter m-slow" aria-pressed="false">
+      <span class="meter__k">Slow</span>
+      <span class="meter__viz" aria-hidden="true">
+        <span class="tl"><span class="tl__bar"></span></span>
+        <span class="tl__ticks"><i>M1</i><i>M2</i><i>M3</i><i>M4</i><i>M5</i><i>M6</i></span>
+      </span>
+      <span class="meter__s"><span class="a">6+ months to hire</span><span class="b">Ready this week</span></span>
+      <span class="meter__d"><span class="a">Hiring the right people takes months.</span><span class="b">Our team is ready when you are.</span></span>
+    </button>
+    <button class="meter m-cost" aria-pressed="false">
+      <span class="meter__k">Expensive</span>
+      <span class="meter__viz" aria-hidden="true">
+        <svg viewBox="-6 -4 212 132"><path class="g-track" d="M20 104 A80 80 0 0 1 180 104" pathLength="100"/><path class="g-fill" d="M20 104 A80 80 0 0 1 180 104" pathLength="100"/><line class="g-needle" x1="100" y1="104" x2="100" y2="40"/><circle class="g-hub" cx="100" cy="104" r="8"/></svg>
+      </span>
+      <span class="meter__s"><span class="a">Full-time senior salaries</span><span class="b">Pay only for what you use</span></span>
+      <span class="meter__d"><span class="a">Senior AI talent is scarce and costly.</span><span class="b">The skills you need, only when you need them.</span></span>
+    </button>
+    <button class="meter m-hard" aria-pressed="false">
+      <span class="meter__k">Hard to get right</span>
+      <span class="meter__viz" aria-hidden="true">
+        <span class="pb"><span class="pb__bar"></span></span>
+        <span class="pb__n"><b class="a">80% · stuck</b><b class="b">100% · live</b></span>
+      </span>
+      <span class="meter__s"><span class="a">Stalls between demo and daily use</span><span class="b">Built and run with you</span></span>
+      <span class="meter__d"><span class="a">Many projects never make it past the demo.</span><span class="b">We build it, then run it with you.</span></span>
+    </button>
   </div>
   <p class="empathy">Good ideas stall without the right people. We've seen it, and we built Gi5.si to fix it.</p>
 </section>
@@ -204,6 +227,6 @@
   <div class="foot__word" aria-hidden="true">Gi5<span></span>si</div>
   <div class="foot__base"><span>© 2026 Gi5.si. All rights reserved.</span><a href="#top">Back to top ↑</a></div>
 </footer>
-<script src="assets/v3.js?v=8"></script>
+<script src="assets/v3.js?v=9"></script>
 </body>
 </html>

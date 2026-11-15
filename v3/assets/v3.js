@@ -72,7 +72,7 @@
   }
 
   // ---------- Reveals (and one-time animations inside tiles)
-  var rv = $('.wrap h2, .wrap .kick, .pain, .tile, .empathy, .ba, .ind, .end h2, .plan li');
+  var rv = $('.wrap h2, .wrap .kick, .meter, .tile, .empathy, .ba, .ind, .end h2, .plan li');
   rv.forEach(function (el) { el.classList.add('rv'); });
   if ('IntersectionObserver' in window && !still) {
     var io = new IntersectionObserver(function (es) { es.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); } }); }, { rootMargin: '0px 0px -10% 0px' });
@@ -91,6 +91,21 @@
     }, { threshold: .5 });
     pio.observe(document.querySelector('.pains'));
   }
+
+  // ---------- Problem meters: fix themselves in view, replay on hover, toggle on tap
+  $('[data-meters]').forEach(function (box) {
+    var ms = $('.meter', box);
+    function set(m, on) { m.classList.toggle('fixed', on); m.setAttribute('aria-pressed', on ? 'true' : 'false'); }
+    if ('IntersectionObserver' in window) {
+      var mo = new IntersectionObserver(function (e) { if (e[0].isIntersecting) { mo.disconnect(); ms.forEach(function (m, i) { setTimeout(function () { set(m, true); }, still ? 0 : 1200 + i * 700); }); } }, { threshold: .45 });
+      mo.observe(box);
+    } else ms.forEach(function (m) { set(m, true); });
+    ms.forEach(function (m) {
+      var t;
+      m.addEventListener('mouseenter', function () { if (!m.classList.contains('fixed') || still) return; set(m, false); clearTimeout(t); t = setTimeout(function () { set(m, true); }, 900); });
+      m.addEventListener('click', function () { clearTimeout(t); set(m, !m.classList.contains('fixed')); });
+    });
+  });
 
   // ---------- Industries: tabs swap the five senses, auto-advance until touched
   $('[data-ind]').forEach(function (box) {

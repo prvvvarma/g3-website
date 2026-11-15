@@ -426,3 +426,43 @@ h1, h2, h3 { font-family: var(--head); font-weight: 600; letter-spacing: -.045em
 .lights.on .blk rect { fill: #CBD3DF; stroke: #B3BCCB; }
 .lights.on .blk[style*="--z:5"] rect { fill: #FFFFFF; stroke: #B9C2D0; }
 .lights:not(.on) .floor .wall { stroke: #3A4150; } .lights:not(.on) .blk[style*="--z:5"] rect { stroke: #454D5E; }
+
+/* ===== Problem meters ===== */
+.meters { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin-top: 40px; }
+.meter { display: flex; flex-direction: column; align-items: stretch; gap: 14px; text-align: left; padding: 26px 26px 28px; border-radius: 28px; background: var(--card); border: 1px solid var(--line); cursor: pointer; transition: border-color .5s, box-shadow .5s, transform .3s; --c: var(--coral); }
+.meter:hover { transform: translateY(-4px); box-shadow: 0 30px 60px -36px rgba(20,24,46,.35); }
+.meter.fixed { --c: #9ACD1E; border-color: #D9F28A; box-shadow: 0 0 0 4px rgba(212,255,90,.25); }
+.meter__k { font-family: var(--head); font-weight: 600; font-size: clamp(24px, 2.4vw, 32px); letter-spacing: -.035em; }
+.meter__viz { display: block; height: 130px; position: relative; border-radius: 18px; background: var(--bg); padding: 22px 18px; }
+.meter__s, .meter__d { display: grid; }
+.meter__s > span, .meter__d > span { grid-area: 1 / 1; transition: opacity .45s, transform .5s; }
+.meter__s { font-weight: 600; font-size: 18px; color: var(--ink); }
+.meter__s .a { color: #D8442A; }
+.meter__d { color: var(--mute); font-size: 15.5px; }
+.meter .b { opacity: 0; transform: translateY(8px); }
+.meter.fixed .a { opacity: 0; transform: translateY(-8px); }
+.meter.fixed .b { opacity: 1; transform: none; }
+/* timeline */
+.tl { display: block; position: relative; height: 26px; border-radius: 999px; background: #E6E9EF; margin-top: 18px; overflow: hidden; }
+.tl__bar { position: absolute; left: 0; top: 0; bottom: 0; width: 100%; border-radius: 999px; background: repeating-linear-gradient(-45deg, var(--c) 0 10px, color-mix(in srgb, var(--c) 80%, #fff) 10px 20px); transition: width 1.1s cubic-bezier(.2,.8,.2,1), background .5s; }
+.meter.fixed .tl__bar { width: 14%; background: var(--lime); box-shadow: 0 0 0 2px #0E0F14 inset; }
+.tl__ticks { display: flex; justify-content: space-between; margin-top: 12px; font-family: var(--mono); font-size: 11px; color: var(--mute); }
+.tl__ticks i { font-style: normal; }
+/* gauge */
+.m-cost .meter__viz { padding: 18px 18px 12px; display: flex; justify-content: center; align-items: center; }
+.m-cost svg { display: block; height: 96px; width: auto; max-width: 100%; overflow: visible; }
+.g-track { fill: none; stroke: #E6E9EF; stroke-width: 16; stroke-linecap: round; }
+.g-fill { fill: none; stroke: var(--c); stroke-width: 16; stroke-linecap: round; stroke-dasharray: 100; stroke-dashoffset: 6; transition: stroke-dashoffset 1.2s cubic-bezier(.2,.8,.2,1), stroke .5s; }
+.meter.fixed .g-fill { stroke-dashoffset: 76; stroke: #A8D62A; }
+.g-needle { stroke: var(--ink); stroke-width: 5; stroke-linecap: round; transform-origin: 100px 104px; transform: rotate(78deg); transition: transform 1.2s cubic-bezier(.3,1.3,.5,1); }
+.meter.fixed .g-needle { transform: rotate(-54deg); }
+.g-hub { fill: var(--ink); }
+/* progress */
+.pb { display: block; position: relative; height: 26px; border-radius: 999px; background: #E6E9EF; margin-top: 18px; overflow: hidden; }
+.pb__bar { position: absolute; left: 0; top: 0; bottom: 0; width: 80%; border-radius: 999px; background: repeating-linear-gradient(-45deg, var(--c) 0 10px, color-mix(in srgb, var(--c) 80%, #fff) 10px 20px); background-size: 28px 28px; animation: stuck 1s linear infinite; transition: width 1.1s cubic-bezier(.2,.8,.2,1), background .5s; }
+@keyframes stuck { to { background-position: 28px 0; } }
+.meter.fixed .pb__bar { width: 100%; background: var(--lime); animation: none; box-shadow: 0 0 0 2px #0E0F14 inset; }
+.pb__n { display: grid; margin-top: 12px; font-family: var(--mono); font-size: 12px; }
+.pb__n b { grid-area: 1 / 1; font-weight: 500; transition: opacity .4s; } .pb__n .a { color: #D8442A; }
+@media (max-width: 860px) { .meters { grid-template-columns: 1fr; } .meter__viz { height: 120px; } }
+@media (prefers-reduced-motion: reduce) { .pb__bar { animation: none; } }
