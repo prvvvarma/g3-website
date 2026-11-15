@@ -341,3 +341,7 @@ h1, h2, h3 { font-family: var(--head); font-weight: 600; letter-spacing: -.045em
 .p-market { box-shadow: 0 0 0 1px rgba(47,211,245,.35), 0 30px 70px -30px rgba(47,211,245,.45); background: #0A1A33; }
 .p-market::after { display: none; }
 .p-market img { object-position: 50% 50%; transform-origin: 50% 50%; }
+
+.p-voiceimg { box-shadow: 0 0 0 6px rgba(255,255,255,.6), 0 30px 60px -30px rgba(40,80,160,.45); }
+.p-voiceimg::after { display: none; }
+.p-voiceimg img { object-position: 50% 45%; transform-origin: 50% 50%; }
