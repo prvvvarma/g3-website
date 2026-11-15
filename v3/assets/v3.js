@@ -252,4 +252,26 @@
       window.open('https://wa.me/971559531612?text=' + encodeURIComponent(lines.join('\n')), '_blank', 'noopener');
     });
   }
+
+  // Product links preset the "What do you need?" field
+  document.querySelectorAll('[data-need]').forEach(function (a) {
+    a.addEventListener('click', function () { var sel = cf && cf.elements.interest; if (sel) sel.value = a.getAttribute('data-need'); });
+  });
+  // Product stack: a card settles back as the next one slides over it
+  var cards = [].slice.call(document.querySelectorAll('.stack .sc'));
+  if (cards.length && !still) {
+    var tick = false;
+    function depth() {
+      tick = false;
+      cards.forEach(function (c, i) {
+        var nx = cards[i + 1]; if (!nx) return;
+        var a = c.getBoundingClientRect(), b = nx.getBoundingClientRect();
+        var p = Math.min(1, Math.max(0, (a.bottom - b.top) / a.height));
+        c.style.transform = 'scale(' + (1 - p * .05).toFixed(4) + ')';
+        c.style.filter = p > .01 ? 'brightness(' + (1 - p * .12).toFixed(3) + ')' : '';
+      });
+    }
+    addEventListener('scroll', function () { if (!tick) { tick = true; requestAnimationFrame(depth); } }, { passive: true });
+    depth();
+  }
 })();
