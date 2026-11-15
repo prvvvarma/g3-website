@@ -9,7 +9,7 @@
 <meta name="description" content="Gi5.si builds and runs AI, blockchain and IoT for your business.">
 <link rel="icon" href="assets/favicon.svg">
 <link rel="preload" href="assets/fonts/geist-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="assets/v3.css?v=14">
+<link rel="stylesheet" href="assets/v3.css?v=16">
 </head>
 <body>
 <header class="top" id="top">
@@ -155,11 +155,28 @@
 <!-- 5 · CHANGE: guessing to knowing -->
 <section class="wrap" id="change">
   <h2>From guessing to knowing.</h2>
-  <div class="ba" data-ba>
-    <div class="ba__side ba__before"><h3>Guessing</h3><div><span>Sales</span><b>Known at month end</b></div><div><span>Fridge 3</span><b>Failed overnight</b></div><div><span>Phone calls</span><b>Missed after hours</b></div><div><span>Stock</span><b>Ran out on Friday</b></div></div>
-    <div class="ba__side ba__after" aria-hidden="true"><h3>Knowing</h3><div><span>Sales</span><b>Known right now</b></div><div><span>Fridge 3</span><b>Fixed before it failed</b></div><div><span>Phone calls</span><b>All answered</b></div><div><span>Stock</span><b>Reordered in time</b></div></div>
-    <div class="ba__knob" aria-hidden="true"><span>‹ ›</span></div>
-    <input type="range" min="0" max="100" value="8" aria-label="Drag from guessing to knowing">
+  <div class="lights" data-lights>
+    <div class="lights__stage">
+      <svg class="lights__map" viewBox="0 0 1000 520" aria-hidden="true">
+        <rect class="wall" x="16" y="16" width="968" height="488" rx="26"/>
+        <path class="wall" d="M16 196 H200 M240 196 H250 V16"/>
+        <rect class="fx" x="92" y="78" width="70" height="44" rx="8"/><circle class="fx" cx="127" cy="146" r="10"/>
+        <rect class="fx" x="300" y="90" width="380" height="40" rx="8"/><rect class="fx" x="300" y="186" width="380" height="40" rx="8"/><rect class="fx" x="300" y="282" width="380" height="40" rx="8"/><rect class="fx" x="868" y="56" width="84" height="72" rx="10"/><rect class="fx" x="868" y="148" width="84" height="72" rx="10"/><rect class="fx f3" x="868" y="240" width="84" height="72" rx="10"/><rect class="fx" x="868" y="332" width="84" height="72" rx="10"/>
+        <rect class="fx" x="96" y="388" width="130" height="46" rx="10"/><rect class="fx" x="286" y="388" width="130" height="46" rx="10"/>
+        <circle class="dot" cx="440" cy="411" r="9"/><circle class="dot" cx="470" cy="411" r="9"/><circle class="dot" cx="500" cy="411" r="9"/>
+        <path class="door" d="M600 504 H770"/>
+      </svg>
+      <div class="lights__dark" aria-hidden="true"></div>
+      <span class="q" style="left:13%;top:24%" aria-hidden="true">?</span><span class="q" style="left:49%;top:36%" aria-hidden="true">?</span><span class="q" style="left:91%;top:52%" aria-hidden="true">?</span><span class="q" style="left:35%;top:79%" aria-hidden="true">?</span><span class="q" style="left:69%;top:84%" aria-hidden="true">?</span>
+      <div class="lights__chips" aria-live="polite">
+        <div class="chip" style="left:4%;top:7%"><i></i><b>Calls</b><span>Every call answered</span></div>
+        <div class="chip" style="left:36%;top:20%"><i></i><b>Stock</b><span>Reordered on Thursday</span></div>
+        <div class="chip" style="left:63%;top:42%"><i class="warn"></i><b>Fridge 3</b><span>4.1 °C · fixed before it failed</span></div>
+        <div class="chip" style="left:20%;top:60%"><i></i><b>Till 2</b><span>Queue cleared · second till opened</span></div>
+        <div class="chip" style="left:56%;top:74%"><i></i><b>Sales today</b><span>AED <em data-to="18420">18,420</em> · live</span></div>
+      </div>
+    </div>
+    <button class="lights__switch" aria-pressed="false"><span class="sw2" aria-hidden="true"><i></i></span><span class="lbl">Switch on Gi5.si</span></button>
   </div>
 </section>
 
@@ -191,6 +208,6 @@
   <div class="foot__word" aria-hidden="true">Gi5<span></span>si</div>
   <div class="foot__base"><span>© 2026 Gi5.si. All rights reserved.</span><a href="#top">Back to top ↑</a></div>
 </footer>
-<script src="assets/v3.js?v=4"></script>
+<script src="assets/v3.js?v=5"></script>
 </body>
 </html>

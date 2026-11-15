@@ -126,6 +126,23 @@
     addEventListener('scroll', spy, { passive: true }); spy();
   }
 
+  // ---------- Lights on: guessing to knowing
+  $('[data-lights]').forEach(function (box) {
+    var stage = box.querySelector('.lights__stage'), btn = box.querySelector('.lights__switch'), lbl = btn.querySelector('.lbl'), used = false;
+    var num = box.querySelector('[data-to]');
+    function set(on) {
+      box.classList.toggle('on', on); btn.setAttribute('aria-pressed', on ? 'true' : 'false');
+      lbl.textContent = on ? 'Gi5.si is on' : 'Switch on Gi5.si';
+      if (on && num && !still) { var to = +num.getAttribute('data-to'), t0 = performance.now(); (function go(now) { var p = Math.min(1, (now - t0) / 1400); num.textContent = Math.round(to * (1 - Math.pow(1 - p, 3))).toLocaleString('en-US'); if (p < 1 && box.classList.contains('on')) requestAnimationFrame(go); })(t0); }
+    }
+    btn.addEventListener('click', function () { used = true; set(!box.classList.contains('on')); });
+    stage.addEventListener('pointermove', function (e) { var r = stage.getBoundingClientRect(); stage.style.setProperty('--mx', (e.clientX - r.left) + 'px'); stage.style.setProperty('--my', (e.clientY - r.top) + 'px'); });
+    if ('IntersectionObserver' in window) {
+      var lo = new IntersectionObserver(function (e) { if (e[0].isIntersecting) { lo.disconnect(); setTimeout(function () { if (!used) set(true); }, still ? 0 : 1600); } }, { threshold: .55 });
+      lo.observe(stage);
+    } else set(true);
+  });
+
   // ---------- Before / after
   $('[data-ba]').forEach(function (box) {
     var input = box.querySelector('input'), used = false;

@@ -345,3 +345,57 @@ h1, h2, h3 { font-family: var(--head); font-weight: 600; letter-spacing: -.045em
 .p-voiceimg { box-shadow: 0 0 0 6px rgba(255,255,255,.6), 0 30px 60px -30px rgba(40,80,160,.45); }
 .p-voiceimg::after { display: none; }
 .p-voiceimg img { object-position: 50% 45%; transform-origin: 50% 50%; }
+
+/* ===== Lights on: guessing to knowing ===== */
+.lights { margin-top: 40px; display: grid; justify-items: center; gap: 24px; }
+.lights__stage { position: relative; width: 100%; aspect-ratio: 1000 / 520; border-radius: 34px; overflow: hidden; background: #07080C; transition: background .9s ease; --mx: 50%; --my: 50%; box-shadow: 0 40px 80px -40px rgba(10,14,30,.55); }
+.lights__map { position: absolute; inset: 0; width: 100%; height: 100%; }
+.lights__map .wall { fill: none; stroke: #2A2F3A; stroke-width: 6; stroke-linecap: round; transition: stroke .9s; }
+.lights__map .fx { fill: #12151C; stroke: #2A2F3A; stroke-width: 3; transition: fill .9s, stroke .9s; }
+.lights__map .dot { fill: #2A2F3A; transition: fill .9s; }
+.lights__map .door { stroke: #07080C; stroke-width: 10; transition: stroke .9s; }
+.lights__dark { position: absolute; inset: 0; pointer-events: none; transition: opacity .9s;
+  background: radial-gradient(circle 150px at var(--mx) var(--my), rgba(7,8,12,0) 0, rgba(7,8,12,.55) 45%, rgba(7,8,12,.94) 75%); }
+.lights .q { position: absolute; transform: translate(-50%, -50%); font-family: var(--head); font-weight: 600; font-size: clamp(22px, 2.6vw, 34px); color: #5C6474; transition: opacity .5s; animation: qpulse 2.4s ease-in-out infinite; }
+.lights .q:nth-of-type(2n) { animation-delay: -1.2s; }
+@keyframes qpulse { 50% { opacity: .35; } }
+.lights__chips { position: absolute; inset: 0; pointer-events: none; }
+.chip { position: absolute; display: grid; grid-template-columns: auto 1fr; column-gap: 9px; align-items: center; padding: 10px 14px; border-radius: 16px;
+  background: rgba(255,255,255,.66); border: 1px solid rgba(255,255,255,.95); backdrop-filter: blur(16px) saturate(1.6); -webkit-backdrop-filter: blur(16px) saturate(1.6);
+  box-shadow: 0 18px 40px -20px rgba(20,24,46,.45), inset 0 1px 0 #fff; opacity: 0; transform: translateY(12px) scale(.96); transition: opacity .5s, transform .6s cubic-bezier(.2,.8,.2,1); }
+.chip i { grid-row: span 2; width: 10px; height: 10px; border-radius: 50%; background: #2BD46A; box-shadow: 0 0 0 4px rgba(43,212,106,.2); }
+.chip i.warn { background: var(--lime); box-shadow: 0 0 0 4px rgba(14,15,20,.12); }
+.chip b { font-family: var(--mono); font-size: 11.5px; font-weight: 500; letter-spacing: .06em; text-transform: uppercase; color: var(--mute); }
+.chip span { font-size: 15px; font-weight: 600; color: var(--ink); white-space: nowrap; } .chip em { font-style: normal; }
+/* On */
+.lights.on .lights__stage { background: linear-gradient(160deg, #FFFFFF, #EEF2F8); }
+.lights.on .lights__map .wall { stroke: #C9CFDA; }
+.lights.on .lights__map .fx { fill: #FFFFFF; stroke: #D3D8E2; }
+.lights.on .lights__map .fx.f3 { fill: #F5FFD9; stroke: #C9EC63; }
+.lights.on .lights__map .dot { fill: #C9CFDA; }
+.lights.on .lights__map .door { stroke: #EEF2F8; }
+.lights.on .lights__dark { opacity: 0; }
+.lights.on .q { opacity: 0; animation: none; }
+.lights.on .chip { opacity: 1; transform: none; }
+.lights.on .chip:nth-child(2) { transition-delay: .12s; } .lights.on .chip:nth-child(3) { transition-delay: .24s; } .lights.on .chip:nth-child(4) { transition-delay: .36s; } .lights.on .chip:nth-child(5) { transition-delay: .48s; }
+/* Switch */
+.lights__switch { display: inline-flex; align-items: center; gap: 14px; padding: 10px 24px 10px 10px; border-radius: 999px; background: var(--ink); color: #fff; font-weight: 600; font-size: 17px; transition: background .4s, color .4s, transform .2s; }
+.lights__switch:hover { transform: translateY(-2px); }
+.lights__switch .sw2 { position: relative; width: 62px; height: 34px; border-radius: 999px; background: rgba(255,255,255,.16); transition: background .4s; }
+.lights__switch .sw2 i { position: absolute; left: 4px; top: 4px; width: 26px; height: 26px; border-radius: 50%; background: #fff; transition: transform .45s cubic-bezier(.3,1.4,.5,1), background .4s; }
+.lights.on .lights__switch { background: var(--lime); color: var(--ink); }
+.lights.on .lights__switch .sw2 { background: rgba(14,15,20,.15); } .lights.on .lights__switch .sw2 i { transform: translateX(28px); background: var(--ink); }
+@media (max-width: 760px) {
+  .lights__stage { aspect-ratio: auto; display: flex; flex-direction: column; border-radius: 26px; }
+  .lights__map { position: relative; inset: auto; height: auto; aspect-ratio: 1000 / 520; }
+  .lights__dark { bottom: auto; height: 0; padding-bottom: 52%; }
+  .lights .q { top: auto !important; }
+  .lights .q { display: none; }
+  .lights__chips { position: relative; inset: auto; display: grid; gap: 8px; padding: 0 14px 14px; }
+  .chip { position: relative; left: auto !important; top: auto !important; }
+  .chip span { white-space: normal; font-size: 14px; }
+  .lights:not(.on) .lights__chips { max-height: 0; padding-bottom: 0; overflow: hidden; }
+}
+@media (prefers-reduced-motion: reduce) { .lights .q { animation: none; } }
+.lights:not(.on) .lights__map .wall { stroke: #353B48; } .lights:not(.on) .lights__map .fx { stroke: #353B48; fill: #141821; }
+.lights__dark { background: radial-gradient(circle 170px at var(--mx) var(--my), rgba(212,255,90,.07) 0, rgba(7,8,12,.35) 40%, rgba(7,8,12,.93) 78%); }
