@@ -72,7 +72,7 @@
   }
 
   // ---------- Reveals (and one-time animations inside tiles)
-  var rv = $('.wrap h2, .wrap .kick, .meter, .tile, .empathy, .ba, .ind, .end h2, .plan li');
+  var rv = $('.wrap h2, .svc h2, .gt, .team, .wrap .kick, .meter, .tile, .empathy, .ba, .ind, .end h2, .plan li');
   rv.forEach(function (el) { el.classList.add('rv'); });
   if ('IntersectionObserver' in window && !still) {
     var io = new IntersectionObserver(function (es) { es.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); } }); }, { rootMargin: '0px 0px -10% 0px' });
@@ -106,6 +106,44 @@
       m.addEventListener('click', function () { clearTimeout(t); set(m, !m.classList.contains('fixed')); });
     });
   });
+
+  // ---------- Services: tap to open on touch, live demos while in view
+  (function () {
+    var sec = document.getElementById('services'); if (!sec) return;
+    var tiles = $('.gt', sec), live = false;
+    tiles.forEach(function (t) {
+      var tog = function () { var o = t.getAttribute('aria-expanded') !== 'true'; tiles.forEach(function (x) { x.setAttribute('aria-expanded', 'false'); }); t.setAttribute('aria-expanded', o ? 'true' : 'false'); };
+      t.addEventListener('click', function (e) { if (matchMedia('(hover: hover)').matches) return; tog(); });
+      t.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); tog(); } });
+    });
+    if ('IntersectionObserver' in window) new IntersectionObserver(function (e) { live = e[0].isIntersecting; if (live) sec.classList.add('in'); }, { threshold: .2 }).observe(sec);
+    else { live = true; sec.classList.add('in'); }
+    // chat
+    var chat = sec.querySelector('[data-demo="chat"]'), convo = [['Where is order 1042?', 'Out for delivery. Arrives by 3 pm.'], ['Do you open on Friday?', 'Yes, 10 am to 11 pm.'], ['Can I change my booking?', 'Done. Moved to Saturday, 7 pm.'], ['Is the blue size M in stock?', 'Yes, 4 left at Dubai Mall.']], ci = 0, cs = 0;
+    function addMsg(text, me) { var s = document.createElement('span'); s.textContent = text; if (me) s.className = 'me'; chat.appendChild(s); while (chat.children.length > 4) chat.removeChild(chat.firstChild); }
+    addMsg(convo[0][0]); addMsg(convo[0][1], true); ci = 1;
+    // chain
+    var chain = sec.querySelector('[data-demo="chain"]'), hex = function () { return Math.random().toString(16).slice(2, 6) + '…' + Math.random().toString(16).slice(2, 4); };
+    function addBlock() { if (chain.children.length) { var l = document.createElement('i'); l.className = 'lnk'; chain.appendChild(l); } var b = document.createElement('div'); b.className = 'blk2'; b.innerHTML = '<code>' + hex() + '</code><b>✓ Sealed</b>'; chain.appendChild(b); while (chain.querySelectorAll('.blk2').length > 3) { chain.removeChild(chain.firstChild); if (chain.firstChild && chain.firstChild.className === 'lnk') chain.removeChild(chain.firstChild); } }
+    addBlock(); addBlock(); addBlock();
+    // iot
+    var fr = sec.querySelector('[data-s="fridge"]'), pw = sec.querySelector('[data-s="power"]'), tick = 0;
+    // security
+    var nb = sec.querySelector('[data-n]'), n = +nb.getAttribute('data-n');
+    if (still) return;
+    setInterval(function () {
+      if (!live) return; tick++;
+      // chat: alternate question and answer
+      if (cs === 0) { addMsg(convo[ci][0]); cs = 1; } else { addMsg(convo[ci][1], true); cs = 0; ci = (ci + 1) % convo.length; }
+      if (tick % 2 === 0) addBlock();
+      var phase = tick % 8;
+      if (phase === 5) { fr.classList.add('alert'); fr.querySelector('b').textContent = '7.8 °C'; fr.querySelector('i').textContent = 'Alert'; }
+      else if (phase === 7) { fr.classList.remove('alert'); fr.querySelector('b').textContent = '4.0 °C'; fr.querySelector('i').textContent = 'Fixed'; }
+      else if (phase < 5) { fr.querySelector('b').textContent = (3.9 + Math.random() * .4).toFixed(1) + ' °C'; fr.querySelector('i').textContent = 'OK'; }
+      pw.querySelector('b').textContent = (17.6 + Math.random() * 1.4).toFixed(1) + ' kW';
+      n += 1 + Math.floor(Math.random() * 4); nb.textContent = n.toLocaleString('en-US');
+    }, 1600);
+  })();
 
   // ---------- Industries: tabs swap the five senses, auto-advance until touched
   $('[data-ind]').forEach(function (box) {

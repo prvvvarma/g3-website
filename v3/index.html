@@ -9,7 +9,7 @@
 <meta name="description" content="Gi5.si builds and runs AI, blockchain and IoT for your business.">
 <link rel="icon" href="assets/favicon.svg">
 <link rel="preload" href="assets/fonts/geist-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="assets/v3.css?v=22">
+<link rel="stylesheet" href="assets/v3.css?v=24">
 </head>
 <body>
 <header class="top" id="top">
@@ -130,25 +130,47 @@
 </section>
 
 <!-- 4 · ANSWER: bento grid of services, each tile alive -->
-<section class="wrap" id="services">
-  <h2>One team for all of it.</h2>
-  <div class="bento">
-    <article class="tile t-ai">
-      <div class="tile__txt"><h3>AI</h3><p>Assistants and agents that do real work, every day.</p></div>
-      <div class="chat"><span>Where is order 1042?</span><span class="me">Out for delivery. Arrives by 3 pm.</span><span>Can I add one more item?</span><span class="me typing"><i></i><i></i><i></i></span></div>
-    </article>
-    <article class="tile t-bc">
-      <div class="tile__txt"><h3>Blockchain</h3><p>Records no one can argue with.</p></div>
-      <div class="chain"><i></i><b></b><i></i><b></b><i></i><b></b><i></i></div>
-    </article>
-    <article class="tile t-iot">
-      <div class="tile__txt"><h3>IoT</h3><p>See every site, live.</p></div>
-      <div class="pins"><i style="left:18%;top:34%"></i><i style="left:44%;top:66%"></i><i style="left:66%;top:28%"></i><i style="left:84%;top:60%"></i></div>
-    </article>
-    <article class="tile t-cs">
-      <div class="tile__txt"><h3>Cloud &amp; Security</h3><p>Up and safe, 24/7.</p></div>
-      <div class="up"><b>All systems running</b><div><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
-    </article>
+<section class="svc" id="services">
+  <div class="svc__glow" aria-hidden="true"></div>
+  <div class="svc__in">
+    <h2>One team for all of it.</h2>
+    <div class="team" aria-label="Your team">
+      <span>Consultants</span><i aria-hidden="true"></i><span>Architects</span><i aria-hidden="true"></i><span>Developers</span><i aria-hidden="true"></i><span>24/7 support</span>
+    </div>
+    <div class="team__bus" aria-hidden="true"><b></b></div>
+    <div class="svcg">
+      <article class="gt" tabindex="0" aria-expanded="false">
+        <div class="gt__top"><h3>AI</h3><span class="gt__plus" aria-hidden="true">+</span></div>
+        <p class="gt__line">Assistants and agents that do real work.</p>
+        <div class="gt__demo d-chat" data-demo="chat" aria-hidden="true"></div>
+        <ul class="gt__more"><li>Assistants and agents</li><li>Answers from your own data</li><li>Vision, voice and forecasts</li></ul>
+      </article>
+      <article class="gt" tabindex="0" aria-expanded="false">
+        <div class="gt__top"><h3>Blockchain</h3><span class="gt__plus" aria-hidden="true">+</span></div>
+        <p class="gt__line">Records no one can argue with.</p>
+        <div class="gt__demo d-chain" data-demo="chain" aria-hidden="true"></div>
+        <ul class="gt__more"><li>Smart contracts</li><li>Tokenised assets</li><li>Source-to-shelf tracing</li></ul>
+      </article>
+      <article class="gt" tabindex="0" aria-expanded="false">
+        <div class="gt__top"><h3>IoT</h3><span class="gt__plus" aria-hidden="true">+</span></div>
+        <p class="gt__line">Every site, live, on one screen.</p>
+        <div class="gt__demo d-iot" data-demo="iot" aria-hidden="true">
+          <div class="srow" data-s="fridge"><span>Fridge 3</span><b>4.1 °C</b><i>OK</i></div>
+          <div class="srow"><span>Door B</span><b>Closed</b><i>OK</i></div>
+          <div class="srow" data-s="power"><span>Power</span><b>18.2 kW</b><i>OK</i></div>
+        </div>
+        <ul class="gt__more"><li>Sensors and devices</li><li>Live dashboards</li><li>Alerts before failures</li></ul>
+      </article>
+      <article class="gt" tabindex="0" aria-expanded="false">
+        <div class="gt__top"><h3>Cloud &amp; Security</h3><span class="gt__plus" aria-hidden="true">+</span></div>
+        <p class="gt__line">Up and safe, around the clock.</p>
+        <div class="gt__demo d-sec" data-demo="sec" aria-hidden="true">
+          <p class="big"><b data-n="1284">1,284</b><span>threats blocked today</span></p>
+          <p class="ok"><i></i>All systems running · 99.99%</p>
+        </div>
+        <ul class="gt__more"><li>Cloud build and migration</li><li>Security testing</li><li>24/7 monitoring</li></ul>
+      </article>
+    </div>
   </div>
 </section>
 
@@ -227,6 +249,6 @@
   <div class="foot__word" aria-hidden="true">Gi5<span></span>si</div>
   <div class="foot__base"><span>© 2026 Gi5.si. All rights reserved.</span><a href="#top">Back to top ↑</a></div>
 </footer>
-<script src="assets/v3.js?v=9"></script>
+<script src="assets/v3.js?v=10"></script>
 </body>
 </html>
