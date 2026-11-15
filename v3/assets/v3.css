@@ -224,7 +224,17 @@ h1, h2, h3 { font-family: var(--head); font-weight: 600; letter-spacing: -.045em
 .faq summary::after { content: "+"; font-size: 26px; line-height: .8; transition: transform .3s; } .faq details[open] summary::after { transform: rotate(45deg); }
 .faq p { color: var(--mute); padding-bottom: 22px; font-size: 17px; }
 
-.foot { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px 28px; padding: 30px var(--pad); border-top: 1px solid var(--line); color: var(--mute); font-size: 14px; }
+.foot { max-width: 1200px; margin: 0 auto; padding: clamp(56px, 7vw, 90px) var(--pad) 28px; color: var(--mute); overflow: hidden; }
+.foot__top { display: grid; grid-template-columns: 1.6fr 1fr 1fr; gap: 40px; }
+.foot__brand p { margin: 16px 0 24px; font-size: 18px; color: var(--ink); max-width: 18em; }
+.foot__col { display: flex; flex-direction: column; gap: 10px; font-size: 16px; }
+.foot__col h3 { font-family: var(--mono); font-size: 12.5px; font-weight: 500; letter-spacing: .06em; text-transform: uppercase; color: var(--mute); margin-bottom: 6px; }
+.foot__col a { color: var(--ink); transition: color .2s; width: max-content; } .foot__col a:hover { color: var(--mute); }
+.foot__word { font-family: var(--head); font-weight: 600; letter-spacing: -.06em; line-height: .8; font-size: clamp(90px, 22vw, 300px); color: #E3E5EB; margin: clamp(40px, 6vw, 80px) 0 0; user-select: none; white-space: nowrap; }
+.foot__word span { display: inline-block; width: .2em; height: .2em; margin: 0 .03em; border-radius: 50%; background: var(--lime); }
+.foot__base { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px 24px; padding-top: 22px; margin-top: 22px; border-top: 1px solid var(--line); font-size: 14px; }
+.foot__base a:hover { color: var(--ink); }
+@media (max-width: 760px) { .foot__top { grid-template-columns: 1fr 1fr; } .foot__brand { grid-column: 1 / -1; } }
 
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } .rv { opacity: 1; transform: none; } .chat span, .v-feed span, .v-cam i { opacity: 1 !important; transform: none !important; } .v-cam i { transform: translate(-50%, -50%) !important; } }
 
