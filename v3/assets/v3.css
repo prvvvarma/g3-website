@@ -320,3 +320,5 @@ h1, h2, h3 { font-family: var(--head); font-weight: 600; letter-spacing: -.045em
 .sc:hover .p-photo img { transform: scale(1.08); }
 .p-photo .proof { position: absolute; left: 16px; bottom: 16px; z-index: 1; box-shadow: 0 8px 20px -8px rgba(0,0,0,.5); }
 @media (max-width: 860px) { .p-photo { min-height: 0; aspect-ratio: 4 / 3; } }
+.p-photo { box-shadow: 0 0 0 6px rgba(255,255,255,.6), 0 30px 60px -30px rgba(60,40,140,.45); }
+.p-photo::after { content: ""; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(200deg, rgba(236,232,255,.0) 55%, rgba(91,61,245,.18)); }
