@@ -117,8 +117,11 @@ h1, h2, h3 { font-family: var(--head); font-weight: 600; letter-spacing: -.045em
 }
 
 /* Logos */
-.logos { padding: 30px var(--pad) 10px; text-align: center; }
-.logos__row { display: flex; flex-wrap: wrap; justify-content: center; gap: 18px clamp(28px, 5vw, 64px); font-family: var(--head); font-size: clamp(20px, 2vw, 26px); font-weight: 700; color: #9A9EAA; letter-spacing: -.02em; }
+.logos { padding: 34px 0 10px; overflow: hidden; -webkit-mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent); mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent); }
+.logos__track { display: flex; width: max-content; animation: logos 32s linear infinite; }
+.logos:hover .logos__track { animation-play-state: paused; }
+@keyframes logos { to { transform: translateX(-50%); } }
+.logos__row { display: flex; flex-wrap: nowrap; align-items: center; gap: clamp(40px, 5vw, 72px); padding-right: clamp(40px, 5vw, 72px); font-family: var(--head); font-size: clamp(20px, 2vw, 26px); font-weight: 700; color: #9A9EAA; letter-spacing: -.02em; }
 .logos__row .s { font-family: var(--mono); font-weight: 500; letter-spacing: .18em; font-size: .78em; align-self: center; }
 
 /* Sections */
