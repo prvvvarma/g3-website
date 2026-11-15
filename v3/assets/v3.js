@@ -67,7 +67,7 @@
   }
 
   // ---------- Reveals (and one-time animations inside tiles)
-  var rv = $('.wrap h2, .wrap .kick, .pain, .tile, .empathy, .ba, .faq details, .end h2, .plan li');
+  var rv = $('.wrap h2, .wrap .kick, .pain, .tile, .empathy, .ba, .ind, .end h2, .plan li');
   rv.forEach(function (el) { el.classList.add('rv'); });
   if ('IntersectionObserver' in window && !still) {
     var io = new IntersectionObserver(function (es) { es.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); } }); }, { rootMargin: '0px 0px -10% 0px' });
@@ -86,6 +86,27 @@
     }, { threshold: .5 });
     pio.observe(document.querySelector('.pains'));
   }
+
+  // ---------- Industries: tabs swap the five senses, auto-advance until touched
+  $('[data-ind]').forEach(function (box) {
+    var tabs = $('.ind__tab', box), card = box.querySelector('.ind__card'), list = box.querySelector('.ind__list');
+    var nEl = box.querySelector('.ind__n'), lEl = box.querySelector('.ind__l'), btn = box.querySelector('.ind__head .btn');
+    var tpl = $('template', box), cur = 0, used = false;
+    function show(i) {
+      cur = i; tabs.forEach(function (t, j) { t.classList.toggle('on', j === i); t.setAttribute('aria-selected', j === i ? 'true' : 'false'); });
+      var t = tpl[i]; card.classList.add('swap');
+      setTimeout(function () {
+        nEl.textContent = t.getAttribute('data-name'); lEl.textContent = t.getAttribute('data-line');
+        btn.textContent = 'Talk about ' + t.getAttribute('data-name').toLowerCase();
+        list.innerHTML = t.innerHTML; card.classList.remove('swap');
+      }, still ? 0 : 180);
+      // restart the tab progress bar
+      var on = tabs[i]; on.classList.remove('on'); void on.offsetWidth; on.classList.add('on');
+    }
+    tabs.forEach(function (t, i) { t.addEventListener('click', function () { used = true; box.classList.add('used'); show(i); t.scrollIntoView({ block: 'nearest', inline: 'center', behavior: 'smooth' }); }); });
+    if (!still) setInterval(function () { var r = box.getBoundingClientRect(); if (!used && r.top < innerHeight * .8 && r.bottom > innerHeight * .2) show((cur + 1) % tabs.length); }, 5000);
+    else box.classList.add('used');
+  });
 
   // ---------- Before / after
   $('[data-ba]').forEach(function (box) {

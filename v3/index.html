@@ -8,8 +8,8 @@
 <title>Gi5.si · AI, blockchain and IoT for your business</title>
 <meta name="description" content="Gi5.si builds and runs AI, blockchain and IoT for your business.">
 <link rel="icon" href="assets/favicon.svg">
-<link rel="preload" href="assets/fonts/bricolage-grotesque-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="assets/v3.css?v=1">
+<link rel="preload" href="assets/fonts/geist-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="assets/v3.css?v=2">
 </head>
 <body>
 <header class="top">
@@ -17,7 +17,7 @@
     <svg viewBox="0 0 100 100" width="32" height="32" aria-hidden="true"><polygon points="50,8 90,37 75,84 25,84 10,37" fill="#0E0F14"/><circle cx="50" cy="51" r="14" fill="#D4FF5A"/></svg>
     <span>Gi5<em>.si</em></span>
   </a>
-  <nav class="menu" aria-label="Main"><a href="#senses">What it does</a><a href="#services">Services</a><a href="#products">Products</a><a href="#change">Results</a><a href="#faq">Questions</a></nav>
+  <nav class="menu" aria-label="Main"><a href="#senses">What it does</a><a href="#services">Services</a><a href="#products">Products</a><a href="#industries">Industries</a><a href="#change">Results</a></nav>
   <a class="btn btn--ink" href="#call">Book a call</a>
 </header>
 
@@ -98,7 +98,22 @@
   <p class="empathy">Good ideas stall without the right people. We've seen it, and we built Gi5.si to fix it.</p>
 </section>
 
-<!-- 3 · ANSWER: bento grid of services, each tile alive -->
+
+<!-- 3 · WHO IT'S FOR: industries retune the five senses -->
+<section class="wrap" id="industries">
+  <p class="kick">Built for your industry</p>
+  <h2>Pick your business. See what changes.</h2>
+  <div class="ind" data-ind>
+    <div class="ind__tabs" role="tablist" aria-label="Industries"><button class="ind__tab on" role="tab" aria-selected="true" data-k="retail">Retail</button><button class="ind__tab" role="tab" aria-selected="false" data-k="hospitality">Hospitality</button><button class="ind__tab" role="tab" aria-selected="false" data-k="logistics">Logistics</button><button class="ind__tab" role="tab" aria-selected="false" data-k="realestate">Real estate</button><button class="ind__tab" role="tab" aria-selected="false" data-k="healthcare">Healthcare</button><button class="ind__tab" role="tab" aria-selected="false" data-k="government">Government</button></div>
+    <div class="ind__card" aria-live="polite">
+      <div class="ind__head"><p class="ind__n">Retail</p><h3 class="ind__l">Shorter queues. Fuller shelves.</h3><a class="btn btn--ink" href="#call">Talk about retail</a></div>
+      <ol class="ind__list"><li><b>See</b><span>Queues and footfall, counted live</span></li><li><b>Hear</b><span>Customer calls answered</span></li><li><b>Touch</b><span>Fridges and freezers watched</span></li><li><b>Smell</b><span>Theft and stock loss flagged</span></li><li><b>Taste</b><span>Products suggested to each shopper</span></li><li><b>Remember</b><span>Supplier records sealed</span></li></ol>
+    </div>
+    <template data-k="retail" data-name="Retail" data-line="Shorter queues. Fuller shelves."><li><b>See</b><span>Queues and footfall, counted live</span></li><li><b>Hear</b><span>Customer calls answered</span></li><li><b>Touch</b><span>Fridges and freezers watched</span></li><li><b>Smell</b><span>Theft and stock loss flagged</span></li><li><b>Taste</b><span>Products suggested to each shopper</span></li><li><b>Remember</b><span>Supplier records sealed</span></li></template><template data-k="hospitality" data-name="Hospitality" data-line="Happier guests. Lower bills."><li><b>See</b><span>Lobby and check-in flow</span></li><li><b>Hear</b><span>Room-service calls in any language</span></li><li><b>Touch</b><span>AC, minibar and energy tracked</span></li><li><b>Smell</b><span>Leaks and faults caught early</span></li><li><b>Taste</b><span>Guest preferences remembered</span></li><li><b>Remember</b><span>Bookings and payments sealed</span></li></template><template data-k="logistics" data-name="Logistics" data-line="Every parcel, on time, provable."><li><b>See</b><span>Parcels checked for damage</span></li><li><b>Hear</b><span>Driver and customer calls handled</span></li><li><b>Touch</b><span>Cold-chain temperature, live</span></li><li><b>Smell</b><span>Delays spotted before they hit</span></li><li><b>Taste</b><span>Smarter delivery slots</span></li><li><b>Remember</b><span>Proof of every handover</span></li></template><template data-k="realestate" data-name="Real estate" data-line="Buildings that look after themselves."><li><b>See</b><span>Parking and access, by camera</span></li><li><b>Hear</b><span>Tenant requests by voice</span></li><li><b>Touch</b><span>Lifts, water and power metered</span></li><li><b>Smell</b><span>Repairs before breakdowns</span></li><li><b>Taste</b><span>Offers tenants actually use</span></li><li><b>Remember</b><span>Leases and payments that can’t be changed</span></li></template><template data-k="healthcare" data-name="Healthcare" data-line="Less waiting. Safer care."><li><b>See</b><span>Waiting-room flow</span></li><li><b>Hear</b><span>Appointment calls answered</span></li><li><b>Touch</b><span>Medicine fridges watched</span></li><li><b>Smell</b><span>Cyber threats blocked</span></li><li><b>Taste</b><span>Reminders patients act on</span></li><li><b>Remember</b><span>Secure record history</span></li></template><template data-k="government" data-name="Government" data-line="Faster services. Total trust."><li><b>See</b><span>Service-centre queues</span></li><li><b>Hear</b><span>Citizen calls, 24/7</span></li><li><b>Touch</b><span>Smart building sensors</span></li><li><b>Smell</b><span>Cyber attacks stopped</span></li><li><b>Taste</b><span>Services suggested to citizens</span></li><li><b>Remember</b><span>Permits that can’t be faked</span></li></template>
+  </div>
+</section>
+
+<!-- 4 · ANSWER: bento grid of services, each tile alive -->
 <section class="wrap" id="services">
   <p class="kick">The answer</p>
   <h2>One team for all of it.</h2>
@@ -167,17 +182,6 @@
   <a class="btn btn--lime btn--lg" href="mailto:hello@gggtech.io">Book a call</a>
 </section>
 
-<section class="wrap wrap--narrow" id="faq">
-  <p class="kick">Questions</p>
-  <h2>Quick answers.</h2>
-  <div class="faq">
-    <details><summary>Do I need my own tech team?</summary><p>No. We bring the consultants, architects and developers.</p></details>
-    <details><summary>How fast can we start?</summary><p>After the first call you get a clear plan. Work starts when you approve it.</p></details>
-    <details><summary>What does it cost?</summary><p>It depends on what you need. You see the price in the plan before any work begins.</p></details>
-    <details><summary>Who runs it after launch?</summary><p>We do, or we hand it to your team when you're ready.</p></details>
-  </div>
-  <p class="small">Sample answers · to be confirmed</p>
-</section>
 </main>
 
 <footer class="foot">
@@ -185,6 +189,6 @@
   <span>Dubai, UAE · hello@gggtech.io · +971 4 000 0000</span>
   <span>Preview · sample content</span>
 </footer>
-<script src="assets/v3.js?v=1"></script>
+<script src="assets/v3.js?v=2"></script>
 </body>
 </html>
