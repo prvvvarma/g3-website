@@ -13,7 +13,7 @@
     orbit.addEventListener('pointermove', function (e) { if (down || e.pointerType !== 'mouse') return; var r = orbit.getBoundingClientRect(); ttx = ((e.clientX - r.left) / r.width - .5) * 2; tty = ((e.clientY - r.top) / r.height - .5) * 2; });
     orbit.addEventListener('pointerleave', function () { ttx = tty = 0; });
 
-    function size() { var w = orbit.clientWidth; R = w > 900 ? 380 : w > 700 ? 300 : Math.min(250, w * .64); }
+    function size() { var w = orbit.clientWidth; R = w > 1100 ? 440 : w > 900 ? 380 : w > 700 ? 300 : Math.min(250, w * .64); }
     size(); addEventListener('resize', size);
 
     function setFront(i) {
@@ -35,6 +35,7 @@
         var k = Math.pow(f, 3);
         p.style.transform = 'translate(-50%,-50%) perspective(1300px) translate3d(' + x.toFixed(1) + 'px,' + ((1 - f) * -26).toFixed(1) + 'px,' + z.toFixed(1) + 'px) rotateY(' + (s * -38 + tx * 8 * k).toFixed(2) + 'deg) rotateX(' + (-ty * 6 * k).toFixed(2) + 'deg)';
         p.style.zIndex = Math.round(f * 100);
+        p.style.filter = f > .97 ? 'none' : 'blur(' + ((1 - f) * (wide ? 3.2 : 5)).toFixed(2) + 'px) saturate(' + (.75 + f * .25).toFixed(2) + ')';
         var o = Math.max(0, (f - .2) / .8); p.style.opacity = (wide ? Math.pow(o, 1.1) : Math.pow(o, 4)).toFixed(3); p.style.visibility = o < .02 ? 'hidden' : 'visible';
       }
       var idx = ((Math.round(-ang / step) % n) + n) % n; setFront(idx);
@@ -229,4 +230,26 @@
     }, { threshold: .6 });
     o.observe(box);
   });
+
+  // Contact form: builds a WhatsApp message to the footer number
+  var cf = document.getElementById('contact');
+  if (cf) {
+    var industry = '';
+    document.querySelectorAll('a[href="#call"]').forEach(function (a) {
+      a.addEventListener('click', function () {
+        industry = a.closest('.ind') ? (document.querySelector('.ind__n') || {}).textContent || '' : '';
+        setTimeout(function () { try { cf.elements.name.focus({ preventScroll: true }); } catch (e) {} }, 700);
+      });
+    });
+    cf.addEventListener('submit', function (e) {
+      e.preventDefault();
+      cf.classList.add('tried');
+      if (!cf.checkValidity()) { var bad = cf.querySelector(':invalid'); if (bad) bad.focus(); return; }
+      var f = cf.elements, lines = ["Hi Gi5.si, I'd like to book a call.", '', 'Name: ' + f.name.value.trim(), 'Email: ' + f.email.value.trim()];
+      if (f.company.value.trim()) lines.push('Company: ' + f.company.value.trim());
+      if (industry) lines.push('Industry: ' + industry);
+      lines.push('Need: ' + f.interest.value, '', f.message.value.trim());
+      window.open('https://wa.me/971559531612?text=' + encodeURIComponent(lines.join('\n')), '_blank', 'noopener');
+    });
+  }
 })();

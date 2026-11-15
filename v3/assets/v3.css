@@ -536,3 +536,51 @@ h1, h2, h3 { font-family: var(--head); font-weight: 600; letter-spacing: -.045em
 .d-chain .blk2 code, .d-chain .blk2 b { font-size: 9.5px; }
 .srow { padding: 7px 9px; font-size: 11.5px; } .srow b { font-size: 11.5px; } .srow i { font-size: 9.5px; padding: 2px 6px; }
 .d-sec .big b { font-size: 30px; } .d-sec .big span, .d-sec .ok { font-size: 11.5px; }
+
+/* ---------- Closing panel with WhatsApp form ---------- */
+.end { text-align: left; padding: clamp(40px, 6vw, 80px) clamp(22px, 5vw, 72px); }
+.end__grid { display: grid; grid-template-columns: 1fr 1.05fr; gap: clamp(32px, 5vw, 72px); align-items: center; max-width: 1180px; margin: 0 auto; }
+.end h2 { margin: 0; font-size: clamp(40px, 5.4vw, 80px); max-width: none; text-wrap: balance; }
+.end .plan { justify-content: flex-start; margin: 32px 0 0; flex-direction: column; align-items: flex-start; gap: 10px; }
+.end .plan li { font-size: 15.5px; }
+.end__direct { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 22px; margin-top: 34px; }
+.end__phone { font-size: clamp(22px, 2.2vw, 30px); font-weight: 600; letter-spacing: -.02em; }
+.end__phone:hover { color: var(--lime); }
+.end__wa { display: inline-flex; align-items: center; gap: 8px; font-weight: 600; font-size: 15px; padding-bottom: 4px; border-bottom: 1px solid rgba(255,255,255,.35); }
+.end__wa svg, .cf button svg { width: 18px; height: 18px; }
+.end__wa:hover { color: var(--lime); border-color: var(--lime); }
+.end .btn { margin-top: 0; }
+.cf { position: relative; display: grid; gap: 16px; padding: clamp(22px, 3vw, 34px); border-radius: 28px; background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.16); backdrop-filter: blur(18px) saturate(140%); -webkit-backdrop-filter: blur(18px) saturate(140%); box-shadow: inset 0 1px 0 rgba(255,255,255,.18), 0 40px 70px -30px rgba(0,0,0,.6); }
+.cf__row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.cf label { display: grid; gap: 7px; font-size: 13px; font-weight: 600; color: rgba(255,255,255,.78); }
+.cf input, .cf select, .cf textarea { width: 100%; font: inherit; font-size: 15.5px; font-weight: 400; color: #fff; background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.16); border-radius: 14px; padding: 13px 14px; transition: border-color .2s, background .2s; }
+.cf textarea { resize: vertical; min-height: 96px; }
+.cf select { appearance: none; -webkit-appearance: none; padding-right: 40px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%23fff' stroke-width='1.8' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 16px center; }
+.cf select:invalid { color: rgba(255,255,255,.5); }
+.cf option { color: var(--ink); background: #fff; }
+.cf ::placeholder { color: rgba(255,255,255,.45); }
+.cf input:focus, .cf select:focus, .cf textarea:focus { outline: none; border-color: var(--lime); background: rgba(255,255,255,.1); }
+.cf.tried :invalid { border-color: var(--coral); }
+.cf__send { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 18px; margin-top: 4px; }
+.cf__send small { font-size: 13px; color: rgba(255,255,255,.6); }
+@media (max-width: 900px) {
+  .end__grid { grid-template-columns: 1fr; }
+  .end h2 { font-size: clamp(36px, 9vw, 56px); }
+  .end .plan { flex-direction: row; flex-wrap: wrap; margin-top: 24px; }
+  .end .plan li { font-size: 14px; padding: 8px 14px 8px 8px; } .end .plan b { width: 24px; height: 24px; font-size: 12px; }
+}
+@media (max-width: 560px) { .cf__row { grid-template-columns: 1fr; } .cf .btn { width: 100%; } .cf__send small { width: 100%; text-align: center; } }
+
+/* ---------- Hero cards: live status and stronger front card ---------- */
+.gp header::after { content: "Live"; margin-left: auto; display: inline-flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: 10.5px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--mute); padding: 4px 9px 4px 20px; border-radius: 999px; background: rgba(255,255,255,.7); position: relative;
+  background-image: radial-gradient(circle at 10px 50%, #2BD46A 3.5px, transparent 4.5px); }
+.gp.front header::after { animation: livepulse 1.8s ease-in-out infinite; }
+@keyframes livepulse { 50% { background-image: radial-gradient(circle at 10px 50%, #2BD46A 3.5px, rgba(43,212,106,.25) 4.5px, transparent 7px); } }
+.gp.front { border-color: rgba(255,255,255,1); box-shadow: 0 60px 100px -36px rgba(20,24,46,.5), 0 0 0 1px rgba(255,255,255,.95), 0 0 0 7px rgba(212,255,90,.22), inset 0 1px 0 #fff; }
+.gp.front header b { background: var(--lime); color: var(--ink); }
+.gp > p { display: flex; align-items: center; gap: 8px; }
+.gp > p::before { content: ""; width: 18px; height: 18px; flex: none; border-radius: 50%; background: var(--ink) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='8' viewBox='0 0 10 8'%3E%3Cpath d='M1 4l3 3 5-6' fill='none' stroke='%23D4FF5A' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center no-repeat; }
+@media (min-width: 1101px) { .gp { width: 300px; height: 366px; } .orbit { height: 580px; } }
+@media (prefers-reduced-motion: reduce) { .gp.front header::after { animation: none; } }
+.lede { text-wrap: balance; }
+@media (min-width: 901px) { .end__grid { grid-template-columns: 1.15fr 1fr; } .end h2 { font-size: clamp(40px, 4.4vw, 64px); } }
