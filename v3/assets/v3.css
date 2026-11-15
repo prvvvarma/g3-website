@@ -1,8 +1,8 @@
 @font-face { font-family: "Geist"; src: url(fonts/geist-latin-wght-normal.woff2) format("woff2"); font-weight: 100 900; font-display: swap; }
 @font-face { font-family: "Geist Mono"; src: url(fonts/geist-mono-latin-wght-normal.woff2) format("woff2"); font-weight: 100 900; font-display: swap; }
 :root {
-  --bg: #F3F4F7; --card: #FFFFFF; --ink: #0E0F14; --mute: #545866; --line: #DFE2E9; --lime: #D4FF5A; --coral: #FF5A3C;
-  --hi: #FFFFFF; --lo: #D2D6DF; /* neumorphic light and shadow */
+  --bg: #F7F8FA; --card: #FFFFFF; --ink: #0E0F14; --mute: #545866; --line: #DFE2E9; --lime: #D4FF5A; --coral: #FF5A3C;
+  --hi: #FFFFFF; --lo: #D7DBE3; /* neumorphic light and shadow */
   --head: "Geist", system-ui, sans-serif; --body: "Geist", system-ui, sans-serif; --mono: "Geist Mono", ui-monospace, monospace;
   --pad: clamp(16px, 4vw, 48px); --r: 28px;
 }
@@ -305,3 +305,11 @@ h1, h2, h3 { font-family: var(--head); font-weight: 600; letter-spacing: -.045em
 
 @media (prefers-reduced-motion: reduce) { .ind__glow i { animation: none; } .gp.front::before { animation: none; } }
 .end::before, .end::after { z-index: 0; } .end > * { z-index: 1; }
+
+/* Brighter header: white glass, ink links, lime marker on the current section */
+.top { background: rgba(255,255,255,.82); border-color: #fff; box-shadow: 0 18px 40px -24px rgba(20,24,46,.28), inset 0 1px 0 #fff; }
+.menu { color: var(--ink); font-weight: 500; }
+.menu a { position: relative; padding: 6px 2px; transition: opacity .2s; }
+.menu a:hover { opacity: .65; color: var(--ink); }
+.menu a::after { content: ""; position: absolute; left: 50%; bottom: -6px; width: 7px; height: 7px; border-radius: 50%; background: var(--lime); box-shadow: 0 0 0 1.5px var(--ink); transform: translateX(-50%) scale(0); transition: transform .3s cubic-bezier(.3,1.4,.5,1); }
+.menu a.on::after { transform: translateX(-50%) scale(1); }

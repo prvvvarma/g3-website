@@ -115,6 +115,17 @@
     else box.classList.add('used');
   });
 
+  // ---------- Menu: lime marker on the section in view
+  var links = $('.menu a');
+  if (links.length) {
+    var spy = function () {
+      var y = innerHeight * .4, cur = null;
+      links.forEach(function (a) { var s = document.querySelector(a.getAttribute('href')); if (s && s.getBoundingClientRect().top <= y && s.getBoundingClientRect().bottom > y) cur = a; });
+      links.forEach(function (a) { a.classList.toggle('on', a === cur); if (a === cur) a.setAttribute('aria-current', 'true'); else a.removeAttribute('aria-current'); });
+    };
+    addEventListener('scroll', spy, { passive: true }); spy();
+  }
+
   // ---------- Before / after
   $('[data-ba]').forEach(function (box) {
     var input = box.querySelector('input'), used = false;
