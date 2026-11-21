@@ -22,3 +22,10 @@
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape') setM(false); });
   }
 })();
+// How it works: steps light up in order when the section comes into view
+(function () {
+  var how = document.getElementById('how'); if (!how) return;
+  if (!('IntersectionObserver' in window)) { how.classList.add('in'); return; }
+  var io = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { how.classList.add('in'); io.disconnect(); } }); }, { threshold: .3 });
+  io.observe(how);
+})();

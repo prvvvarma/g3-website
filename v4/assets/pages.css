@@ -166,3 +166,31 @@
 .gt__go a:hover, .gt__go a:focus-visible, .gt:hover .gt__go a, .gt[aria-expanded="true"] .gt__go a { background: #F2F1F7; color: #0A0A11; border-color: #F2F1F7; }
 .gt__go a { white-space: nowrap; }
 @media (min-width: 601px) and (max-width: 1100px) { .svcg { grid-template-columns: 1fr 1fr; } }
+
+/* ---- How it works (homepage) ---- */
+.how__steps { list-style: none; padding: 0; margin-top: 44px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; position: relative; }
+.how__steps::before { content: ""; position: absolute; left: 8%; right: 8%; top: 47px; height: 2px; border-radius: 2px; background: var(--grad); opacity: .9; transform: scaleX(0); transform-origin: left; transition: transform 1.4s cubic-bezier(.2,.8,.2,1) .2s; }
+.how.in .how__steps::before { transform: scaleX(1); }
+.how__steps li { position: relative; padding: 28px 26px 26px; border-radius: 28px; background: linear-gradient(160deg, #16151F, #111019); border: 1px solid rgba(255,255,255,.08);
+  opacity: .35; transform: translateY(16px); transition: opacity .6s, transform .7s cubic-bezier(.2,.8,.2,1), border-color .4s, box-shadow .4s; }
+.how.in .how__steps li { opacity: 1; transform: none; }
+.how.in .how__steps li:nth-child(2) { transition-delay: .45s; } .how.in .how__steps li:nth-child(3) { transition-delay: .9s; }
+.how__steps li:hover { border-color: transparent; background: linear-gradient(160deg, #19172A, #111019) padding-box, linear-gradient(140deg, #D9579A, #8D5BE3 50%, #58B6F2) border-box; box-shadow: 0 0 50px -18px rgba(141,91,227,.6); }
+.how__ic { position: relative; z-index: 1; width: 40px; height: 40px; border-radius: 13px; display: grid; place-items: center; color: #fff; background: var(--grad); box-shadow: 0 0 0 6px #121119, 0 10px 30px -8px rgba(141,91,227,.7); }
+.how__n { position: absolute; right: 26px; top: 30px; font-family: var(--mono); font-size: 13px; color: var(--mute); }
+.how__steps h3 { margin-top: 26px; font-size: clamp(22px, 2vw, 27px); font-weight: 600; letter-spacing: -.03em; color: #fff; }
+.how__steps p { margin-top: 10px; font-size: 16.5px; line-height: 1.5; color: #B9B7C8; max-width: 22em; }
+.how__steps em { display: inline-block; margin-top: 18px; padding: 6px 12px; border-radius: 999px; font-style: normal; font-size: 13px; color: #E4E2EE; background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.12); }
+.how__end { margin-top: 40px; font-size: clamp(26px, 3.2vw, 42px); font-weight: 300; letter-spacing: -.04em; }
+.how__end span { font-weight: 500; background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
+@media (max-width: 860px) {
+  .how__steps { grid-template-columns: 1fr; gap: 12px; }
+  .how__steps::before { left: 45px; right: auto; top: 40px; bottom: 40px; width: 2px; height: auto; transform: scaleY(0); transform-origin: top; }
+  .how.in .how__steps::before { transform: scaleY(1); }
+  .how__steps li { display: grid; grid-template-columns: 40px 1fr; column-gap: 16px; padding: 22px 20px; }
+  .how__ic { grid-row: span 3; }
+  .how__steps h3 { margin-top: 6px; } .how__n { top: 24px; right: 20px; }
+  .how__steps em { justify-self: start; }
+}
+@media (prefers-reduced-motion: reduce) { .how__steps li, .how__steps::before { opacity: 1 !important; transform: none !important; transition: none !important; } }
+#how, section[id] { scroll-margin-top: 110px; }
