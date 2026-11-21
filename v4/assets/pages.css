@@ -156,3 +156,13 @@
 @media (prefers-reduced-motion: reduce) { .spu.pre { opacity: 1; transform: none; } .vz *, .vz__h i { animation: none !important; } }
 
 .dd__panel { background: #15141F; width: 372px; }
+
+/* Explore buttons: always visible at the bottom of each service tile */
+.gt { display: flex; flex-direction: column; }
+.gt__go { display: flex; flex-wrap: wrap; gap: 10px; margin-top: auto; padding-top: 16px; position: relative; z-index: 2; }
+.gt__more { max-height: 0; }
+.gt:hover .gt__more, .gt[aria-expanded="true"] .gt__more { max-height: 220px; }
+.gt__go a { display: inline-flex; align-items: center; gap: 6px; padding: 9px 16px; border-radius: 999px; background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.18); color: #fff; font-weight: 600; font-size: 14px; transition: background .2s, color .2s, border-color .2s; }
+.gt__go a:hover, .gt__go a:focus-visible, .gt:hover .gt__go a, .gt[aria-expanded="true"] .gt__go a { background: #F2F1F7; color: #0A0A11; border-color: #F2F1F7; }
+.gt__go a { white-space: nowrap; }
+@media (min-width: 601px) and (max-width: 1100px) { .svcg { grid-template-columns: 1fr 1fr; } }
