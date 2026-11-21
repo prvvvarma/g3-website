@@ -170,7 +170,7 @@
   });
 
   // ---------- Menu: lime marker on the section in view
-  var links = $('.menu a');
+  var links = $('.menu a').filter(function (a) { return (a.getAttribute('href') || '').charAt(0) === '#'; });
   if (links.length) {
     var spy = function () {
       var y = innerHeight * .4, cur = null;
