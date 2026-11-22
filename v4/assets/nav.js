@@ -29,3 +29,12 @@
   var io = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { how.classList.add('in'); io.disconnect(); } }); }, { threshold: .3 });
   io.observe(how);
 })();
+
+/* "Back to top" and the logo on the homepage: always go right to the top */
+document.addEventListener('click', function (e) {
+  var a = e.target.closest && e.target.closest('a[href="#top"]'); if (!a) return;
+  e.preventDefault();
+  var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' });
+  if (history.replaceState) history.replaceState(null, '', location.pathname + location.search);
+});
