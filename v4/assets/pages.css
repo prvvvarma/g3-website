@@ -238,3 +238,11 @@
 .sp-problem .sp-problem__a { max-width: 40em; text-wrap: pretty; }
 .sp--contact .sp-hero--solo { padding-bottom: 8px; }
 .sp--contact .ct { margin-top: 24px; }
+/* How it works: tags line up at the bottom of every card */
+@media (min-width: 861px) {
+  .how__steps li { display: flex; flex-direction: column; align-items: flex-start; }
+  .how__steps em { margin-top: auto; }
+  .how__steps p { margin-bottom: 18px; }
+}
+/* Homepage closing panel: steps already shown in How it works */
+.how ~ .end--band .plan, body:not(.sp) .end--band .plan { display: none; }
