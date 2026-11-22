@@ -73,7 +73,7 @@
   }
 
   // ---------- Reveals (and one-time animations inside tiles)
-  var rv = $('.wrap h2, .svc h2, .gt, .team, .wrap .kick, .meter, .pcard, .tile, .empathy, .ba, .ind, .end h2, .plan li');
+  var rv = $('.wrap h2, .svc h2, .gt, .team, .wrap .kick, .meter, .pcard, .tr, .tile, .empathy, .ba, .ind, .end h2, .plan li');
   rv.forEach(function (el) { el.classList.add('rv'); });
   if ('IntersectionObserver' in window && !still) {
     var io = new IntersectionObserver(function (es) { es.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); } }); }, { rootMargin: '0px 0px -10% 0px' });
@@ -155,7 +155,7 @@
       cur = i; tabs.forEach(function (t, j) { t.classList.toggle('on', j === i); t.setAttribute('aria-selected', j === i ? 'true' : 'false'); });
       var T = [['#D4FF5A','#6F8CFF'],['#E6FF9A','#9BE8FF'],['#6F8CFF','#D4FF5A'],['#9BE8FF','#6F8CFF'],['#9BE8FF','#D4FF5A'],['#D4FF5A','#9BE8FF']][i % 6];
       box.style.setProperty('--g1', T[0]); box.style.setProperty('--g2', T[1]);
-      var t = tpl[i]; card.classList.add('swap');
+      var t = tpl[i]; card.classList.add('swap'); box.querySelectorAll('.ind__ph img').forEach(function (im, j) { im.classList.toggle('on', j === i); });
       setTimeout(function () {
         nEl.textContent = t.getAttribute('data-name'); lEl.textContent = t.getAttribute('data-line');
         btn.textContent = 'Talk about ' + t.getAttribute('data-name').toLowerCase();
