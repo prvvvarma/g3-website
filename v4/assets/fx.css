@@ -144,7 +144,7 @@ html { overflow-x: clip; }
 .has-img .sp-hero__img::after { background: linear-gradient(90deg, #0A0A11 0%, rgba(10,10,17,.85) 28%, rgba(10,10,17,.35) 55%, rgba(10,10,17,.15) 100%); }
 .hero-flip.has-img .sp-hero__img::after { background: linear-gradient(270deg, #0A0A11 0%, rgba(10,10,17,.85) 30%, rgba(10,10,17,.3) 58%, rgba(10,10,17,.1) 100%); }
 .hero-flip.has-img .sp-hero__viz { display: block; visibility: hidden; }
-.sp--iot .sp-hero__img { background-position: 30% center; }
+.sp--iot .sp-hero__img { background-position: 20% center; }
 .sp--security .sp-hero__img { left: calc(50% - 50vw); background-position: 75% 40%; }
 .sp--security .sp-hero__img::after { background: linear-gradient(90deg, #0A0A11 0%, rgba(10,10,17,.88) 30%, rgba(10,10,17,.2) 60%, rgba(10,10,17,.05) 100%); }
 .sp--security .has-img { background: none; }
