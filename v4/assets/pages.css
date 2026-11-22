@@ -287,3 +287,5 @@ body:not(.sp) main > section:last-of-type { padding-bottom: clamp(72px, 10vw, 14
 @media (max-width: 600px) { .wts:has(> .wt:nth-child(5)) { grid-template-columns: 1fr; } }
 .sc-rise { animation: scrise 2.6s ease-in-out infinite; } @keyframes scrise { 50% { transform: translateY(-6px); } }
 @media (prefers-reduced-motion: reduce) { .sc-rise { animation: none; } }
+.sc-spin { transform-origin: 120px 70px; animation: scspin 4s linear infinite; } @keyframes scspin { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) { .sc-spin { animation: none; } }
