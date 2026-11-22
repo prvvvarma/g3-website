@@ -73,7 +73,7 @@
   }
 
   // ---------- Reveals (and one-time animations inside tiles)
-  var rv = $('.wrap h2, .svc h2, .gt, .team, .wrap .kick, .meter, .tile, .empathy, .ba, .ind, .end h2, .plan li');
+  var rv = $('.wrap h2, .svc h2, .gt, .team, .wrap .kick, .meter, .pcard, .tile, .empathy, .ba, .ind, .end h2, .plan li');
   rv.forEach(function (el) { el.classList.add('rv'); });
   if ('IntersectionObserver' in window && !still) {
     var io = new IntersectionObserver(function (es) { es.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); } }); }, { rootMargin: '0px 0px -10% 0px' });
