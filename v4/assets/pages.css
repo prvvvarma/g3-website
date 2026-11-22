@@ -341,3 +341,12 @@ body:not(.sp) main > section:last-of-type { padding-bottom: clamp(72px, 10vw, 14
 .hero__film video, .hero__film img { filter: blur(2.5px) saturate(.95) brightness(.95); transform: scale(1.04); }
 /* One gradient word only (homepage hero). Everything else plain white. */
 .gw, .how__end span, .end h2 span { background: none !important; -webkit-background-clip: border-box !important; background-clip: border-box !important; color: inherit !important; font-weight: inherit !important; }
+
+/* ---- Problem cards (plain, no fake meters) ---- */
+.pcards { margin-top: 40px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+.pcard { padding: 28px 26px; border-radius: 26px; background: linear-gradient(160deg, #16151F, #111019); border: 1px solid rgba(255,255,255,.08); display: grid; align-content: start; gap: 10px; }
+.pcard__ic { width: 44px; height: 44px; border-radius: 14px; display: grid; place-items: center; color: #fff; background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.12); margin-bottom: 10px; }
+.pcard h3 { font-size: clamp(22px, 2vw, 26px); font-weight: 600; letter-spacing: -.03em; color: #fff; }
+.pcard p { font-size: 16.5px; line-height: 1.5; color: #B9B7C8; }
+.pcard .pcard__a { color: #fff; padding-top: 12px; border-top: 1px solid rgba(255,255,255,.08); }
+@media (max-width: 860px) { .pcards { grid-template-columns: 1fr; } }
