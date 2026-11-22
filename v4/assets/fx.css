@@ -166,3 +166,5 @@ html { overflow-x: clip; }
   .sp--security .has-img .sp-hero__img { left: calc(50% - 50vw + 36vw); transform: none; background-position: center 40%; }
   .sp--security .has-img .sp-hero__img::after { background: linear-gradient(90deg, #0A0A11 0%, rgba(10,10,17,.6) 18%, rgba(10,10,17,0) 40%); }
 }
+/* no hairline under the hero: the picture fades straight into the next section */
+.sp-hero.has-img + .sp-problem, .sp-hero + .sp-problem { border-top: 0; }
