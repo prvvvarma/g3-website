@@ -11,7 +11,8 @@
 <link rel="preload" href="../assets/fonts/geist-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="../assets/v3.css?v=32">
 <link rel="stylesheet" href="../assets/dark.css?v=4">
-<link rel="stylesheet" href="../assets/pages.css?v=22">
+<link rel="stylesheet" href="../assets/pages.css?v=23">
+<link rel="stylesheet" href="../assets/fx.css?v=2">
 </head>
 <body class="sp sp--cloud">
 <header class="top" id="top">
@@ -27,7 +28,8 @@
   </nav>
 </header>
 <main>
-<section class="sp-hero">
+<section class="sp-hero hero-full">
+  
   <div class="sp-hero__txt">
     <p class="crumb"><a href="../index.html#services">Services</a><span aria-hidden="true">/</span>ICT services<span aria-hidden="true">/</span>Cloud and infrastructure</p>
     <h1>Systems that <span class="gw">stay up</span>, and grow when you do.</h1>
@@ -36,7 +38,21 @@
   <div class="sp-hero__viz" aria-hidden="true"><div class="vz vz-up"><p class="vz__h"><i></i>All systems running</p><p class="vz__big"><b>99.99%</b><span>uptime, last 30 days</span></p><div class="bars" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="vz__chips"><span>On-premises</span><span>Cloud</span><span>Hybrid</span></div></div></div>
 </section>
 
-<section class="sp-problem spu"><p>One weak link can take everything offline.</p><p class="sp-problem__a">We've seen it, and we built Gi5.si to fix it.</p></section>
+<section class="sp-problem spu"><p>One weak link can take everything offline.</p><p class="sp-problem__a">We build it so nothing hangs on a single point of failure.</p></section>
+
+<section class="fx fx-cl spu" data-fx="cl">
+  <div class="fx__head"><p class="fx__k">Try it</p><h2>Pull the plug.</h2><p class="fx__sub">Knock out a server. Your customers won't notice.</p></div>
+  <div class="fxcl">
+    <div class="fxcl__users"><b class="fxcl__n">2,418</b><span>customers online</span></div>
+    <div class="fxcl__srv">
+      <button type="button" class="fxcl__s" aria-label="Unplug server A"><i></i><b>Server A</b><span>Running</span></button>
+      <button type="button" class="fxcl__s" aria-label="Unplug server B"><i></i><b>Server B</b><span>Running</span></button>
+      <button type="button" class="fxcl__s" aria-label="Unplug server C"><i></i><b>Server C</b><span>Running</span></button>
+    </div>
+    <div class="fxcl__up"><b>100%</b><span>uptime</span></div>
+    <p class="fxcl__msg" aria-live="polite">Tap a server to unplug it.</p>
+  </div>
+</section>
 
 <section class="sp-what" id="what">
   <h2 class="spu">What we do</h2>
@@ -88,7 +104,8 @@
   <div class="foot__word" aria-hidden="true">Gi5<span></span>si</div>
   <div class="foot__base"><span>© 2026 Gi5.si. All rights reserved.</span><a href="#top">Back to top ↑</a></div>
 </footer>
-<script src="../assets/nav.js?v=1"></script>
+<script src="../assets/nav.js?v=3"></script>
 <script src="../assets/page.js?v=4"></script>
+<script src="../assets/fx.js?v=2"></script>
 </body>
 </html>

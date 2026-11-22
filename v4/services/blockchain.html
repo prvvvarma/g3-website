@@ -11,7 +11,8 @@
 <link rel="preload" href="../assets/fonts/geist-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="../assets/v3.css?v=32">
 <link rel="stylesheet" href="../assets/dark.css?v=4">
-<link rel="stylesheet" href="../assets/pages.css?v=22">
+<link rel="stylesheet" href="../assets/pages.css?v=23">
+<link rel="stylesheet" href="../assets/fx.css?v=2">
 </head>
 <body class="sp sp--blockchain">
 <header class="top" id="top">
@@ -27,7 +28,8 @@
   </nav>
 </header>
 <main>
-<section class="sp-hero">
+<section class="sp-hero hero-band">
+  
   <div class="sp-hero__txt">
     <p class="crumb"><a href="../index.html#services">Services</a><span aria-hidden="true">/</span>Blockchain</p>
     <h1>Records <span class="gw">no one</span> can argue with.</h1>
@@ -36,7 +38,21 @@
   <div class="sp-hero__viz" aria-hidden="true"><div class="vz vz-chain"><div class="blk3"><code>8b1f…0b</code><b>✓ Sealed</b></div><i class="lk"></i><div class="blk3"><code>c2b4…1a</code><b>✓ Sealed</b></div><i class="lk"></i><div class="blk3 new"><code>9ea1…41</code><b>Sealing…</b></div></div></div>
 </section>
 
-<section class="sp-problem spu"><p>When partners keep separate records, disputes and delays follow.</p><p class="sp-problem__a">We've seen it, and we built Gi5.si to fix it.</p></section>
+<section class="sp-problem spu"><p>When partners keep separate records, disputes and delays follow.</p><p class="sp-problem__a">One shared record that every partner trusts ends the argument.</p></section>
+
+<section class="fx fx-bc spu" data-fx="bc">
+  <div class="fx__head"><p class="fx__k">Try it</p><h2>Try to change history.</h2><p class="fx__sub">Every partner holds the same chain. Change one record, and see what happens.</p></div>
+  <div class="fxbc">
+    <ol class="fxbc__chain">
+      <li><b>#1041</b><span>Order placed</span><code>a91f…</code></li>
+      <li><b>#1042</b><span>Payment received</span><code>c3e8…</code></li>
+      <li class="t"><b>#1043</b><span>Goods shipped</span><code>7bd2…</code></li>
+      <li><b>#1044</b><span>Delivered</span><code>e04a…</code></li>
+      <li><b>#1045</b><span>Invoice settled</span><code>5fc9…</code></li>
+    </ol>
+    <div class="fxbc__ctl"><button class="btn btn--ink" type="button">Change record #1043</button><p class="fxbc__msg" aria-live="polite">All 4 partners agree. Chain verified.</p></div>
+  </div>
+</section>
 
 <section class="sp-what" id="what">
   <h2 class="spu">What we do</h2>
@@ -102,7 +118,8 @@
   <div class="foot__word" aria-hidden="true">Gi5<span></span>si</div>
   <div class="foot__base"><span>© 2026 Gi5.si. All rights reserved.</span><a href="#top">Back to top ↑</a></div>
 </footer>
-<script src="../assets/nav.js?v=1"></script>
+<script src="../assets/nav.js?v=3"></script>
 <script src="../assets/page.js?v=4"></script>
+<script src="../assets/fx.js?v=2"></script>
 </body>
 </html>
