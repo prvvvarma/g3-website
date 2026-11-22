@@ -197,3 +197,44 @@
 .foot__addr { font-style: normal; line-height: 1.5; color: var(--mute); max-width: none; }
 .foot__addr a { display: inline; color: inherit; text-decoration: underline; text-decoration-color: rgba(255,255,255,.25); text-underline-offset: 3px; }
 .foot__addr a:hover { color: #fff; }
+
+/* ---- Slim closing band (homepage, service pages, about) ---- */
+.end--band { padding: clamp(36px, 5vw, 64px) clamp(22px, 5vw, 64px); }
+.band { display: grid; grid-template-columns: 1.3fr 1fr; gap: clamp(28px, 5vw, 64px); align-items: center; max-width: 1180px; margin: 0 auto; }
+.band h2 { margin: 0; font-size: clamp(36px, 4.4vw, 64px); }
+.band .plan { margin: 26px 0 0; justify-content: flex-start; flex-wrap: wrap; flex-direction: row; gap: 8px; }
+.band .plan li { font-size: 14.5px; }
+.band__act { display: grid; gap: 12px; justify-items: stretch; max-width: 360px; justify-self: end; width: 100%; }
+.band__act .btn { justify-content: center; gap: 10px; }
+.band__wa { color: #fff; }
+.band__or { text-align: center; font-size: 14px; color: var(--mute); }
+.band__or a { color: #fff; text-decoration: underline; text-decoration-color: rgba(255,255,255,.3); text-underline-offset: 3px; }
+@media (max-width: 860px) { .band { grid-template-columns: 1fr; } .band__act { justify-self: stretch; max-width: none; } }
+
+/* ---- Contact page ---- */
+.sp-hero--solo { grid-template-columns: 1fr; padding-bottom: clamp(24px, 4vw, 48px); }
+.ct { margin-bottom: clamp(56px, 8vw, 110px); }
+.ct__list { list-style: none; padding: 0; margin: 30px 0 0; display: grid; gap: 10px; }
+.ct__list a { display: grid; grid-template-columns: 44px 1fr; gap: 14px; align-items: center; padding: 12px 14px; border-radius: 18px; color: #fff; font-size: 16.5px; line-height: 1.4; border: 1px solid transparent; transition: background .2s, border-color .2s; }
+.ct__list a:hover { background: rgba(255,255,255,.05); border-color: rgba(255,255,255,.1); }
+.ct__list small { display: block; font-family: var(--mono); font-size: 11.5px; letter-spacing: .08em; text-transform: uppercase; color: var(--mute); margin-bottom: 2px; }
+.ct__ic { width: 44px; height: 44px; border-radius: 14px; display: grid; place-items: center; background: var(--grad); color: #fff; }
+
+/* ---- About page ---- */
+.vz-name { flex-direction: row; align-items: stretch; justify-content: center; gap: 10px; }
+.nm { flex: 1; display: grid; align-content: center; justify-items: center; gap: 10px; padding: 26px 10px; border-radius: 18px; background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.1); text-align: center; }
+.nm b { font-size: clamp(44px, 5vw, 66px); font-weight: 600; letter-spacing: -.05em; line-height: 1; background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.nm span { font-size: 14px; color: #D9D7E3; }
+.ab-cards { margin-top: 32px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+.ab-card { padding: 22px 20px; border-radius: 22px; background: linear-gradient(160deg, #16151F, #111019); border: 1px solid rgba(255,255,255,.08); }
+.ab-card b, .ab-why b { display: block; font-size: 19px; font-weight: 600; letter-spacing: -.02em; }
+.ab-card span, .ab-why span { display: block; margin-top: 6px; font-size: 15px; color: var(--mute); line-height: 1.45; }
+.ab-why { list-style: none; padding: 0; margin-top: 32px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+.ab-why li { padding: 22px 20px 22px; border-top: 2px solid transparent; border-image: var(--grad) 1; background: rgba(255,255,255,.03); }
+.sp--about .end, .sp--about .sp-how + .end { margin-top: clamp(24px, 4vw, 48px); }
+.sp main > .end:last-child { margin-bottom: clamp(56px, 8vw, 110px); }
+@media (max-width: 960px) { .ab-cards, .ab-why { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 560px) { .ab-cards, .ab-why { grid-template-columns: 1fr; } .nm { padding: 18px 6px; } .nm span { font-size: 12.5px; } }
+.sp-problem .sp-problem__a { max-width: 40em; text-wrap: pretty; }
+.sp--contact .sp-hero--solo { padding-bottom: 8px; }
+.sp--contact .ct { margin-top: 24px; }

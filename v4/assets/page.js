@@ -7,6 +7,8 @@
     ups.forEach(function (el) { el.classList.add('pre'); io.observe(el); });
   }
   var cf = document.getElementById('contact');
+  // Preselect "What do you need?" from ?need= (set by Book a call / Ask about it links)
+  if (cf) { try { var need = new URLSearchParams(location.search).get('need'); if (need) { var sel = cf.elements.interest; [].forEach.call(sel.options, function (o) { if (o.text === need) sel.value = o.value || o.text; }); } } catch (x) {} }
   if (cf) cf.addEventListener('submit', function (e) {
     e.preventDefault(); cf.classList.add('tried');
     if (!cf.checkValidity()) { var bad = cf.querySelector(':invalid'); if (bad) bad.focus(); return; }
