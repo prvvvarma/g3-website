@@ -252,3 +252,6 @@
 .dd__g { padding: 2px 12px 4px; font-family: var(--mono); font-size: 11.5px; font-weight: 500; letter-spacing: .1em; text-transform: uppercase; color: var(--mute); }
 .foot__sub { margin-top: 6px; font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--mute); }
 .foot__col .foot__ind { padding-left: 12px; border-left: 1px solid rgba(255,255,255,.14); }
+/* Pages end without a closing band: keep breathing room above the footer */
+.sp main > section:last-child { padding-bottom: clamp(64px, 9vw, 120px); }
+body:not(.sp) main > section:last-of-type { padding-bottom: clamp(72px, 10vw, 140px); }
