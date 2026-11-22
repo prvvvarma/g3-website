@@ -276,3 +276,5 @@ body:not(.sp) main > section:last-of-type { padding-bottom: clamp(72px, 10vw, 14
 @media (max-width: 600px) { .wts { grid-template-columns: 1fr; } }
 @media (prefers-reduced-motion: reduce) { .sc-draw { stroke-dashoffset: 0; animation: none !important; } .sc-pulse, .sc-flow { animation: none; } }
 .steps li:last-child b { white-space: nowrap; }
+.wt h3 { font-size: clamp(20px, 1.8vw, 23px); }
+.wt__p { margin: 10px 8px 0; font-size: 15px; line-height: 1.55; color: #B9B7C8; }
