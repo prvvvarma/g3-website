@@ -130,7 +130,7 @@
     // iot
     var fr = sec.querySelector('[data-s="fridge"]'), pw = sec.querySelector('[data-s="power"]'), tick = 0;
     // security
-    var nb = sec.querySelector('[data-n]'), n = +nb.getAttribute('data-n');
+    var nb = sec.querySelector('[data-n]'), n = nb ? +nb.getAttribute('data-n') : 0;
     if (still) return;
     setInterval(function () {
       if (!live) return; tick++;
@@ -142,7 +142,7 @@
       else if (phase === 7) { fr.classList.remove('alert'); fr.querySelector('b').textContent = '4.0 °C'; fr.querySelector('i').textContent = 'Fixed'; }
       else if (phase < 5) { fr.querySelector('b').textContent = (3.9 + Math.random() * .4).toFixed(1) + ' °C'; fr.querySelector('i').textContent = 'OK'; }
       pw.querySelector('b').textContent = (17.6 + Math.random() * 1.4).toFixed(1) + ' kW';
-      n += 1 + Math.floor(Math.random() * 4); nb.textContent = n.toLocaleString('en-US');
+      if (nb) { n += 1 + Math.floor(Math.random() * 4); nb.textContent = n.toLocaleString('en-US'); }
     }, 1600);
   })();
 
