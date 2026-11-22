@@ -338,3 +338,4 @@ body:not(.sp) main > section:last-of-type { padding-bottom: clamp(72px, 10vw, 14
 .hero__film video, .hero__film img { filter: saturate(.95) brightness(.95); }
 .hero__film::after { background: radial-gradient(42% 38% at 50% 30%, rgba(10,10,17,.62), rgba(10,10,17,.25) 70%, rgba(10,10,17,.2)), linear-gradient(180deg, rgba(10,10,17,.5) 0%, rgba(10,10,17,.12) 30%, rgba(10,10,17,.45) 70%, rgba(10,10,17,.95) 100%); }
 .hero .lede { color: #DCDAE6; text-shadow: 0 1px 12px rgba(10,10,17,.7); } .hero h1 { text-shadow: 0 2px 30px rgba(10,10,17,.45); }
+.hero__film video, .hero__film img { filter: blur(2.5px) saturate(.95) brightness(.95); transform: scale(1.04); }
