@@ -13,7 +13,7 @@
     var f = cf.elements, lines = ["Hi Gi5.si, I'd like to book a call.", '', 'Name: ' + f.name.value.trim(), 'Email: ' + f.email.value.trim()];
     if (f.company.value.trim()) lines.push('Company: ' + f.company.value.trim());
     lines.push('Need: ' + f.interest.value, '', f.message.value.trim());
-    window.open('https://wa.me/971559531612?text=' + encodeURIComponent(lines.join('\n')), '_blank', 'noopener');
+    window.open('https://wa.me/971504079974?text=' + encodeURIComponent(lines.join('\n')), '_blank', 'noopener');
   });
   document.querySelectorAll('a[href="#call"]').forEach(function (a) {
     a.addEventListener('click', function () { setTimeout(function () { try { cf.elements.name.focus({ preventScroll: true }); } catch (x) {} }, 700); });

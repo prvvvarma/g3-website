@@ -249,7 +249,7 @@
       if (f.company.value.trim()) lines.push('Company: ' + f.company.value.trim());
       if (industry) lines.push('Industry: ' + industry);
       lines.push('Need: ' + f.interest.value, '', f.message.value.trim());
-      window.open('https://wa.me/971559531612?text=' + encodeURIComponent(lines.join('\n')), '_blank', 'noopener');
+      window.open('https://wa.me/971504079974?text=' + encodeURIComponent(lines.join('\n')), '_blank', 'noopener');
     });
   }
 
