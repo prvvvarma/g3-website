@@ -350,3 +350,10 @@ body:not(.sp) main > section:last-of-type { padding-bottom: clamp(72px, 10vw, 14
 .pcard p { font-size: 16.5px; line-height: 1.5; color: #B9B7C8; }
 .pcard .pcard__a { color: #fff; padding-top: 12px; border-top: 1px solid rgba(255,255,255,.08); }
 @media (max-width: 860px) { .pcards { grid-template-columns: 1fr; } }
+
+/* ---- Industries: three plain outcomes (no senses) ---- */
+.ind__list.ind__list--out { grid-template-columns: 1fr; gap: 10px; align-content: center; }
+.ind__list--out li { grid-template-columns: 1fr !important; gap: 4px !important; padding: 20px 22px !important; align-content: start; }
+.ind__list--out b { font-family: inherit !important; text-transform: none !important; letter-spacing: -.02em !important; font-size: 19px !important; font-weight: 600 !important; color: #fff !important; display: block !important; }
+.ind__list--out b::before { display: none !important; content: none !important; }
+.ind__list--out span { font-size: 15.5px !important; font-weight: 400 !important; color: #B9B7C8 !important; line-height: 1.45; }
