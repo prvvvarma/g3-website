@@ -168,3 +168,8 @@ html { overflow-x: clip; }
 }
 /* no hairline under the hero: the picture fades straight into the next section */
 .sp-hero.has-img + .sp-problem, .sp-hero + .sp-problem { border-top: 0; }
+/* About: skyline behind the headline */
+.ab-hero .sp-hero__img { background-position: center 60%; }
+.ab-hero .sp-hero__img::after { background: linear-gradient(90deg, #0A0A11 0%, rgba(10,10,17,.82) 32%, rgba(10,10,17,.25) 65%, rgba(10,10,17,.1) 100%); }
+/* IoT: sensor photo sits left, text right */
+.sp--iot .sp-hero__img { background-position: 25% center; }
