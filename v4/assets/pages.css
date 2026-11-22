@@ -507,3 +507,16 @@ html, html[style] { background: radial-gradient(55% 520px at 92% 8%, rgba(88,182
   .tr.rv ol::before { transform: scaleY(0); } .tr.rv.in ol::before { transform: none; }
   .tr li { padding: 0 0 0 32px; }
 }
+
+/* Privacy note */
+.pv { max-width: 760px; padding-top: 8px; }
+.pv h2 { font-size: clamp(22px, 2vw, 26px); letter-spacing: -.02em; font-weight: 600; color: #fff; margin: 40px 0 10px; }
+.pv h2:first-child { margin-top: 0; }
+.pv p { font-size: 17px; line-height: 1.6; color: #B9B7C8; margin: 0; }
+.pv a, .cf__send small a, .foot__base a { color: inherit; text-decoration: underline; text-decoration-color: rgba(255,255,255,.3); text-underline-offset: 3px; }
+.pv-hero { min-height: 0 !important; padding-bottom: 8px !important; }
+.pv-hero { display: block !important; }
+.pv-hero .sp-hero__sub { margin-top: 14px; color: #8F8DA0; }
+.pv { max-width: none !important; } .pv > * { max-width: 760px; }
+.pv-hero .pv { margin-top: 48px; padding: 0; }
+.pv-hero h1 { font-size: clamp(48px, 6vw, 88px); }
