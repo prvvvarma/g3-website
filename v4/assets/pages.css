@@ -318,3 +318,11 @@ body:not(.sp) main > section:last-of-type { padding-bottom: clamp(72px, 10vw, 14
 @media (max-width: 960px) { .ct-hero { grid-template-columns: 1fr; } .ctmap__card { left: 50%; transform: translateX(-10%); } }
 @media (max-width: 520px) { .ctmap__card { left: 38%; padding: 9px 12px; } .ctmap__card b { font-size: 14px; } }
 @media (prefers-reduced-motion: reduce) { .ctmap__ring { animation: none; } }
+
+/* ---- Contact: real Google map, styled dark ---- */
+.ctmap { position: relative; border-radius: 28px; overflow: hidden; aspect-ratio: 4 / 3; border: 1px solid rgba(255,255,255,.1); box-shadow: 0 40px 80px -40px rgba(0,0,0,.9); -webkit-mask-image: none; mask-image: none; background: #14131F; }
+.ctmap iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; filter: invert(.92) hue-rotate(200deg) saturate(.7) brightness(.9) contrast(.95); }
+.ctmap::after { content: ""; position: absolute; inset: 0; pointer-events: none; box-shadow: inset 0 0 60px rgba(10,10,17,.6); background: linear-gradient(140deg, rgba(217,87,154,.10), transparent 40%, rgba(88,182,242,.08)); }
+.ctmap__card { left: 16px; top: auto; bottom: 16px; z-index: 2; transform: none; }
+.ctmap__card:hover em { color: #fff; }
+@media (max-width: 960px) { .ctmap__card { left: 12px; bottom: 12px; transform: none; } }
