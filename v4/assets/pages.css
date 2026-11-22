@@ -399,3 +399,8 @@ body:not(.sp) main > section:last-of-type { padding-bottom: clamp(72px, 10vw, 14
 .ind__card { box-shadow: 0 40px 90px -40px rgba(0,0,0,.9) !important; }
 /* page background: drop the diagonal plum band across the middle; keep a soft light near the hero only */
 html, html[style] { background: radial-gradient(55% 520px at 92% 8%, rgba(88,182,242,.12), transparent 70%), #0A0A11 !important; background-repeat: no-repeat !important; }
+
+/* Footer: no giant wordmark; a quiet divider above the base line */
+.foot__word { display: none !important; }
+.foot__base { margin-top: 48px !important; padding-top: 22px !important; border-top: 1px solid rgba(255,255,255,.08) !important; }
+@media (max-width: 760px) { .foot__addr { max-width: none !important; width: auto !important; } .foot__addr br { display: none; } }
