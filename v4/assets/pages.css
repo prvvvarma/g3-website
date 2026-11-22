@@ -278,3 +278,12 @@ body:not(.sp) main > section:last-of-type { padding-bottom: clamp(72px, 10vw, 14
 .steps li:last-child b { white-space: nowrap; }
 .wt h3 { font-size: clamp(20px, 1.8vw, 23px); }
 .wt__p { margin: 10px 8px 0; font-size: 15px; line-height: 1.55; color: #B9B7C8; }
+/* five cards: 3 + 2 */
+.wts:has(> .wt:nth-child(5)) { grid-template-columns: repeat(6, 1fr); }
+.wts:has(> .wt:nth-child(5)) > .wt { grid-column: span 2; }
+.wts:has(> .wt:nth-child(5)) > .wt:nth-child(4), .wts:has(> .wt:nth-child(5)) > .wt:nth-child(5) { grid-column: span 3; }
+.wts:has(> .wt:nth-child(5)) > .wt:nth-child(n+4) .wt__viz svg { max-width: 360px; margin: 0 auto; }
+@media (max-width: 960px) { .wts:has(> .wt:nth-child(5)) { grid-template-columns: 1fr 1fr; } .wts:has(> .wt:nth-child(5)) > .wt, .wts:has(> .wt:nth-child(5)) > .wt:nth-child(n+4) { grid-column: auto; } .wts:has(> .wt:nth-child(5)) > .wt:last-child { grid-column: 1 / -1; } }
+@media (max-width: 600px) { .wts:has(> .wt:nth-child(5)) { grid-template-columns: 1fr; } }
+.sc-rise { animation: scrise 2.6s ease-in-out infinite; } @keyframes scrise { 50% { transform: translateY(-6px); } }
+@media (prefers-reduced-motion: reduce) { .sc-rise { animation: none; } }
