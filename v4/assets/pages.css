@@ -357,3 +357,13 @@ body:not(.sp) main > section:last-of-type { padding-bottom: clamp(72px, 10vw, 14
 .ind__list--out b { font-family: inherit !important; text-transform: none !important; letter-spacing: -.02em !important; font-size: 19px !important; font-weight: 600 !important; color: #fff !important; display: block !important; }
 .ind__list--out b::before { display: none !important; content: none !important; }
 .ind__list--out span { font-size: 15.5px !important; font-weight: 400 !important; color: #B9B7C8 !important; line-height: 1.45; }
+
+/* Problem cards: one brand colour each (plum, violet, ice) */
+.pcard { --c: #D9579A; position: relative; overflow: hidden; }
+.pcard:nth-child(2) { --c: #8D5BE3; } .pcard:nth-child(3) { --c: #58B6F2; }
+.pcard::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 2px; background: var(--c); opacity: .85; }
+.pcard::after { content: ""; position: absolute; inset: 0; background: radial-gradient(120% 60% at 0% 0%, color-mix(in srgb, var(--c) 14%, transparent), transparent 60%); pointer-events: none; }
+.pcard > * { position: relative; z-index: 1; }
+.pcard__ic { color: var(--c); background: color-mix(in srgb, var(--c) 14%, transparent); border-color: color-mix(in srgb, var(--c) 35%, transparent); }
+.pcard .pcard__a { border-top-color: color-mix(in srgb, var(--c) 30%, transparent); }
+.pcard .pcard__a::before { content: "→ "; color: var(--c); }
