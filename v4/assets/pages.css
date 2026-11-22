@@ -367,3 +367,13 @@ body:not(.sp) main > section:last-of-type { padding-bottom: clamp(72px, 10vw, 14
 .pcard__ic { color: var(--c); background: color-mix(in srgb, var(--c) 14%, transparent); border-color: color-mix(in srgb, var(--c) 35%, transparent); }
 .pcard .pcard__a { border-top-color: color-mix(in srgb, var(--c) 30%, transparent); }
 .pcard .pcard__a::before { content: "→ "; color: var(--c); }
+
+/* Industries outcomes: plum / violet / ice, matching the problem cards */
+.ind__list--out li { --c: #D9579A; position: relative; overflow: hidden; padding-left: 64px !important;
+  background: linear-gradient(90deg, color-mix(in srgb, var(--c) 12%, transparent), rgba(255,255,255,.03) 55%) !important;
+  border: 1px solid color-mix(in srgb, var(--c) 26%, rgba(255,255,255,.06)) !important; }
+.ind__list--out li:nth-child(2) { --c: #8D5BE3; } .ind__list--out li:nth-child(3) { --c: #58B6F2; }
+.ind__list--out li::before { content: ""; position: absolute; left: 22px; top: 22px; width: 26px; height: 26px; border-radius: 9px;
+  background: color-mix(in srgb, var(--c) 20%, transparent) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23FFFFFF' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m5 12.5 4.5 4.5L19 7.5'/%3E%3C/svg%3E") center / 14px no-repeat;
+  border: 1px solid color-mix(in srgb, var(--c) 55%, transparent); }
+.ind__list--out li::after { content: ""; position: absolute; left: 0; top: 16px; bottom: 16px; width: 2px; border-radius: 2px; background: var(--c); }
