@@ -255,3 +255,24 @@
 /* Pages end without a closing band: keep breathing room above the footer */
 .sp main > section:last-child { padding-bottom: clamp(64px, 9vw, 120px); }
 body:not(.sp) main > section:last-of-type { padding-bottom: clamp(72px, 10vw, 140px); }
+
+/* ---- What we do: picture tiles ---- */
+.wts { margin-top: 32px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+.wt { display: flex; flex-direction: column; padding: 14px 14px 22px; border-radius: 28px; background: linear-gradient(160deg, #16151F, #111019); border: 1px solid rgba(255,255,255,.08); transition: transform .3s, border-color .3s, box-shadow .3s; }
+.wt:hover { transform: translateY(-4px); border-color: transparent; background: linear-gradient(160deg, #19172A, #111019) padding-box, linear-gradient(140deg, #D9579A, #8D5BE3 50%, #58B6F2) border-box; box-shadow: 0 0 50px -18px rgba(141,91,227,.6); }
+.wt__viz { border-radius: 20px; padding: 16px; background: radial-gradient(80% 90% at 50% 0%, rgba(141,91,227,.22), transparent 70%), #0E0D16; border: 1px solid rgba(255,255,255,.06); }
+.wt__viz svg { display: block; width: 100%; height: auto; }
+.wt__k { margin: 20px 8px 0; font-family: var(--mono); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--mute); }
+.wt h3 { margin: 8px 8px 0; font-size: clamp(21px, 2vw, 26px); font-weight: 600; letter-spacing: -.03em; line-height: 1.2; color: #fff; }
+.wt__chips { display: flex; flex-wrap: wrap; gap: 7px; margin: 16px 8px 0; }
+.wt__chips span { padding: 6px 11px; border-radius: 999px; font-size: 13px; color: #E4E2EE; background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.1); }
+.sc-draw { stroke-dasharray: 400; stroke-dashoffset: 400; }
+.in .sc-draw, .wts:not(.pre) .sc-draw { animation: scdraw 1.6s cubic-bezier(.2,.8,.2,1) .2s forwards; }
+@keyframes scdraw { to { stroke-dashoffset: 0; } }
+.sc-pulse { transform-box: fill-box; transform-origin: center; animation: scpulse 2.4s ease-in-out infinite; }
+@keyframes scpulse { 50% { transform: scale(1.18); opacity: .55; } }
+.sc-flow { animation: scflow 1.4s linear infinite; } @keyframes scflow { to { stroke-dashoffset: -18; } }
+@media (max-width: 960px) { .wts { grid-template-columns: 1fr 1fr; } .wt:last-child { grid-column: 1 / -1; } }
+@media (max-width: 600px) { .wts { grid-template-columns: 1fr; } }
+@media (prefers-reduced-motion: reduce) { .sc-draw { stroke-dashoffset: 0; animation: none !important; } .sc-pulse, .sc-flow { animation: none; } }
+.steps li:last-child b { white-space: nowrap; }
